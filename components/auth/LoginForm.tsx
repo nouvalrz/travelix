@@ -1,0 +1,84 @@
+"use client";
+
+import { Button } from "@heroui/button";
+import { Card, CardBody, CardHeader } from "@heroui/card";
+import { Input } from "@heroui/input";
+import { useForm } from "react-hook-form";
+import { zodResolver } from "@hookform/resolvers/zod";
+import { useState } from "react";
+import { addToast } from "@heroui/toast";
+
+import { LoginSchema, LoginType } from "@/types/schemas/login.schema";
+import { fetchLogin } from "@/lib/data/client/login";
+import { AppError } from "@/lib/appError";
+
+const LoginForm = () => {
+  const [loading, setLoading] = useState<boolean>(false);
+  const {
+    register,
+    handleSubmit,
+    formState: { errors },
+  } = useForm<LoginType>({ resolver: zodResolver(LoginSchema) });
+
+  const login = async (data: LoginType) => {
+    setLoading(true);
+    try {
+      await fetchLogin(data);
+      addToast({
+        title: "Login Success",
+        color: "success",
+        description: "Welcome to Travelix!",
+      });
+    } catch (error) {
+      addToast({
+        title: "Error",
+        description:
+          error instanceof AppError ? error.message : "Something went wrong",
+        color: "danger",
+      });
+    }
+    setLoading(false);
+  };
+
+  return (
+    <Card className=" p-2" shadow="sm">
+      <CardHeader className="flex flex-col gap-1 items-start ">
+        <p className="font-medium">Welcome Back</p>
+        <p className="text-sm text-secondary">
+          Please login using your account
+        </p>
+      </CardHeader>
+      <CardBody>
+        <form className="flex flex-col gap-6" onSubmit={handleSubmit(login)}>
+          <Input
+            {...register("email")}
+            errorMessage={errors.email?.message}
+            isInvalid={!!errors.email?.message}
+            label="Email"
+            labelPlacement="outside"
+            placeholder="Enter your email"
+          />
+          <Input
+            {...register("password")}
+            errorMessage={errors.password?.message}
+            isInvalid={!!errors.password?.message}
+            label="Password"
+            labelPlacement="outside"
+            placeholder="Enter your password"
+            type="password"
+          />
+          <Button
+            disableRipple
+            className="bg-sky-500 text-white"
+            isLoading={loading}
+            type="submit"
+          >
+            Login
+          </Button>
+        </form>
+      </CardBody>
+    </Card>
+  );
+};
+
+export default LoginForm;

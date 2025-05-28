@@ -1,9 +1,7 @@
-import { Button } from "@heroui/button";
-import { Card, CardBody, CardHeader } from "@heroui/card";
-import { Input } from "@heroui/input";
 import Image from "next/image";
 
 import { TravelixLogoHorizontal } from "@/components/icons";
+import LoginForm from "@/components/auth/LoginForm";
 
 const LoginPage = () => {
   return (
@@ -25,36 +23,7 @@ const LoginPage = () => {
         </div>
         <div className="w-full lg:max-w-lg flex flex-col gap-8">
           <TravelixLogoHorizontal className="mx-auto" width={160} />
-          <Card className=" p-2" shadow="sm">
-            <CardHeader className="flex flex-col gap-1 items-start ">
-              <p className="font-medium">Welcome Back</p>
-              <p className="text-sm text-secondary">
-                Please login using your account
-              </p>
-            </CardHeader>
-            <CardBody>
-              <form className="flex flex-col gap-6">
-                <Input
-                  label="Email"
-                  labelPlacement="outside"
-                  placeholder="Enter your email"
-                />
-                <Input
-                  label="Password"
-                  labelPlacement="outside"
-                  placeholder="Enter your password"
-                  type="password"
-                />
-                <Button
-                  disableRipple
-                  className="bg-sky-500 text-white"
-                  type="submit"
-                >
-                  Login
-                </Button>
-              </form>
-            </CardBody>
-          </Card>
+          <LoginForm />
         </div>
       </div>
     </div>
