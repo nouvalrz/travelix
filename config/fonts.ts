@@ -1,11 +1,11 @@
-import { Fira_Code as FontMono, Inter as FontSans } from "next/font/google";
+import { Manrope, Geist } from "next/font/google";
 
-export const fontSans = FontSans({
+export const fontManrope = Manrope({
   subsets: ["latin"],
-  variable: "--font-sans",
+  variable: "--font-manrope",
 });
 
-export const fontMono = FontMono({
+export const fontGeist = Geist({
   subsets: ["latin"],
-  variable: "--font-mono",
+  variable: "--font-geist",
 });
