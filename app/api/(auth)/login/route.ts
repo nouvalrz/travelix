@@ -1,6 +1,7 @@
 import { NextRequest, NextResponse } from "next/server";
 
 import { fetchApiFromServer } from "@/lib/fetchApi";
+import { signJWT } from "@/lib/jwt";
 
 export const POST = async (req: NextRequest): Promise<NextResponse> => {
   const body = await req.json();
@@ -15,9 +16,16 @@ export const POST = async (req: NextRequest): Promise<NextResponse> => {
 
     if (res.ok) {
       if (!responseData.token) throw new Error("Token Not Found");
+      const jwtPayload = {
+        data: responseData.data,
+        backendToken: responseData.token,
+      };
+
+      const jwtResult = await signJWT(jwtPayload);
+
       nextResponse.cookies.set({
         name: "token",
-        value: responseData.token,
+        value: jwtResult,
         httpOnly: true,
         secure: process.env.NODE_ENV === "production",
         sameSite: "lax",
