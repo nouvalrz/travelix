@@ -14,5 +14,17 @@ export async function signJWT(payload: JWTPayload, expiresIn = "30d") {
 export async function verifyJWT(token: string) {
   const { payload } = await jwtVerify(token, secret);
 
-  return payload;
+  return payload as unknown as JwtPayload;
+}
+
+interface JwtPayload {
+  data: {
+    id: string;
+    role: "admin" | "user";
+    email: string;
+    profilePictureUrl: string;
+    phoneNumber: string;
+  };
+  backendToken: string;
+  exp: number;
 }
