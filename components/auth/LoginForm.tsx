@@ -7,6 +7,7 @@ import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useState } from "react";
 import { addToast } from "@heroui/toast";
+import { Eye, EyeOff } from "lucide-react";
 
 import { LoginSchema, LoginType } from "@/types/schemas/login.schema";
 import { fetchLogin } from "@/lib/data/client/login";
@@ -14,11 +15,14 @@ import { AppError } from "@/lib/appError";
 
 const LoginForm = () => {
   const [loading, setLoading] = useState<boolean>(false);
+  const [isPasswordVisible, setIsPasswordVisible] = useState<boolean>(false);
   const {
     register,
     handleSubmit,
     formState: { errors },
   } = useForm<LoginType>({ resolver: zodResolver(LoginSchema) });
+
+  const togglePasswordVisible = () => setIsPasswordVisible(!isPasswordVisible);
 
   const login = async (data: LoginType) => {
     setLoading(true);
@@ -60,16 +64,29 @@ const LoginForm = () => {
           />
           <Input
             {...register("password")}
+            endContent={
+              <button
+                className="text-gray-700"
+                type="button"
+                onClick={togglePasswordVisible}
+              >
+                {isPasswordVisible ? (
+                  <EyeOff className="size-5" />
+                ) : (
+                  <Eye className="size-5" />
+                )}
+              </button>
+            }
             errorMessage={errors.password?.message}
             isInvalid={!!errors.password?.message}
             label="Password"
             labelPlacement="outside"
             placeholder="Enter your password"
-            type="password"
+            type={isPasswordVisible ? "text" : "password"}
           />
           <Button
             disableRipple
-            className="bg-sky-500 text-white"
+            color="primary"
             isLoading={loading}
             type="submit"
           >

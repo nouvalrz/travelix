@@ -1,3 +1,4 @@
 {
+  "tailwindCSS.classAttributes": ["class", "className", "previewClassName"],
   "typescript.tsdk": "node_modules/typescript/lib"
 }
