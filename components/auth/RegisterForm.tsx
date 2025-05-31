@@ -8,12 +8,16 @@ import { zodResolver } from "@hookform/resolvers/zod";
 import { useState } from "react";
 import { Eye, EyeOff } from "lucide-react";
 import { useDisclosure } from "@heroui/modal";
+import { addToast } from "@heroui/toast";
 
 import { ImageInputField, ImageInputPicker } from "../ImageInput";
 
 import RoleChoices from "./RoleChoices";
 
 import { RegisterSchema, RegisterType } from "@/types/schemas/register.schema";
+import { fetchUploadImage } from "@/lib/data/client/uploadImage";
+import { AppError } from "@/lib/appError";
+import { fetchRegister } from "@/lib/data/client/register";
 
 const RegisterForm = () => {
   const [loading, setLoading] = useState<boolean>(false);
@@ -31,6 +35,34 @@ const RegisterForm = () => {
 
   const submitRegister = async (data: RegisterType) => {
     setLoading(true);
+
+    try {
+      let imageUrl: string | null = null;
+
+      if (data.profilePictureFile) {
+        const { url } = await fetchUploadImage(data.profilePictureFile);
+
+        imageUrl = url;
+      }
+
+      await fetchRegister({
+        ...data,
+        profilePictureUrl: imageUrl ? imageUrl : undefined,
+      });
+
+      addToast({
+        title: "Register Success",
+        color: "success",
+        description: "Successfully created new account!",
+      });
+    } catch (error) {
+      if (error instanceof AppError) {
+        addToast({
+          color: "danger",
+          description: error.message,
+        });
+      }
+    }
 
     setLoading(false);
   };

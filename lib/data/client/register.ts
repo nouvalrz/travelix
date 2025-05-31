@@ -1,8 +1,8 @@
 import { AppError } from "@/lib/appError";
-import { LoginType } from "@/types/schemas/login.schema";
+import { RegisterType } from "@/types/schemas/register.schema";
 
-export const fetchLogin = async (data: LoginType) => {
-  const response = await fetch("/api/login", {
+export const fetchRegister = async (data: RegisterType) => {
+  const response = await fetch("/api/register", {
     method: "POST",
     body: JSON.stringify(data),
   });
@@ -17,5 +17,5 @@ export const fetchLogin = async (data: LoginType) => {
     });
   }
 
-  return responseData;
+  return data;
 };
