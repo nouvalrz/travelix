@@ -9,6 +9,7 @@ import { useState } from "react";
 import { Eye, EyeOff } from "lucide-react";
 import { useDisclosure } from "@heroui/modal";
 import { addToast } from "@heroui/toast";
+import { useRouter } from "next/navigation";
 
 import { ImageInputField, ImageInputPicker } from "../ImageInput";
 
@@ -20,6 +21,7 @@ import { AppError } from "@/lib/appError";
 import { fetchRegister } from "@/lib/data/client/register";
 
 const RegisterForm = () => {
+  const router = useRouter();
   const [loading, setLoading] = useState<boolean>(false);
   const [isPasswordVisible, setIsPasswordVisible] = useState<boolean>(false);
   const { isOpen, onOpen, onOpenChange } = useDisclosure();
@@ -50,10 +52,13 @@ const RegisterForm = () => {
         profilePictureUrl: imageUrl ? imageUrl : undefined,
       });
 
+      router.replace("/login");
+
       addToast({
         title: "Register Success",
         color: "success",
-        description: "Successfully created new account!",
+        description:
+          "Successfully created new account! Redirecting to Login Page",
       });
     } catch (error) {
       if (error instanceof AppError) {
@@ -78,7 +83,14 @@ const RegisterForm = () => {
           className="flex flex-col gap-6"
           onSubmit={handleSubmit(submitRegister)}
         >
-          <RoleChoices {...register("role")} defaultValue="user" />
+          <RoleChoices
+            defaultValue="user"
+            errorMessage={errors.role?.message}
+            isInvalid={!!errors.role?.message}
+            onValueChange={(value) =>
+              setValue("role", value as RegisterType["role"])
+            }
+          />
           <Input
             {...register("name")}
             errorMessage={errors.name?.message}
@@ -155,6 +167,16 @@ const RegisterForm = () => {
             onClick={onOpen}
           />
           <ImageInputPicker
+            compress={0.3}
+            cropShape="round"
+            description={
+              <div className="text-sm">
+                <ul>
+                  <li>Image type supported: jpg, jpeg, png, webp</li>
+                  <li>Image max size: 2MB</li>
+                </ul>
+              </div>
+            }
             isOpen={isOpen}
             modalTitle="Upload Image"
             onOpenChange={onOpenChange}

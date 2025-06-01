@@ -14,12 +14,22 @@ const RoleChoices = (props: RadioGroupProps) => {
         {...props}
       >
         <div className="flex gap-3">
-          <CustomRadio className="flex-1" color="secondary" value="user">
+          <CustomRadio
+            key="admin"
+            className="flex-1"
+            color="secondary"
+            value="user"
+          >
             <span className="flex gap-2 items-center text-sm">
               <User className="size-5" /> User
             </span>
           </CustomRadio>
-          <CustomRadio className="flex-1" value="admin">
+          <CustomRadio
+            key="user"
+            className="flex-1"
+            color="secondary"
+            value="admin"
+          >
             <span className="flex gap-2 items-center text-sm">
               <ShieldUser className="size-5" /> Admin
             </span>

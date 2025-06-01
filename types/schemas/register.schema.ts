@@ -13,7 +13,10 @@ export const RegisterSchema = z
     passwordRepeat: z
       .string()
       .min(6, { message: "Password must be at least 6 characters" }),
-    role: z.enum(["user", "admin"]).default("user").optional(),
+    role: z
+      .enum(["user", "admin"], { message: "Role can be only user and admin" })
+      .default("user")
+      .optional(),
     phoneNumber: z
       .string()
       .min(9)

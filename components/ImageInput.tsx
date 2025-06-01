@@ -12,7 +12,7 @@ import { addToast } from "@heroui/toast";
 import clsx from "clsx";
 import { ImageIcon } from "lucide-react";
 import { useCallback, useRef, useState } from "react";
-import Cropper from "react-easy-crop";
+import Cropper, { CropperProps } from "react-easy-crop";
 import { Area } from "react-easy-crop/types";
 
 type ImageInputFieldType = {
@@ -61,6 +61,10 @@ type ImageInputPickerType = {
   isOpen: boolean;
   onOpenChange: (isOpen: boolean) => void;
   onResult: (file: File) => void;
+  compress?: number;
+  cropShape?: CropperProps["cropShape"];
+  description?: React.ReactNode;
+  maxSizeInMb?: number;
 };
 
 export const ImageInputPicker: React.FC<ImageInputPickerType> = ({
@@ -68,6 +72,10 @@ export const ImageInputPicker: React.FC<ImageInputPickerType> = ({
   isOpen,
   onOpenChange,
   onResult,
+  compress = 0.7,
+  cropShape = "rect",
+  description,
+  maxSizeInMb = 2,
 }) => {
   const inputRef = useRef<HTMLInputElement | null>(null);
   const [imageSrc, setImageSrc] = useState<string | null>(null);
@@ -83,6 +91,18 @@ export const ImageInputPicker: React.FC<ImageInputPickerType> = ({
     const file = e.target.files?.[0];
 
     if (file) {
+      const maxByte = maxSizeInMb * 1024 * 1024;
+
+      if (file.size > maxByte) {
+        addToast({
+          color: "danger",
+          title: "File size limit",
+          description: "Max image size is 2MB",
+        });
+
+        return;
+      }
+
       const imageDataUrl = await readFile(file);
 
       setImageSrc(imageDataUrl);
@@ -105,7 +125,11 @@ export const ImageInputPicker: React.FC<ImageInputPickerType> = ({
   const getCroppedImage = async () => {
     if (!imageSrc || !croppedAreaPixels) return;
     try {
-      const croppedImageFile = await getCroppedImg(imageSrc, croppedAreaPixels);
+      const croppedImageFile = await getCroppedImg(
+        imageSrc,
+        croppedAreaPixels,
+        compress
+      );
 
       onResult(croppedImageFile);
     } catch (e) {
@@ -129,6 +153,7 @@ export const ImageInputPicker: React.FC<ImageInputPickerType> = ({
                   <Cropper
                     aspect={1}
                     crop={crop}
+                    cropShape={cropShape}
                     image={imageSrc}
                     zoom={zoom}
                     onCropChange={setCrop}
@@ -140,7 +165,7 @@ export const ImageInputPicker: React.FC<ImageInputPickerType> = ({
 
               <input
                 ref={inputRef}
-                accept="image/*"
+                accept="image/jpeg, image/jpg, image/png, image/webp"
                 className="hidden"
                 type="file"
                 onChange={handleFileChange}
@@ -155,6 +180,7 @@ export const ImageInputPicker: React.FC<ImageInputPickerType> = ({
               >
                 Choose File
               </Button>
+              {description}
               {/* {imageSrc && (
                 <button onClick={getCroppedImage}>Crop & Preview</button>
               )} */}
@@ -177,7 +203,11 @@ export const ImageInputPicker: React.FC<ImageInputPickerType> = ({
   );
 };
 
-export const getCroppedImg = (imageSrc: string, crop: Area): Promise<File> => {
+export const getCroppedImg = (
+  imageSrc: string,
+  crop: Area,
+  compress: number = 0.7
+): Promise<File> => {
   return new Promise((resolve, reject) => {
     const image = new Image();
 
@@ -208,14 +238,18 @@ export const getCroppedImg = (imageSrc: string, crop: Area): Promise<File> => {
         crop.height
       );
 
-      canvas.toBlob((blob) => {
-        if (!blob) {
-          reject(new Error("Canvas is empty"));
+      canvas.toBlob(
+        (blob) => {
+          if (!blob) {
+            reject(new Error("Canvas is empty"));
 
-          return;
-        }
-        resolve(new File([blob], "cropped.jpg", { type: "image/jpeg" }));
-      }, "image/jpeg");
+            return;
+          }
+          resolve(new File([blob], "cropped.jpg", { type: "image/jpeg" }));
+        },
+        "image/jpeg",
+        compress
+      );
     };
 
     image.onerror = () => reject(new Error("Failed to load image"));
