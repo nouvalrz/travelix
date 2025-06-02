@@ -6,7 +6,7 @@ import { Cart } from "@/types/cart.type";
 
 type CartsStore = {
   carts: Cart[];
-  isLoading: boolean;
+  cartsLoading: boolean;
   fetchCarts: () => Promise<void>;
   totalCarts: () => number;
   cartsModalOpen: boolean;
@@ -16,14 +16,14 @@ type CartsStore = {
 export const useCartsStore = create<CartsStore>((set, get) => {
   return {
     carts: [],
-    isLoading: true,
+    cartsLoading: true,
     fetchCarts: async () => {
-      set({ isLoading: true });
+      set({ cartsLoading: true });
 
       const response = await fetchCarts();
       const carts = response.data as Cart[];
 
-      set({ carts: carts, isLoading: false });
+      set({ carts: carts, cartsLoading: false });
     },
     totalCarts: () => get().carts.length,
     cartsModalOpen: false,

@@ -13,14 +13,16 @@ import {
   Dropdown,
   DropdownItem,
   DropdownMenu,
+  DropdownSection,
   DropdownTrigger,
 } from "@heroui/dropdown";
 import { Avatar } from "@heroui/avatar";
 import { DoorOpen, LayoutDashboard, ShoppingCart, User } from "lucide-react";
 import { Badge } from "@heroui/badge";
+import clsx from "clsx";
 
 import { TravelixLogoHorizontal } from "../../icons";
-import CartsModal from "../carts/CartsModal";
+import CartsDropdownItem from "../carts/CartsDropdownItem";
 
 import LogoutModal from "@/components/LogoutModal";
 import { AuthUserType } from "@/types/authUser.type";
@@ -51,31 +53,51 @@ type LoggedContentProps = {
 };
 
 const LoggedContent = ({ authUser, onModalLogoutOpen }: LoggedContentProps) => {
-  const { isLoading, totalCarts, setCartsModalOpen } = useCartsStore();
+  const { cartsLoading, totalCarts, carts } = useCartsStore();
 
   return (
-    <NavbarContent justify="end">
-      <CartsModal />
+    <NavbarContent className="gap-2" justify="end">
       <NavbarItem>
-        {isLoading ? (
-          <Button
-            isIconOnly
-            variant="light"
-            onClick={() => setCartsModalOpen(true)}
-          >
-            <ShoppingCart className="size-6" />
-          </Button>
-        ) : (
-          <Badge color="primary" content={totalCarts()} shape="circle">
-            <Button
-              isIconOnly
+        <Badge
+          className={clsx({ "animate-pulse": cartsLoading })}
+          color="primary"
+          content={cartsLoading ? " " : totalCarts()}
+          isInvisible={!cartsLoading && totalCarts() === 0}
+          shape="circle"
+        >
+          <Dropdown>
+            <DropdownTrigger>
+              <Button isIconOnly variant="light">
+                <ShoppingCart className="size-6" />
+              </Button>
+            </DropdownTrigger>
+            <DropdownMenu
+              aria-label="Dynamic Actions"
+              className="max-w-md"
+              items={carts}
+              title="Your Cart"
               variant="light"
-              onClick={() => setCartsModalOpen(true)}
             >
-              <ShoppingCart className="size-6" />
-            </Button>
-          </Badge>
-        )}
+              <DropdownSection
+                classNames={{ heading: "text-sm text-primary-900" }}
+                title="Your Cart"
+              >
+                {carts.map((cart) => (
+                  <DropdownItem key={cart.id} isReadOnly>
+                    <CartsDropdownItem cart={cart} />
+                  </DropdownItem>
+                ))}
+              </DropdownSection>
+              <DropdownItem key="cart-action" isReadOnly>
+                <Link href="/carts">
+                  <Button className="ml-auto" color="primary">
+                    See All
+                  </Button>
+                </Link>
+              </DropdownItem>
+            </DropdownMenu>
+          </Dropdown>
+        </Badge>
       </NavbarItem>
       <NavbarItem>
         <Dropdown>

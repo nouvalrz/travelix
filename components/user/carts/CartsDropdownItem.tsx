@@ -2,7 +2,7 @@ import { Image } from "@heroui/image";
 
 import { Cart } from "@/types/cart.type";
 
-const CartsModalItem = ({ cart }: { cart: Cart }) => {
+const CartsDropdownItem = ({ cart }: { cart: Cart }) => {
   const { id, activity, quantity } = cart;
 
   return (
@@ -35,4 +35,4 @@ const CartsModalItem = ({ cart }: { cart: Cart }) => {
   );
 };
 
-export default CartsModalItem;
+export default CartsDropdownItem;
