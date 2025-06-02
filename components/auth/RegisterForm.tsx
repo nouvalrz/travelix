@@ -29,9 +29,13 @@ const RegisterForm = () => {
     getValues,
     setValue,
     register,
+    watch,
     handleSubmit,
     formState: { errors },
-  } = useForm<RegisterType>({ resolver: zodResolver(RegisterSchema) });
+  } = useForm<RegisterType>({
+    resolver: zodResolver(RegisterSchema),
+    defaultValues: { role: "user" },
+  });
 
   const togglePasswordVisible = () => setIsPasswordVisible(!isPasswordVisible);
 
