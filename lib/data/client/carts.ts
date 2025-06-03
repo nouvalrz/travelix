@@ -1,5 +1,5 @@
 export const fetchCarts = async () => {
-  const response = await fetch("/api/carts", {
+  const response = await fetch("/api/proxy/carts", {
     method: "GET",
     credentials: "same-origin",
   });

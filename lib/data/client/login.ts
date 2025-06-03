@@ -5,6 +5,9 @@ export const fetchLogin = async (data: LoginType) => {
   const response = await fetch("/api/login", {
     method: "POST",
     body: JSON.stringify(data),
+    headers: {
+      "Content-Type": "application/json",
+    },
   });
 
   const responseData = await response.json();
