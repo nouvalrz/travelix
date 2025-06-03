@@ -9,6 +9,7 @@ import {
 import { LayoutDashboard, User, DoorOpen } from "lucide-react";
 import React from "react";
 import Link from "next/link";
+import { Chip } from "@heroui/chip";
 
 import { LoggedContentProps } from "./NavbarClient";
 
@@ -34,6 +35,16 @@ const ProfileDropdown = ({
         </Button>
       </DropdownTrigger>
       <DropdownMenu aria-label="Static Actions">
+        <DropdownItem key="profile-summary" isReadOnly>
+          <p className="font-medium">{authUser.name}</p>
+          <p>{authUser.email}</p>
+          <Chip
+            className="capitalize mt-2"
+            color={authUser.role === "admin" ? "danger" : "primary"}
+          >
+            {authUser.role}
+          </Chip>
+        </DropdownItem>
         {authUser.role === "admin" ? (
           <DropdownItem
             key="admin"

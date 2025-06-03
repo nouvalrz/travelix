@@ -21,8 +21,6 @@ export const useTransactionsStore = create<TransactionsStore>((set, get) => {
       const response = await fetchTransactions();
       const transactions = response.data as Transaction[];
 
-      debugger;
-
       set({ transactions: transactions, transactionsLoading: false });
     },
     totalTransactions: () => get().transactions.length,

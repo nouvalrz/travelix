@@ -20,6 +20,9 @@ importers:
       '@heroui/card':
         specifier: ^2.2.18
         version: 2.2.18(@heroui/system@2.4.15(@heroui/theme@2.4.15(tailwindcss@3.4.16))(framer-motion@11.13.1(react-dom@18.3.1(react@18.3.1))(react@18.3.1))(react-dom@18.3.1(react@18.3.1))(react@18.3.1))(@heroui/theme@2.4.15(tailwindcss@3.4.16))(framer-motion@11.13.1(react-dom@18.3.1(react@18.3.1))(react@18.3.1))(react-dom@18.3.1(react@18.3.1))(react@18.3.1)
+      '@heroui/chip':
+        specifier: ^2.2.16
+        version: 2.2.16(@heroui/system@2.4.15(@heroui/theme@2.4.15(tailwindcss@3.4.16))(framer-motion@11.13.1(react-dom@18.3.1(react@18.3.1))(react@18.3.1))(react-dom@18.3.1(react@18.3.1))(react@18.3.1))(@heroui/theme@2.4.15(tailwindcss@3.4.16))(react-dom@18.3.1(react@18.3.1))(react@18.3.1)
       '@heroui/code':
         specifier: 2.2.14
         version: 2.2.14(@heroui/theme@2.4.15(tailwindcss@3.4.16))(react-dom@18.3.1(react@18.3.1))(react@18.3.1)
@@ -329,6 +332,14 @@ packages:
       react: '>=18 || >=19.0.0-rc.0'
       react-dom: '>=18 || >=19.0.0-rc.0'
 
+  '@heroui/chip@2.2.16':
+    resolution: {integrity: sha512-DpwClZ+CHclOG9b9gOG/zK6c6hfdtBaHw5V09TqF4PP4nujw3WZWufPEL3EGKyItyALD20tKHUqG2lYygi8Zbg==}
+    peerDependencies:
+      '@heroui/system': '>=2.4.7'
+      '@heroui/theme': '>=2.4.6'
+      react: '>=18 || >=19.0.0-rc.0'
+      react-dom: '>=18 || >=19.0.0-rc.0'
+
   '@heroui/code@2.2.14':
     resolution: {integrity: sha512-mFHgSXi1XzP+B59QBpWk/6NOc2A8wToPWDEaPOJO65nNUZ0S7FHhZTUNVPxHRn3wy8RPclPUpLFicGggT5inQw==}
     peerDependencies:
@@ -487,6 +498,11 @@ packages:
 
   '@heroui/shared-icons@2.1.7':
     resolution: {integrity: sha512-uJ8MKVR6tWWhFqTjyzeuJabLVMvwENX2aCWLAAPcJedKcPEEmxgE8y3CbY7vRRPEJENXOoeAgmcVWdVgPYeRIw==}
+    peerDependencies:
+      react: '>=18 || >=19.0.0-rc.0'
+
+  '@heroui/shared-icons@2.1.8':
+    resolution: {integrity: sha512-97/i6yTl2fSh5jKp8mIig8de8AsP+I/7/AkatLQ1FyxxkabERSWisTXrgdQrfUBimXSNujXMj1tN1vt8kt1zsQ==}
     peerDependencies:
       react: '>=18 || >=19.0.0-rc.0'
 
@@ -3210,6 +3226,20 @@ snapshots:
       react: 18.3.1
       react-dom: 18.3.1(react@18.3.1)
 
+  '@heroui/chip@2.2.16(@heroui/system@2.4.15(@heroui/theme@2.4.15(tailwindcss@3.4.16))(framer-motion@11.13.1(react-dom@18.3.1(react@18.3.1))(react@18.3.1))(react-dom@18.3.1(react@18.3.1))(react@18.3.1))(@heroui/theme@2.4.15(tailwindcss@3.4.16))(react-dom@18.3.1(react@18.3.1))(react@18.3.1)':
+    dependencies:
+      '@heroui/react-utils': 2.1.10(react@18.3.1)
+      '@heroui/shared-icons': 2.1.8(react@18.3.1)
+      '@heroui/shared-utils': 2.1.9
+      '@heroui/system': 2.4.15(@heroui/theme@2.4.15(tailwindcss@3.4.16))(framer-motion@11.13.1(react-dom@18.3.1(react@18.3.1))(react@18.3.1))(react-dom@18.3.1(react@18.3.1))(react@18.3.1)
+      '@heroui/theme': 2.4.15(tailwindcss@3.4.16)
+      '@react-aria/focus': 3.20.3(react-dom@18.3.1(react@18.3.1))(react@18.3.1)
+      '@react-aria/interactions': 3.25.1(react-dom@18.3.1(react@18.3.1))(react@18.3.1)
+      '@react-aria/utils': 3.29.0(react-dom@18.3.1(react@18.3.1))(react@18.3.1)
+      '@react-types/checkbox': 3.9.4(react@18.3.1)
+      react: 18.3.1
+      react-dom: 18.3.1(react@18.3.1)
+
   '@heroui/code@2.2.14(@heroui/theme@2.4.15(tailwindcss@3.4.16))(react-dom@18.3.1(react@18.3.1))(react@18.3.1)':
     dependencies:
       '@heroui/react-utils': 2.1.10(react@18.3.1)
@@ -3499,6 +3529,10 @@ snapshots:
       react-dom: 18.3.1(react@18.3.1)
 
   '@heroui/shared-icons@2.1.7(react@18.3.1)':
+    dependencies:
+      react: 18.3.1
+
+  '@heroui/shared-icons@2.1.8(react@18.3.1)':
     dependencies:
       react: 18.3.1
 

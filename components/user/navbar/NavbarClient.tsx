@@ -4,6 +4,8 @@ import {
   NavbarBrand,
   NavbarContent,
   NavbarItem,
+  NavbarMenu,
+  NavbarMenuItem,
   NavbarMenuToggle,
 } from "@heroui/navbar";
 import { useEffect, useState } from "react";
@@ -26,6 +28,25 @@ import { useTransactionsStore } from "@/lib/store/useTransactionsStore";
 type NavbarClientProps = {
   authUser: AuthUserType | null;
 };
+
+const navigations = [
+  {
+    title: "Home",
+    href: "/",
+  },
+  {
+    title: "Destinations",
+    href: "/destinations",
+  },
+  {
+    title: "Categories",
+    href: "/categories",
+  },
+  {
+    title: "Promos",
+    href: "/promos",
+  },
+];
 
 const GuestContent = () => {
   return (
@@ -116,22 +137,11 @@ const NavbarClient = ({ authUser }: NavbarClientProps) => {
         </NavbarBrand>
       </NavbarContent>
       <NavbarContent className="hidden sm:flex gap-6" justify="center">
-        <NavbarItem>
-          <Link href="#">Home</Link>
-        </NavbarItem>
-        <NavbarItem>
-          <Link href="#">Destinations</Link>
-        </NavbarItem>
-        <NavbarItem>
-          <Link aria-current="page" href="#">
-            Categories
-          </Link>
-        </NavbarItem>
-        <NavbarItem>
-          <Link color="foreground" href="#">
-            Promos
-          </Link>
-        </NavbarItem>
+        {navigations.map((navigation, index) => (
+          <NavbarItem key={index}>
+            <Link href={navigation.href}>{navigation.title}</Link>
+          </NavbarItem>
+        ))}
       </NavbarContent>
       <LogoutModal isOpen={modalLogout} onOpenChange={setModalLogout} />
       {authUser ? (
@@ -142,6 +152,13 @@ const NavbarClient = ({ authUser }: NavbarClientProps) => {
       ) : (
         <GuestContent />
       )}
+      <NavbarMenu>
+        {navigations.map((navigation, index) => (
+          <NavbarMenuItem key={index} className="text-base">
+            <Link href={navigation.href}>{navigation.title}</Link>
+          </NavbarMenuItem>
+        ))}
+      </NavbarMenu>
     </Navbar>
   );
 };
