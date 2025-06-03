@@ -9,24 +9,19 @@ import {
 import { useEffect, useState } from "react";
 import Link from "next/link";
 import { Button } from "@heroui/button";
-import {
-  Dropdown,
-  DropdownItem,
-  DropdownMenu,
-  DropdownSection,
-  DropdownTrigger,
-} from "@heroui/dropdown";
-import { Avatar } from "@heroui/avatar";
-import { DoorOpen, LayoutDashboard, ShoppingCart, User } from "lucide-react";
+import { ReceiptText } from "lucide-react";
 import { Badge } from "@heroui/badge";
 import clsx from "clsx";
 
 import { TravelixLogoHorizontal } from "../../icons";
-import CartsDropdownItem from "../carts/CartsDropdownItem";
+import CartsDropdown from "../carts/CartsDropdown";
+
+import ProfileDropdown from "./ProfileDropdown";
 
 import LogoutModal from "@/components/LogoutModal";
 import { AuthUserType } from "@/types/authUser.type";
 import { useCartsStore } from "@/lib/store/useCartsStore";
+import { useTransactionsStore } from "@/lib/store/useTransactionsStore";
 
 type NavbarClientProps = {
   authUser: AuthUserType | null;
@@ -35,7 +30,7 @@ type NavbarClientProps = {
 const GuestContent = () => {
   return (
     <NavbarContent justify="end">
-      <NavbarItem className="hidden lg:flex">
+      <NavbarItem className="flex">
         <Link href="/login">Login</Link>
       </NavbarItem>
       <NavbarItem>
@@ -47,13 +42,20 @@ const GuestContent = () => {
   );
 };
 
-type LoggedContentProps = {
+export type LoggedContentProps = {
   authUser: AuthUserType;
   onModalLogoutOpen: () => void;
 };
 
 const LoggedContent = ({ authUser, onModalLogoutOpen }: LoggedContentProps) => {
-  const { cartsLoading, totalCarts, carts } = useCartsStore();
+  const { cartsLoading, totalCarts, carts, fetchCarts } = useCartsStore();
+  const { transactionsLoading, totalTransactions, fetchTransactions } =
+    useTransactionsStore();
+
+  useEffect(() => {
+    fetchCarts();
+    fetchTransactions();
+  }, []);
 
   return (
     <NavbarContent className="gap-2" justify="end">
@@ -65,83 +67,29 @@ const LoggedContent = ({ authUser, onModalLogoutOpen }: LoggedContentProps) => {
           isInvisible={!cartsLoading && totalCarts() === 0}
           shape="circle"
         >
-          <Dropdown>
-            <DropdownTrigger>
-              <Button isIconOnly variant="light">
-                <ShoppingCart className="size-6" />
-              </Button>
-            </DropdownTrigger>
-            <DropdownMenu
-              aria-label="Dynamic Actions"
-              className="max-w-md"
-              items={carts}
-              title="Your Cart"
-              variant="light"
-            >
-              <DropdownSection
-                classNames={{ heading: "text-sm text-primary-900" }}
-                title="Your Cart"
-              >
-                {carts.map((cart) => (
-                  <DropdownItem key={cart.id} isReadOnly>
-                    <CartsDropdownItem cart={cart} />
-                  </DropdownItem>
-                ))}
-              </DropdownSection>
-              <DropdownItem key="cart-action" isReadOnly>
-                <Link href="/carts">
-                  <Button className="ml-auto" color="primary">
-                    See All
-                  </Button>
-                </Link>
-              </DropdownItem>
-            </DropdownMenu>
-          </Dropdown>
+          <CartsDropdown carts={carts} />
         </Badge>
       </NavbarItem>
       <NavbarItem>
-        <Dropdown>
-          <DropdownTrigger>
-            <Button
-              disableRipple
-              className="text-base font-medium gap-3"
-              variant="light"
-            >
-              <Avatar
-                isBordered
-                classNames={{ base: "size-6" }}
-                color="primary"
-                src={authUser.profilePictureUrl}
-              />
-              {authUser.name.split(" ")[0]}
+        <Badge
+          className={clsx({ "animate-pulse": cartsLoading })}
+          color="primary"
+          content={transactionsLoading ? " " : totalTransactions()}
+          isInvisible={!transactionsLoading && totalTransactions() === 0}
+          shape="circle"
+        >
+          <Link href="/transactions">
+            <Button isIconOnly variant="light">
+              <ReceiptText className="size-6" />
             </Button>
-          </DropdownTrigger>
-          <DropdownMenu aria-label="Static Actions">
-            {authUser.role === "admin" ? (
-              <DropdownItem
-                key="admin"
-                startContent={<LayoutDashboard className="size-5" />}
-              >
-                <Link href="/admin">Admin Dashboard</Link>
-              </DropdownItem>
-            ) : null}
-            <DropdownItem
-              key="profile"
-              startContent={<User className="size-5" />}
-            >
-              <Link href="/profile">Profile</Link>
-            </DropdownItem>
-            <DropdownItem
-              key="logout"
-              className="text-danger"
-              color="danger"
-              startContent={<DoorOpen className="size-5" />}
-              onClick={onModalLogoutOpen}
-            >
-              Logout
-            </DropdownItem>
-          </DropdownMenu>
-        </Dropdown>
+          </Link>
+        </Badge>
+      </NavbarItem>
+      <NavbarItem>
+        <ProfileDropdown
+          authUser={authUser}
+          onModalLogoutOpen={onModalLogoutOpen}
+        />
       </NavbarItem>
     </NavbarContent>
   );
@@ -150,11 +98,6 @@ const LoggedContent = ({ authUser, onModalLogoutOpen }: LoggedContentProps) => {
 const NavbarClient = ({ authUser }: NavbarClientProps) => {
   const [isMenuOpen, setIsMenuOpen] = useState<boolean>(false);
   const [modalLogout, setModalLogout] = useState<boolean>(false);
-  const { fetchCarts } = useCartsStore();
-
-  useEffect(() => {
-    fetchCarts();
-  }, []);
 
   return (
     <Navbar

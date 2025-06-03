@@ -3,15 +3,13 @@ import { NextRequest, NextResponse } from "next/server";
 import { API_URL, API_KEY } from "@/config/credentials";
 import { verifyJWT } from "@/lib/jwt";
 
-export const GET = async (
-  req: NextRequest,
-  { params }: { params: { path: string[] } }
-) => {
+export const GET = async (req: NextRequest) => {
   try {
     if (!API_URL) throw new Error("Missing API_URL");
     if (!API_KEY) throw new Error("Missing API_KEY");
 
-    const url = `${API_URL}/${params.path.join("/")}${req.nextUrl.search}`;
+    const path = req.nextUrl.pathname.replace("/api/proxy/", "");
+    const url = `${API_URL}/${path}${req.nextUrl.search}`;
 
     const token = req.cookies.get("token")?.value;
     const backendToken = token ? (await verifyJWT(token)).backendToken : null;
@@ -39,15 +37,13 @@ export const GET = async (
   }
 };
 
-export const POST = async (
-  req: NextRequest,
-  { params }: { params: { path: string[] } }
-) => {
+export const POST = async (req: NextRequest) => {
   try {
     if (!API_URL) throw new Error("Missing API_URL");
     if (!API_KEY) throw new Error("Missing API_KEY");
 
-    const url = `${API_URL}/${params.path.join("/")}${req.nextUrl.search}`;
+    const path = req.nextUrl.pathname.replace("/api/proxy/", "");
+    const url = `${API_URL}/${path}${req.nextUrl.search}`;
 
     const token = req.cookies.get("token")?.value;
     const backendToken = token ? (await verifyJWT(token)).backendToken : null;

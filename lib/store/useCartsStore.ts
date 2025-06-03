@@ -9,8 +9,8 @@ type CartsStore = {
   cartsLoading: boolean;
   fetchCarts: () => Promise<void>;
   totalCarts: () => number;
-  cartsModalOpen: boolean;
-  setCartsModalOpen: (value: boolean) => void;
+  cartsModalOpen: boolean; // TODO : Delete unused
+  setCartsModalOpen: (value: boolean) => void; // TODO : Delete unused
 };
 
 export const useCartsStore = create<CartsStore>((set, get) => {
