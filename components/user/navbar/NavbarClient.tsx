@@ -124,19 +124,19 @@ const NavbarClient = ({ authUser }: NavbarClientProps) => {
     <Navbar
       isBordered
       className="font-medium"
-      classNames={{ wrapper: "max-w-[1300px]" }}
+      maxWidth="xl"
       onMenuOpenChange={setIsMenuOpen}
     >
       <NavbarContent>
         <NavbarMenuToggle
           aria-label={isMenuOpen ? "Close menu" : "Open menu"}
-          className="sm:hidden"
+          className="md:hidden"
         />
         <NavbarBrand>
           <TravelixLogoHorizontal width={120} />
         </NavbarBrand>
       </NavbarContent>
-      <NavbarContent className="hidden sm:flex gap-6" justify="center">
+      <NavbarContent className="hidden md:flex gap-6" justify="center">
         {navigations.map((navigation, index) => (
           <NavbarItem key={index}>
             <Link href={navigation.href}>{navigation.title}</Link>
