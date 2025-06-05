@@ -2,59 +2,25 @@
 
 import { Card, CardBody, CardFooter } from "@heroui/card";
 import { Image } from "@heroui/image";
-import { ChevronLeft, ChevronRight, MapPin, Star } from "lucide-react";
-import { useRef } from "react";
-import { Button } from "@heroui/button";
+import { MapPin, Star } from "lucide-react";
 
 import { Destination } from "@/types/destination.type";
 import { formatRupiah } from "@/lib/formatRupiah";
-import { useHorizontalScroll } from "@/lib/hooks/useHorizontalScroll";
 
 const HomePopularDestinationListClient = ({
   destinations,
 }: {
   destinations: Destination[];
 }) => {
-  const scrollRef = useRef<HTMLDivElement | null>(null);
-  const { goLeft, goRight, showLeft, showRight } = useHorizontalScroll({
-    scrollElementRef: scrollRef,
-    scrollDistance: 400,
-  });
-
   return (
-    <div className="relative">
-      {showLeft && (
-        <Button
-          disableRipple
-          isIconOnly
-          className="left-0  absolute z-20 top-1/2 -translate-y-1/2"
-          radius="full"
-          onPress={goLeft}
-        >
-          <ChevronLeft />
-        </Button>
-      )}
-      {showRight && (
-        <Button
-          disableRipple
-          isIconOnly
-          className="right-0  absolute z-20 top-1/2 -translate-y-1/2"
-          radius="full"
-          onPress={goRight}
-        >
-          <ChevronRight />
-        </Button>
-      )}
-      <div
-        ref={scrollRef}
-        className="flex flex-row gap-4 overflow-x-auto scrollbar-hide scroll-smooth py-8"
-      >
-        {destinations.slice(0, 12).map((destination) => (
+    <div>
+      <div className="grid grid-cols-1 md:grid-cols-3 lg:grid-cols-4 gap-4 py-8">
+        {destinations.slice(0, 10).map((destination) => (
           <Card
             key={destination.id}
             disableRipple
             isPressable
-            className=" flex-shrink-0 w-[380px]"
+            // className=" flex-shrink-0 w-[380px]"
             shadow="sm"
           >
             <CardBody>
