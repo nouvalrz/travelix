@@ -1,7 +1,10 @@
+import { Category } from "./category.type";
+
 export type Destination = {
   imageUrls: string[];
   id: string;
   categoryId: string;
+  category?: Category;
   title: string;
   description: string;
   price: number;

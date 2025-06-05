@@ -1,8 +1,9 @@
 import Image from "next/image";
 
 import Explorer from "@/components/user/home/Explorer";
-import HomeCategoryWrapper from "@/components/user/home/HomeCategoryWrapper";
-import HomeBannerWrapper from "@/components/user/home/HomeBannerWrapper";
+import HomeCategoryWrapper from "@/components/user/home/home-category/HomeCategoryWrapper";
+import HomeBannerWrapper from "@/components/user/home/home-banner/HomeBannerWrapper";
+import HomePopularDestinationWrapper from "@/components/user/home/home-popular-destination/HomePopularDestinationWrapper";
 
 export default function Home() {
   return (
@@ -37,6 +38,9 @@ export default function Home() {
       </section>
       <section>
         <HomeCategoryWrapper />
+      </section>
+      <section>
+        <HomePopularDestinationWrapper />
       </section>
     </>
   );

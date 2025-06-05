@@ -3,53 +3,18 @@
 import { Button } from "@heroui/button";
 import { Card, CardBody, CardFooter } from "@heroui/card";
 import { ChevronLeft, ChevronRight } from "lucide-react";
-import React, { useEffect, useRef, useState } from "react";
+import React, { useRef } from "react";
 import { Image } from "@heroui/image";
 
 import { Category } from "@/types/category.type";
+import { useHorizontalScroll } from "@/lib/hooks/useHorizontalScroll";
 
 const HomeCategoryListClient = ({ categories }: { categories: Category[] }) => {
   const scrollRef = useRef<HTMLDivElement | null>(null);
-  const [showLeft, setShowLeft] = useState<boolean>(false);
-  const [showRight, setShowRight] = useState<boolean>(true);
-
-  const goLeft = () => {
-    scrollRef.current?.scrollBy({ left: -210, behavior: "smooth" });
-  };
-
-  const goRight = () => {
-    scrollRef.current?.scrollBy({ left: 210, behavior: "smooth" });
-  };
-
-  const checkScroll = () => {
-    if (!scrollRef.current) {
-      return;
-    }
-
-    setShowLeft(scrollRef.current.scrollLeft > 0);
-    setShowRight(
-      scrollRef.current.scrollLeft + scrollRef.current.clientWidth <
-        scrollRef.current.scrollWidth
-    );
-  };
-
-  useEffect(() => {
-    const el = scrollRef.current;
-
-    if (!el) return;
-
-    checkScroll();
-
-    const handleScroll = () => {
-      checkScroll();
-    };
-
-    el.addEventListener("scroll", handleScroll);
-
-    return () => {
-      el.removeEventListener("scroll", handleScroll);
-    };
-  }, []);
+  const { goLeft, goRight, showLeft, showRight } = useHorizontalScroll({
+    scrollElementRef: scrollRef,
+    scrollDistance: 210,
+  });
 
   return (
     <div className="relative">
@@ -79,7 +44,7 @@ const HomeCategoryListClient = ({ categories }: { categories: Category[] }) => {
         ref={scrollRef}
         className="flex flex-row gap-4 overflow-x-auto justify-start scrollbar-hide scroll-smooth overflow-visible py-8"
       >
-        {categories.slice(1, 9).map((category, index) => (
+        {categories.slice(0, 8).map((category, index) => (
           <Card
             key={index}
             disableRipple
