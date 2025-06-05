@@ -92,6 +92,7 @@ const HomeCategoryListClient = ({ categories }: { categories: Category[] }) => {
                 isZoomed
                 alt={category.name}
                 className="w-full object-cover h-[140px]"
+                classNames={{ wrapper: "bg-no-repeat bg-cover bg-center" }}
                 fallbackSrc="/images/fallback-image.jpg"
                 radius="lg"
                 shadow="sm"

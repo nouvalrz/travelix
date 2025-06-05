@@ -2,6 +2,7 @@ import Image from "next/image";
 
 import Explorer from "@/components/user/home/Explorer";
 import HomeCategoryWrapper from "@/components/user/home/HomeCategoryWrapper";
+import HomeBannerWrapper from "@/components/user/home/HomeBannerWrapper";
 
 export default function Home() {
   return (
@@ -30,6 +31,9 @@ export default function Home() {
             <Explorer />
           </div>
         </div>
+      </section>
+      <section>
+        <HomeBannerWrapper />
       </section>
       <section>
         <HomeCategoryWrapper />

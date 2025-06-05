@@ -24,7 +24,7 @@ const config = {
             DEFAULT: '#0ea5e9' // sky-500
           },
           secondary: {
-            DEFAULT: '#eab308' // yellow-500
+            DEFAULT: '#facc15' // yellow-400
           }
         }
       }

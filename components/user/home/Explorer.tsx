@@ -75,7 +75,7 @@ const Finder = () => {
       />
       <DatePicker label="Date" labelPlacement="outside" />
       <Button disableRipple isIconOnly color="primary">
-        <MoveRight />
+        <MoveRight className="size-5" />
       </Button>
     </div>
   );

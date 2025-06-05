@@ -7,25 +7,27 @@ import HomeCategoryListPlaceholder from "./HomeCategoryListPlaceholder";
 
 const HomeCategoryWrapper = () => {
   return (
-    <div className="container mx-auto py-12 px-4">
-      <div className="flex justify-between items-end">
-        <div>
-          <h2 className="text-3xl font-bold">Category</h2>
-          <p className="mt-2">
-            Find the perfect trip style that suits your next adventure.
-          </p>
+    <div className="px-4 pb-12">
+      <div className="container mx-auto ">
+        <div className="flex justify-between items-end">
+          <div>
+            <h2 className="text-3xl font-bold">Category</h2>
+            <p className="mt-2">
+              Find the perfect trip style that suits your next adventure.
+            </p>
+          </div>
+          <Button
+            color="primary"
+            endContent={<ChevronRight className="size-5" />}
+            variant="light"
+          >
+            See All
+          </Button>
         </div>
-        <Button
-          color="primary"
-          endContent={<ChevronRight className="size-5" />}
-          variant="light"
-        >
-          See All
-        </Button>
+        <Suspense fallback={<HomeCategoryListPlaceholder />}>
+          <HomeCategoryList />
+        </Suspense>
       </div>
-      <Suspense fallback={<HomeCategoryListPlaceholder />}>
-        <HomeCategoryList />
-      </Suspense>
     </div>
   );
 };
