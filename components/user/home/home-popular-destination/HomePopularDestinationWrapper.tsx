@@ -4,6 +4,7 @@ import { ArrowRight } from "lucide-react";
 import Link from "next/link";
 
 import HomePopularDestinationList from "./HomePopularDestinationList";
+import HomePopularDestinationListPlaceholder from "./HomePopularDestinationListPlaceholder";
 
 const HomePopularDestinationWrapper = () => {
   return (
@@ -14,7 +15,7 @@ const HomePopularDestinationWrapper = () => {
           <p className="mt-2">Top travel spots handpicked just for you.</p>
         </div>
 
-        <Suspense fallback={<p>Loading...</p>}>
+        <Suspense fallback={<HomePopularDestinationListPlaceholder />}>
           <HomePopularDestinationList />
         </Suspense>
 

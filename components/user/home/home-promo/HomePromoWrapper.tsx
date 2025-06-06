@@ -3,6 +3,7 @@ import { ChevronRight } from "lucide-react";
 import { Suspense } from "react";
 
 import HomePromoList from "./HomePromoList";
+import HomePromoListPlaceholder from "./HomePromoListPlaceholder";
 
 const HomePromoWrapper = () => {
   return (
@@ -23,7 +24,7 @@ const HomePromoWrapper = () => {
             See All
           </Button>
         </div>
-        <Suspense fallback={<p>Loading...</p>}>
+        <Suspense fallback={<HomePromoListPlaceholder />}>
           <HomePromoList />
         </Suspense>
       </div>

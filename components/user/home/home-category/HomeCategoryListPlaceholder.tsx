@@ -3,9 +3,14 @@ import { Skeleton } from "@heroui/skeleton";
 
 const HomeCategoryListPlaceholder = () => {
   return (
-    <div className="grid grid-cols-2 md:grid-cols-4 lg:grid-cols-6 gap-4 mt-8">
+    <div className="flex flex-row gap-4 overflow-x-auto justify-start py-8">
       {Array.from({ length: 6 }).map((_, index) => (
-        <Card key={index} disableRipple isPressable>
+        <Card
+          key={index}
+          disableRipple
+          isPressable
+          className="w-[200px] flex-shrink-0"
+        >
           <CardBody className="overflow-visible p-0">
             <Skeleton className="w-full h-[140px]" />
           </CardBody>
