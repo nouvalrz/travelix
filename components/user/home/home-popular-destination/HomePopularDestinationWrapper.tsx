@@ -25,6 +25,7 @@ const HomePopularDestinationWrapper = () => {
               disableRipple
               color="primary"
               endContent={<ArrowRight className="size-5" />}
+              variant="flat"
             >
               See More Destinations
             </Button>

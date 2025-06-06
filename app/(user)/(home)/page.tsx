@@ -6,6 +6,7 @@ import HomeBannerWrapper from "@/components/user/home/home-banner/HomeBannerWrap
 import HomePopularDestinationWrapper from "@/components/user/home/home-popular-destination/HomePopularDestinationWrapper";
 import HomePromoWrapper from "@/components/user/home/home-promo/HomePromoWrapper";
 import HomeReviewWrapper from "@/components/user/home/home-reviews/HomeReviewWrapper";
+import HomeFaqWrapper from "@/components/user/home/home-faq/HomeFaqWrapper";
 
 export default function Home() {
   return (
@@ -49,6 +50,9 @@ export default function Home() {
       </section>
       <section>
         <HomeReviewWrapper />
+      </section>
+      <section>
+        <HomeFaqWrapper />
       </section>
     </>
   );
