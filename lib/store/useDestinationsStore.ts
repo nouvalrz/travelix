@@ -22,6 +22,10 @@ type DestinationsStore = {
   destinationsLoading: boolean;
   initDestinations: (destinations: Destination[]) => void;
 
+  // Mobile drawer
+  mobileDrawerOpen: boolean;
+  setMobileDrawerOpen: (value: boolean) => void;
+
   // Categories
   categories: Category[];
   fetchCategory: () => Promise<void>;
@@ -69,6 +73,10 @@ export const useDestinationsStore = create<DestinationsStore>()(
 
       set({ destinationsLoading: false });
     },
+
+    // Mobile drawer
+    mobileDrawerOpen: false,
+    setMobileDrawerOpen: (value) => set({ mobileDrawerOpen: value }),
 
     // Categories
     categories: [],

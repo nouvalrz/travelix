@@ -67,6 +67,8 @@ export const useDestinationQuery = () => {
           destinationQueryResults: results,
           paginationCurrent: 1,
         });
+
+        window.scrollTo({ top: 0, behavior: "smooth" });
       },
       {
         equalityFn: shallow,

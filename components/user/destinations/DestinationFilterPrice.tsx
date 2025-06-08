@@ -30,7 +30,10 @@ const DestinationFilterPrice = () => {
           key={sliderKey}
           showTooltip
           className="w-full mt-2"
-          defaultValue={[0, 5_000_000]}
+          defaultValue={[
+            useDestinationsStore.getState().minPriceSelected,
+            useDestinationsStore.getState().maxPriceSelected,
+          ]}
           formatOptions={{ style: "currency", currency: "IDR" }}
           label="Price Range"
           maxValue={5_000_000}

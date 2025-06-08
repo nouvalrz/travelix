@@ -11,7 +11,7 @@ const DestinationSortSelect = () => {
 
   return (
     <div className="flex gap-4 items-center">
-      <p className="font-medium">Sort by</p>
+      <p className="text-sm md:text-base font-medium flex-shrink-0">Sort by</p>
       <Select
         className="w-52"
         selectedKeys={new Set([sortSelected])}
