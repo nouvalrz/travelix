@@ -10,7 +10,7 @@ const Toolbar = ({
 }) => {
   return (
     <Card
-      className={clsx("w-full sticky top-16 z-30", className)}
+      className={clsx("w-full sticky top-0 z-30", className)}
       classNames={{ base: "border-t-0 border-l-0 border-r-0" }}
       radius="none"
       shadow="sm"

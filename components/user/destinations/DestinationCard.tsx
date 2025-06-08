@@ -40,7 +40,7 @@ const DestinationCard = ({ destination }: { destination: Destination }) => {
           fallbackSrc="/images/fallback-image.jpg"
           radius="lg"
           shadow="sm"
-          src={destination.imageUrls[0]}
+          src={destination.imageUrls.find(Boolean)}
           width="100%"
         />
       </CardBody>
@@ -72,7 +72,7 @@ const DestinationCard = ({ destination }: { destination: Destination }) => {
                 ? formatRupiah(destination.price_discount)
                 : formatRupiah(destination.price)}
             </p>
-            {destination.price && (
+            {destination.price_discount && (
               <p className="line-through text-xs text-gray-600">
                 {formatRupiah(destination.price)}
               </p>

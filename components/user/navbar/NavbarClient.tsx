@@ -24,6 +24,7 @@ import LogoutModal from "@/components/LogoutModal";
 import { AuthUserType } from "@/types/authUser.type";
 import { useCartsStore } from "@/lib/store/useCartsStore";
 import { useTransactionsStore } from "@/lib/store/useTransactionsStore";
+import { useNavbarPosition } from "@/lib/hooks/useNavbarPosition";
 
 type NavbarClientProps = {
   authUser: AuthUserType | null;
@@ -119,12 +120,14 @@ const LoggedContent = ({ authUser, onModalLogoutOpen }: LoggedContentProps) => {
 const NavbarClient = ({ authUser }: NavbarClientProps) => {
   const [isMenuOpen, setIsMenuOpen] = useState<boolean>(false);
   const [modalLogout, setModalLogout] = useState<boolean>(false);
+  const position = useNavbarPosition();
 
   return (
     <Navbar
       isBordered
       className="font-medium"
       maxWidth="xl"
+      position={position}
       onMenuOpenChange={setIsMenuOpen}
     >
       <NavbarContent>

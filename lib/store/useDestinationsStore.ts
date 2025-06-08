@@ -1,4 +1,5 @@
 import { create } from "zustand";
+import { subscribeWithSelector } from "zustand/middleware";
 
 import { fetchCategories } from "../data/client/categories";
 
@@ -17,8 +18,9 @@ type DestinationsStore = {
   // Destinations
   destinations: Destination[];
   destinationQueryResults: Destination[];
+  destinationsQueryResultsPaginated: Destination[];
   destinationsLoading: boolean;
-  setDestinations: (destinations: Destination[]) => void;
+  initDestinations: (destinations: Destination[]) => void;
 
   // Categories
   categories: Category[];
@@ -34,6 +36,7 @@ type DestinationsStore = {
   setPaginationLimit: (value: number) => void;
   paginationCurrent: number;
   setPaginationCurrent: (value: number) => void;
+  getPageTotal: () => number;
 
   // Query : filter by category
   categorySelected: string;
@@ -51,16 +54,17 @@ type DestinationsStore = {
   setSortSelected: (value: DestinationSorts) => void;
 };
 
-export const useDestinationsStore = create<DestinationsStore>((set) => {
-  return {
+export const useDestinationsStore = create<DestinationsStore>()(
+  subscribeWithSelector((set, get) => ({
     // Destinations
     destinations: [],
     destinationQueryResults: [],
+    destinationsQueryResultsPaginated: [],
     destinationsLoading: true,
-    setDestinations: (destinations) => {
+    initDestinations: (destinations) => {
       set({ destinationsLoading: true });
 
-      set({ destinations: destinations });
+      set({ destinations });
       set({ destinationQueryResults: destinations });
 
       set({ destinationsLoading: false });
@@ -75,8 +79,7 @@ export const useDestinationsStore = create<DestinationsStore>((set) => {
       const response = await fetchCategories();
       const categories = response.data as Category[];
 
-      set({ categories: categories });
-
+      set({ categories });
       set({ categoriesLoading: false });
     },
 
@@ -89,6 +92,8 @@ export const useDestinationsStore = create<DestinationsStore>((set) => {
     setPaginationLimit: (value) => set({ paginationLimit: value }),
     paginationCurrent: 1,
     setPaginationCurrent: (value) => set({ paginationCurrent: value }),
+    getPageTotal: () =>
+      Math.ceil(get().destinationQueryResults.length / get().paginationLimit),
 
     // Query : filter by category
     categorySelected: "",
@@ -100,12 +105,11 @@ export const useDestinationsStore = create<DestinationsStore>((set) => {
     setMinPriceSelected: (value) => set({ minPriceSelected: value }),
     setMaxPriceSelected: (value) => set({ maxPriceSelected: value }),
     resetPriceSelected: () => {
-      set({ minPriceSelected: 0 });
-      set({ maxPriceSelected: 5_000_000 });
+      set({ minPriceSelected: 0, maxPriceSelected: 5_000_000 });
     },
 
     // Sort
     sortSelected: DestinationSorts.DEFAULT,
     setSortSelected: (value) => set({ sortSelected: value }),
-  };
-});
+  }))
+);
