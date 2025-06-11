@@ -15,7 +15,7 @@ const DestinationsToolbar = ({ className }: { className?: string }) => {
     <Toolbar>
       <div className="w-full flex flex-col gap-3 lg:flex-row lg:justify-between lg:items-center">
         <Breadcrumb includeHome />
-        <div className="flex justify-between">
+        <div className="flex justify-between items-end">
           <div className="lg:hidden block">
             <Button
               isIconOnly

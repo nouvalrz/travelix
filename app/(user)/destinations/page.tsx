@@ -8,6 +8,9 @@ const DestinationsPage = async () => {
     headers: {
       "Content-Type": "application/json",
     },
+    next: {
+      revalidate: 60 * 5,
+    },
   });
 
   const destinations = (await response.json()).data as Destination[];

@@ -1,6 +1,6 @@
 "use client";
 import { motion } from "motion/react";
-import React from "react";
+import React, { useEffect, useState } from "react";
 
 import { cn } from "@/lib/cn";
 
@@ -13,6 +13,14 @@ export const Meteors = ({
 }) => {
   const meteors = new Array(number || 20).fill(true);
 
+  const [mounted, setMounted] = useState(false);
+
+  useEffect(() => {
+    setMounted(true);
+  }, []);
+
+  if (!mounted) return null;
+
   return (
     <motion.div
       animate={{ opacity: 1 }}
@@ -23,6 +31,9 @@ export const Meteors = ({
         const meteorCount = number || 20;
         // Calculate position to evenly distribute meteors across container width
         const position = idx * (800 / meteorCount) - 400; // Spread across 800px range, centered
+
+        const delay = Math.random() * 5;
+        const duration = Math.floor(Math.random() * (10 - 5) + 5);
 
         return (
           <span
@@ -35,8 +46,8 @@ export const Meteors = ({
             style={{
               top: "-40px", // Start above the container
               left: position + "px",
-              animationDelay: Math.random() * 5 + "s", // Random delay between 0-5s
-              animationDuration: Math.floor(Math.random() * (10 - 5) + 5) + "s", // Keep some randomness in duration
+              animationDelay: `${delay}s`,
+              animationDuration: `${duration}s`,
             }}
           />
         );

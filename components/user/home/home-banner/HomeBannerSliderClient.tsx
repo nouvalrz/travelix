@@ -36,7 +36,7 @@ const HomeBannerSliderClient = ({ banners }: { banners: Banner[] }) => {
             className="h-[280px] md:h-[400px] object-cover"
             classNames={{ wrapper: "bg-no-repeat bg-cover bg-center" }}
             fallbackSrc="/images/fallback-image.jpg"
-            src={banner.imageUrl}
+            src={banner.imageUrl || undefined}
             width="100%"
           />
         </SwiperSlide>

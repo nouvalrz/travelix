@@ -3,14 +3,22 @@
 import { Breadcrumbs, BreadcrumbItem } from "@heroui/breadcrumbs";
 import { usePathname } from "next/navigation";
 
-const Breadcrumb = ({ includeHome = false }: { includeHome?: boolean }) => {
+const Breadcrumb = ({
+  includeHome = false,
+  uuidReplaceName,
+}: {
+  includeHome?: boolean;
+  uuidReplaceName?: string;
+}) => {
   const pathname = usePathname();
   const segments = pathname.split("/").filter(Boolean);
+  const uuidRegex =
+    /\b[0-9a-fA-F]{8}-[0-9a-fA-F]{4}-[1-5][0-9a-fA-F]{3}-[89abAB][0-9a-fA-F]{3}-[0-9a-fA-F]{12}\b/;
 
   const routeMap = segments.map((segment, index) => {
-    if (/^\d+$/.test(segment)) {
+    if (uuidRegex.test(segment)) {
       return {
-        name: `Detail #${segment}`,
+        name: uuidReplaceName || "Detail",
         route: "/" + segments.slice(0, index + 1).join("/"),
       };
     }
