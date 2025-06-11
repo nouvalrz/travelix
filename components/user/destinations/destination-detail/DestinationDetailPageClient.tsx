@@ -3,24 +3,30 @@
 import { Image } from "@heroui/image";
 import { Pin, Star } from "lucide-react";
 import { Chip } from "@heroui/chip";
-import { Card, CardBody } from "@heroui/card";
 import DOMPurify from "isomorphic-dompurify";
+import { useRef } from "react";
+
+import LocationMap from "./LocationMap";
+import DestinationDetailSidebar from "./DestinationDetailSidebar";
 
 import Breadcrumb from "@/components/Breadcrumb";
 import { Destination } from "@/types/destination.type";
+import { useScrollObserver } from "@/lib/hooks/useScrollObserver";
 
 const DestinationDetailPageClient = ({
   destination,
 }: {
   destination: Destination;
 }) => {
+  const titleRef = useRef<HTMLHeadingElement>(null);
+  const isTitleOutView = useScrollObserver(titleRef, -70);
+
   return (
     <div className="py-4 px-4">
       <div className="container mx-auto">
         <Breadcrumb includeHome uuidReplaceName={destination.title} />
         <div className="grid grid-cols-4 grid-rows-2 gap-4 w-full h-[300px] mt-4 ">
           {/* Big left box */}
-          {/* <div className="col-span-2 row-span-2 bg-red-600">s</div> */}
           <Image
             isBlurred
             classNames={{
@@ -82,10 +88,10 @@ const DestinationDetailPageClient = ({
             src={destination.imageUrls[4]}
           />
         </div>
-        <div className="mt-12 flex gap-8 ">
+        <div className="my-12 flex gap-8 items-start">
           <div className="flex-grow">
             <Chip color="primary">{destination.category?.name}</Chip>
-            <h1 className="capitalize text-3xl font-bold mt-2">
+            <h1 ref={titleRef} className="capitalize text-3xl font-bold mt-2">
               {destination.title}
             </h1>
             <div className="flex gap-5 items-center ">
@@ -103,13 +109,14 @@ const DestinationDetailPageClient = ({
                 </p>
               </div>
             </div>
-            <hr className=" border-black/10 my-6" />
-            <div className="flex flex-col gap-12">
+            <div className="flex flex-col gap-12 mt-8">
               <div>
+                <hr className=" border-black/10 mb-6" />
                 <h2 className="text-2xl font-bold">Destination Overview</h2>
                 <p className="mt-4">{destination.description}</p>
               </div>
               <div>
+                <hr className=" border-black/10 mb-6" />
                 <h2 className="text-2xl font-bold">Facilities</h2>
                 <p
                   dangerouslySetInnerHTML={{
@@ -119,20 +126,17 @@ const DestinationDetailPageClient = ({
                 />
               </div>
               <div>
+                <hr className=" border-black/10 mb-6" />
                 <h2 className="text-2xl font-bold">Location</h2>
-                <div
-                  dangerouslySetInnerHTML={{
-                    __html: destination.location_maps,
-                  }}
-                  className="mt-4"
-                />
+                <LocationMap maps={destination.location_maps} />
               </div>
             </div>
           </div>
-          <div className="w-[600px]">
-            <Card shadow="sm">
-              <CardBody />
-            </Card>
+          <div className="max-w-[400px] w-full flex-shrink-0 sticky top-24">
+            <DestinationDetailSidebar
+              destination={destination}
+              headerShown={isTitleOutView}
+            />
           </div>
         </div>
       </div>

@@ -1,6 +1,7 @@
 "use client";
 
 import { Breadcrumbs, BreadcrumbItem } from "@heroui/breadcrumbs";
+import Link from "next/link";
 import { usePathname } from "next/navigation";
 
 const Breadcrumb = ({

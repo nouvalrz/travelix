@@ -1,6 +1,6 @@
 import { create } from "zustand";
 
-import { fetchCarts } from "../data/client/carts";
+import { fetchAddCart, fetchCarts } from "../data/client/carts";
 
 import { Cart } from "@/types/cart.type";
 
@@ -9,8 +9,7 @@ type CartsStore = {
   cartsLoading: boolean;
   fetchCarts: () => Promise<void>;
   totalCarts: () => number;
-  cartsModalOpen: boolean; // TODO : Delete unused
-  setCartsModalOpen: (value: boolean) => void; // TODO : Delete unused
+  addCart: (cartId: string, quantity: number) => Promise<void>;
 };
 
 export const useCartsStore = create<CartsStore>((set, get) => {
@@ -22,11 +21,20 @@ export const useCartsStore = create<CartsStore>((set, get) => {
 
       const response = await fetchCarts();
       const carts = response.data as Cart[];
+      const cartsSorted = carts.sort(
+        (a, b) =>
+          new Date(b.createdAt).getTime() - new Date(a.createdAt).getTime()
+      );
 
-      set({ carts: carts, cartsLoading: false });
+      set({ carts: cartsSorted, cartsLoading: false });
     },
     totalCarts: () => get().carts.length,
-    cartsModalOpen: false,
-    setCartsModalOpen: (value) => set({ cartsModalOpen: value }),
+    addCart: async (cartId, quantity) => {
+      for (let i = 0; i < quantity; i++) {
+        await fetchAddCart({ activityId: cartId });
+      }
+
+      get().fetchCarts();
+    },
   };
 });
