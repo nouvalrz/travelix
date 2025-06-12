@@ -20,16 +20,18 @@ const HomePopularDestinationWrapper = () => {
         </Suspense>
 
         <div className="flex justify-center">
-          <Link href="/destinations">
-            <Button
-              disableRipple
-              color="primary"
-              endContent={<ArrowRight className="size-5" />}
-              variant="flat"
-            >
-              See More Destinations
-            </Button>
-          </Link>
+          {/* <Link passHref href="/destinations"> */}
+          <Button
+            disableRipple
+            as={Link}
+            color="primary"
+            endContent={<ArrowRight className="size-5" />}
+            href="/destinations"
+            variant="flat"
+          >
+            See More Destinations
+          </Button>
+          {/* </Link> */}
         </div>
       </div>
     </div>

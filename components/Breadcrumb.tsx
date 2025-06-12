@@ -32,14 +32,14 @@ const Breadcrumb = ({
 
   return (
     <Breadcrumbs>
-      {includeHome && <BreadcrumbItem href="/">Home</BreadcrumbItem>}
+      {includeHome && (
+        <BreadcrumbItem>
+          <Link href="/">Home</Link>
+        </BreadcrumbItem>
+      )}
       {routeMap.map((segment) => (
-        <BreadcrumbItem
-          key={segment.route}
-          className="capitalize"
-          href={segment.route}
-        >
-          {segment.name}
+        <BreadcrumbItem key={segment.route} className="capitalize">
+          <Link href={segment.route}>{segment.name}</Link>
         </BreadcrumbItem>
       ))}
     </Breadcrumbs>

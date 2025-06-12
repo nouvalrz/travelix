@@ -1,6 +1,7 @@
 import { Image } from "@heroui/image";
 
 import { Cart } from "@/types/cart.type";
+import { formatRupiah } from "@/lib/formatRupiah";
 
 const CartsDropdownItem = ({ cart }: { cart: Cart }) => {
   const { id, activity, quantity } = cart;
@@ -10,7 +11,8 @@ const CartsDropdownItem = ({ cart }: { cart: Cart }) => {
       <Image
         alt={activity.title}
         className="w-12 h-12 rounded-lg object-cover"
-        fallbackSrc={`https://placehold.co/600x400?text=place`}
+        classNames={{ wrapper: "bg-no-repeat bg-cover bg-center" }}
+        fallbackSrc="/images/fallback-image.jpg"
         src={activity.imageUrls[0]}
       />
       <div className="flex-1">
@@ -20,14 +22,16 @@ const CartsDropdownItem = ({ cart }: { cart: Cart }) => {
       <div className="flex flex-col items-end justify-end">
         {activity.price_discount ? (
           <>
-            <p className="line-through text-sm">{activity.price}</p>
+            <p className="line-through text-sm">
+              {formatRupiah(activity.price)}
+            </p>
             <p className="font-semibold">
-              {quantity} x {activity.price_discount}
+              {quantity} x {formatRupiah(activity.price_discount)}
             </p>
           </>
         ) : (
           <p className="font-semibold">
-            {quantity} x {activity.price}
+            {quantity} x {formatRupiah(activity.price_discount)}
           </p>
         )}
       </div>

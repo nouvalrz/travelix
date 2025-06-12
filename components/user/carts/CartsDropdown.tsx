@@ -24,24 +24,24 @@ const CartsDropdown = ({ carts }: { carts: Cart[] }) => {
       </DropdownTrigger>
       <DropdownMenu
         aria-label="Dynamic Actions"
-        className="max-w-md"
+        className="max-w-md max-h-[500px] overflow-y-scroll"
         items={carts}
         title="Your Cart"
         variant="light"
       >
         <DropdownSection
-          classNames={{ heading: "text-sm text-primary-900" }}
+          classNames={{ heading: "text-sm text-primary-900 " }}
           title="Your Cart"
         >
           {carts.map((cart) => (
-            <DropdownItem key={cart.id} isReadOnly>
+            <DropdownItem key={cart.id} isReadOnly className="!my-2">
               <CartsDropdownItem cart={cart} />
             </DropdownItem>
           ))}
         </DropdownSection>
         <DropdownItem key="cart-action" isReadOnly>
           <Link href="/carts">
-            <Button className="ml-auto" color="primary">
+            <Button className="!ml-auto" color="primary">
               See All
             </Button>
           </Link>

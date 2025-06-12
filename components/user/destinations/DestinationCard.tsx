@@ -1,13 +1,12 @@
 import { Card, CardBody, CardFooter } from "@heroui/card";
 import { Star, MapPin } from "lucide-react";
 import { Image } from "@heroui/image";
-import { useRouter } from "next/navigation";
+import Link from "next/link";
 
 import { formatRupiah } from "@/lib/formatRupiah";
 import { Destination } from "@/types/destination.type";
 
 const DestinationCard = ({ destination }: { destination: Destination }) => {
-  const router = useRouter();
   let discountPercentage: number | null = null;
 
   if (
@@ -25,14 +24,10 @@ const DestinationCard = ({ destination }: { destination: Destination }) => {
       key={destination.id}
       disableRipple
       isPressable
-      as="a"
+      as={Link}
       classNames={{ base: "relative w-full" }}
       href={"/destinations/" + destination.id}
       shadow="sm"
-      onClick={(e) => {
-        e.preventDefault();
-        router.push("/destinations/" + destination.id);
-      }}
     >
       {discountPercentage && (
         <div className="bg-secondary text-gray-800 px-4 py-1 absolute top-5 right-0 z-20 rounded-l-full">
