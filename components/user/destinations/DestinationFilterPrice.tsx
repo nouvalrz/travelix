@@ -2,20 +2,28 @@ import { Button } from "@heroui/button";
 import { Card, CardBody } from "@heroui/card";
 import { Slider } from "@heroui/slider";
 import { RotateCcw } from "lucide-react";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 
 import { useDestinationsStore } from "@/lib/store/useDestinationsStore";
 
 const DestinationFilterPrice = () => {
   const [sliderKey, setSliderKey] = useState<number>(0);
-  const { setMaxPriceSelected, setMinPriceSelected, maxPriceSelected } =
-    useDestinationsStore();
+  const {
+    setMaxPriceSelected,
+    setMinPriceSelected,
+    maxPriceSelected,
+    minPriceSelected,
+  } = useDestinationsStore();
 
   const handleReset = () => {
     setSliderKey((prev) => prev + 1);
     setMinPriceSelected(0);
     setMaxPriceSelected(5_000_000);
   };
+
+  useEffect(() => {
+    setSliderKey((prev) => prev + 1);
+  }, [minPriceSelected, maxPriceSelected]);
 
   return (
     <Card className="mt-4" shadow="sm">

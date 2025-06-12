@@ -1,7 +1,7 @@
 import { Input } from "@heroui/input";
 import { Search, Settings2 } from "lucide-react";
 import { Button } from "@heroui/button";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 
 import Toolbar from "@/components/Toolbar";
 import { useDestinationsStore } from "@/lib/store/useDestinationsStore";
@@ -9,7 +9,12 @@ import Breadcrumb from "@/components/Breadcrumb";
 
 const DestinationsToolbar = ({ className }: { className?: string }) => {
   const [search, setSearch] = useState<string>("");
-  const { setSearchKeyword, setMobileDrawerOpen } = useDestinationsStore();
+  const { setSearchKeyword, setMobileDrawerOpen, searchKeyword } =
+    useDestinationsStore();
+
+  useEffect(() => {
+    setSearch(searchKeyword);
+  }, [searchKeyword]);
 
   return (
     <Toolbar>
@@ -25,19 +30,27 @@ const DestinationsToolbar = ({ className }: { className?: string }) => {
               <Settings2 className="size-5 text-gray-600" />
             </Button>
           </div>
-          <div className="flex gap-4 w-[390px] lg:w-[440px]">
+
+          <form
+            className="flex gap-4 w-[390px] lg:w-[440px]"
+            onSubmit={(e) => {
+              e.preventDefault();
+              setSearchKeyword(search);
+            }}
+          >
             <Input
               isClearable
               className="flex-grow"
               placeholder="Search destinations ..."
               startContent={<Search className="text-gray-600 size-5" />}
+              value={search}
               onClear={() => setSearchKeyword("")}
               onValueChange={setSearch}
             />
-            <Button color="primary" onPress={() => setSearchKeyword(search)}>
+            <Button color="primary" type="submit">
               Search
             </Button>
-          </div>
+          </form>
         </div>
       </div>
     </Toolbar>

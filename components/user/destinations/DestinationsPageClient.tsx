@@ -13,6 +13,10 @@ import DestinationQueryMobile from "./DestinationQueryMobile";
 import { Destination } from "@/types/destination.type";
 import { useDestinationsStore } from "@/lib/store/useDestinationsStore";
 import { useDestinationQuery } from "@/lib/hooks/useDestinationsQuery";
+import {
+  useDestinationQueryUrlBindingFromStore,
+  useDestinationQueryUrlBindingToStore,
+} from "@/lib/hooks/useDestinationQueryUrlBinding";
 
 const DestinationsPageClient = ({
   destinations,
@@ -27,17 +31,20 @@ const DestinationsPageClient = ({
     fetchCategory,
     categorySelected,
     categories,
+    destinationQueryResults,
   } = useDestinationsStore();
 
   useEffect(() => {
     setDestinations(destinations);
-  }, [destinations, setDestinations]);
+  }, []);
 
   useEffect(() => {
     fetchCategory();
   }, [fetchCategory]);
 
   useDestinationQuery();
+  useDestinationQueryUrlBindingToStore();
+  useDestinationQueryUrlBindingFromStore();
 
   return (
     <>

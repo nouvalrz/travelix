@@ -3,6 +3,7 @@ import { Pagination } from "@heroui/pagination";
 import DestinationCard from "./DestinationCard";
 
 import { useDestinationsStore } from "@/lib/store/useDestinationsStore";
+import EmptyPlaceholder from "@/components/EmptyPlaceholder";
 
 const DestinationPaginatedList = () => {
   const {
@@ -21,16 +22,21 @@ const DestinationPaginatedList = () => {
 
   const handlePageChange = (page: number) => {
     setPaginationCurrent(page);
-    window.scrollTo({ top: 0, behavior: "smooth" });
   };
 
   return (
     <>
-      <div className="grid grid-cols-2 md:grid-cols-3  gap-4 mt-4">
-        {paginatedResults.map((destination) => (
-          <DestinationCard key={destination.id} destination={destination} />
-        ))}
-      </div>
+      {paginatedResults.length > 0 ? (
+        <div className="grid grid-cols-2 md:grid-cols-3  gap-4 mt-4">
+          {paginatedResults.map((destination) => (
+            <DestinationCard key={destination.id} destination={destination} />
+          ))}
+        </div>
+      ) : (
+        <div className="flex flex-col items-center justify-center h-[600px]">
+          <EmptyPlaceholder />
+        </div>
+      )}
       {paginatedResults.length > 0 && (
         <div className="flex justify-end mt-4">
           <Pagination
