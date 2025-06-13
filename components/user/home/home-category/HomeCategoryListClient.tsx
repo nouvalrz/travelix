@@ -1,10 +1,10 @@
 "use client";
 
 import { Button } from "@heroui/button";
-import { Card, CardBody, CardFooter } from "@heroui/card";
 import { ChevronLeft, ChevronRight } from "lucide-react";
 import React, { useRef } from "react";
-import { Image } from "@heroui/image";
+
+import CategoryCard from "../../categories/CategoryCard";
 
 import { Category } from "@/types/category.type";
 import { useHorizontalScroll } from "@/lib/hooks/useHorizontalScroll";
@@ -44,31 +44,12 @@ const HomeCategoryListClient = ({ categories }: { categories: Category[] }) => {
         ref={scrollRef}
         className="flex flex-row gap-4 overflow-x-auto justify-start scrollbar-hide scroll-smooth overflow-visible py-8"
       >
-        {categories.slice(0, 8).map((category, index) => (
-          <Card
-            key={index}
-            disableRipple
-            isPressable
+        {categories.slice(0, 8).map((category) => (
+          <CategoryCard
+            key={category.id}
+            category={category}
             className="w-[200px] flex-shrink-0"
-            shadow="sm"
-          >
-            <CardBody className="overflow-visible p-0">
-              <Image
-                isZoomed
-                alt={category.name}
-                className="w-full object-cover h-[140px]"
-                classNames={{ wrapper: "bg-no-repeat bg-cover bg-center" }}
-                fallbackSrc="/images/fallback-image.jpg"
-                radius="lg"
-                shadow="sm"
-                src={category.imageUrl}
-                width="100%"
-              />
-            </CardBody>
-            <CardFooter className="text-small justify-between">
-              <p className="font-medium capitalize">{category.name}</p>
-            </CardFooter>
-          </Card>
+          />
         ))}
       </div>
     </div>

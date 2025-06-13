@@ -1,15 +1,20 @@
 "use client";
 
 import { Breadcrumbs, BreadcrumbItem } from "@heroui/breadcrumbs";
+import clsx from "clsx";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 
 const Breadcrumb = ({
   includeHome = false,
   uuidReplaceName,
+  className,
+  variant = "light",
 }: {
   includeHome?: boolean;
   uuidReplaceName?: string;
+  className?: string;
+  variant?: "solid" | "bordered" | "light";
 }) => {
   const pathname = usePathname();
   const segments = pathname.split("/").filter(Boolean);
@@ -31,7 +36,7 @@ const Breadcrumb = ({
   });
 
   return (
-    <Breadcrumbs>
+    <Breadcrumbs className={clsx(className)} variant={variant}>
       {includeHome && (
         <BreadcrumbItem>
           <Link href="/">Home</Link>

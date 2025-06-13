@@ -2,11 +2,18 @@ import { Card, CardBody, CardFooter } from "@heroui/card";
 import { Star, MapPin } from "lucide-react";
 import { Image } from "@heroui/image";
 import Link from "next/link";
+import clsx from "clsx";
 
 import { formatRupiah } from "@/lib/formatRupiah";
 import { Destination } from "@/types/destination.type";
 
-const DestinationCard = ({ destination }: { destination: Destination }) => {
+const DestinationCard = ({
+  destination,
+  className,
+}: {
+  destination: Destination;
+  className?: string;
+}) => {
   let discountPercentage: number | null = null;
 
   if (
@@ -22,9 +29,9 @@ const DestinationCard = ({ destination }: { destination: Destination }) => {
   return (
     <Card
       key={destination.id}
-      disableRipple
       isPressable
       as={Link}
+      className={clsx(className)}
       classNames={{ base: "relative w-full" }}
       href={"/destinations/" + destination.id}
       shadow="sm"
