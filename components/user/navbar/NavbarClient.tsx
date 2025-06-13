@@ -16,7 +16,7 @@ import { Badge } from "@heroui/badge";
 import clsx from "clsx";
 
 import { TravelixLogoHorizontal } from "../../icons";
-import CartsDropdown from "../carts/CartsDropdown";
+import CartsPopover from "../carts/CartsPopover";
 
 import ProfileDropdown from "./ProfileDropdown";
 
@@ -89,7 +89,8 @@ const LoggedContent = ({ authUser, onModalLogoutOpen }: LoggedContentProps) => {
           isInvisible={!cartsLoading && totalCarts() === 0}
           shape="circle"
         >
-          <CartsDropdown carts={carts} />
+          {/* <CartsDropdown carts={carts} /> */}
+          <CartsPopover carts={carts} />
         </Badge>
       </NavbarItem>
       <NavbarItem>

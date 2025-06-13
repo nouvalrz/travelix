@@ -1,6 +1,7 @@
 import { Button } from "@heroui/button";
 import { ChevronRight } from "lucide-react";
 import { Suspense } from "react";
+import Link from "next/link";
 
 import HomePromoList from "./HomePromoList";
 import HomePromoListPlaceholder from "./HomePromoListPlaceholder";
@@ -17,8 +18,10 @@ const HomePromoWrapper = () => {
             </p>
           </div>
           <Button
+            as={Link}
             color="primary"
             endContent={<ChevronRight className="size-5" />}
+            href="/promos"
             variant="light"
           >
             See All

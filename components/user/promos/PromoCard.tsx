@@ -49,7 +49,7 @@ const PromoCard = ({
             onClick={toggleModal}
           >
             <div className="flex gap-1 items-center">
-              <p className="text-white line-clamp-1 text-sm font-medium">
+              <p className="text-white line-clamp-1 text-sm font-medium text-left">
                 {promo.title}
               </p>
               <ChevronRight className="size-4 text-white" />

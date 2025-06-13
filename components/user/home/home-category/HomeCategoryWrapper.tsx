@@ -1,6 +1,7 @@
 import { Suspense } from "react";
 import { Button } from "@heroui/button";
 import { ChevronRight } from "lucide-react";
+import Link from "next/link";
 
 import HomeCategoryList from "./HomeCategoryList";
 import HomeCategoryListPlaceholder from "./HomeCategoryListPlaceholder";
@@ -17,8 +18,10 @@ const HomeCategoryWrapper = () => {
             </p>
           </div>
           <Button
+            as={Link}
             color="primary"
             endContent={<ChevronRight className="size-5" />}
+            href="/categories"
             variant="light"
           >
             See All
