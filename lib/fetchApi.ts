@@ -1,3 +1,7 @@
+import { cookies } from "next/headers";
+
+import { verifyJWT } from "./jwt";
+
 import { API_KEY, API_URL } from "@/config/credentials";
 
 type FetchApiType = {
@@ -11,6 +15,10 @@ export const fetchApiFromServer = async (
   path: string,
   options: FetchApiType = {}
 ) => {
+  const cookieStore = await cookies();
+  const token = cookieStore.get("token");
+  const backendToken = token ? await verifyJWT(token.value) : null;
+
   if (!API_URL) throw new Error("Missing API_URL");
   if (!API_KEY) throw new Error("Missing API_KEY");
 
@@ -21,7 +29,9 @@ export const fetchApiFromServer = async (
 
   const headers: HeadersInit = {
     apiKey: API_KEY,
-    ...(options.token ? { Authorization: `Bearer ${options.token}` } : {}),
+    ...(backendToken
+      ? { Authorization: `Bearer ${backendToken.backendToken}` }
+      : {}),
     ...options.headers,
   };
 

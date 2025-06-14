@@ -1,0 +1,74 @@
+"use client";
+
+import { Button } from "@heroui/button";
+import { Card, CardBody } from "@heroui/card";
+import { Chip } from "@heroui/chip";
+import { ReceiptText, UserRound, DoorOpen } from "lucide-react";
+import React from "react";
+import { Image } from "@heroui/image";
+import { usePathname } from "next/navigation";
+import Link from "next/link";
+
+import { AuthUserType } from "@/types/authUser.type";
+
+const MeSidebarClient = ({ authUser }: { authUser: AuthUserType }) => {
+  const pathname = usePathname();
+
+  return (
+    <Card shadow="sm">
+      <CardBody>
+        <div>
+          <div className="flex gap-3 items-center">
+            <Image
+              className="w-12 h-12 object-cover rounded-full"
+              src={authUser?.profilePictureUrl}
+            />
+            <div>
+              <p>{authUser?.name}</p>
+              <Chip
+                className="capitalize mt-1"
+                color={authUser?.role === "admin" ? "danger" : "primary"}
+              >
+                {authUser?.role}
+              </Chip>
+            </div>
+          </div>
+          <hr className="my-4" />
+          <div className="flex flex-col gap-1">
+            <Button
+              as={Link}
+              className="justify-start"
+              href="/me"
+              startContent={<UserRound className="size-5" />}
+              variant={pathname === "/me" ? "flat" : "light"}
+            >
+              Profile
+            </Button>
+            <Button
+              as={Link}
+              className="justify-start"
+              href="/me/transactions"
+              startContent={<ReceiptText className="size-5" />}
+              variant={pathname === "/me/transactions" ? "flat" : "light"}
+            >
+              Transactions
+            </Button>
+          </div>
+          <hr className="my-4" />
+          <div>
+            <Button
+              className="justify-start"
+              color="danger"
+              startContent={<DoorOpen className="size-5" />}
+              variant="light"
+            >
+              Logout
+            </Button>
+          </div>
+        </div>
+      </CardBody>
+    </Card>
+  );
+};
+
+export default MeSidebarClient;

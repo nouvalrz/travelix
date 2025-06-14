@@ -101,7 +101,7 @@ const LoggedContent = ({ authUser, onModalLogoutOpen }: LoggedContentProps) => {
           isInvisible={!transactionsLoading && totalTransactions() === 0}
           shape="circle"
         >
-          <Link href="/transactions">
+          <Link href="/me/transactions">
             <Button isIconOnly variant="light">
               <ReceiptText className="size-6" />
             </Button>

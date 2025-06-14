@@ -98,10 +98,10 @@ export const useDestinationsStore = create<DestinationsStore>()(
     // Query : pagination
     paginationLimit: 9,
     setPaginationLimit: (value) => set({ paginationLimit: value }),
-    paginationCurrent: 1,
-    setPaginationCurrent: (value) => set({ paginationCurrent: value }),
     getPageTotal: () =>
       Math.ceil(get().destinationQueryResults.length / get().paginationLimit),
+    paginationCurrent: 1,
+    setPaginationCurrent: (value) => set({ paginationCurrent: value }),
 
     // Query : filter by category
     categorySelected: "",
