@@ -4,6 +4,7 @@ import { Image } from "@heroui/image";
 import { Button } from "@heroui/button";
 import clsx from "clsx";
 import { Info } from "lucide-react";
+import Link from "next/link";
 
 import TransactionStatusChip from "./TransactionStatusChip";
 
@@ -77,7 +78,12 @@ const TransactionListItem = ({ transaction }: { transaction: Transaction }) => {
                 </p>
               </div>
             )}
-            <Button color="primary" size="md">
+            <Button
+              as={Link}
+              color="primary"
+              href={"/me/transactions/" + transaction.id}
+              size="md"
+            >
               See Detail
             </Button>
           </div>

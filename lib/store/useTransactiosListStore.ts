@@ -1,5 +1,7 @@
 import { create } from "zustand";
 
+import { convertToTransactionAdditionalStatus } from "../convertToTransactionWithExpired";
+
 import { Transaction, TransactionStatus } from "@/types/transaction.type";
 
 export type TransactionListSort =
@@ -8,13 +10,22 @@ export type TransactionListSort =
   | "Highest Price"
   | "Lowest Price";
 
+export type TransactionStatusWithAdditional =
+  | TransactionStatus
+  | "expired"
+  | "waiting_confirmation";
+export interface TransactionWithAdditionalStatus
+  extends Omit<Transaction, "status"> {
+  status: TransactionStatusWithAdditional;
+}
+
 type TransactionListsStore = {
-  transactions: Transaction[];
+  transactions: TransactionWithAdditionalStatus[];
   setTransactions: (transactions: Transaction[]) => void;
   searchKeyword: string;
   setSearchKeyword: (keyword: string) => void;
-  statusFilter: TransactionStatus | "";
-  setStatusFilter: (status: TransactionStatus | "") => void;
+  statusFilter: TransactionStatusWithAdditional | "";
+  setStatusFilter: (status: TransactionStatusWithAdditional | "") => void;
   sortSelected: TransactionListSort;
   setSortSelected: (sort: TransactionListSort) => void;
   paginationCurrent: number;
@@ -27,12 +38,18 @@ export const useTransactionsListStore = create<TransactionListsStore>(
   (set, get) => {
     return {
       transactions: [],
-      setTransactions: (transactions) => set({ transactions: transactions }),
+      setTransactions: (transactions) => {
+        const transactionsWithExpired = transactions.map(
+          convertToTransactionAdditionalStatus
+        );
+
+        set({ transactions: transactionsWithExpired });
+      },
       searchKeyword: "",
       setSearchKeyword: (keyword) => set({ searchKeyword: keyword }),
       statusFilter: "" as const,
       setStatusFilter: (status) => set({ statusFilter: status }),
-      paginationLimit: 4,
+      paginationLimit: 6,
       setPaginationLimit: (value) => set({ paginationLimit: value }),
       paginationCurrent: 1,
       setPaginationCurrent: (page) => set({ paginationCurrent: page }),

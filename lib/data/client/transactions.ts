@@ -26,3 +26,24 @@ export const fetchCreateTransaction = async (
 
   return responseData;
 };
+
+export const fetchUpdatePaymentProof = async (
+  transactionId: string,
+  proofUrl: string
+) => {
+  const response = await fetch(
+    "/api/proxy/update-transaction-proof-payment/" + transactionId,
+    {
+      method: "POST",
+      credentials: "same-origin",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify({ proofPaymentUrl: proofUrl }),
+    }
+  );
+
+  const responseData = await response.json();
+
+  return responseData;
+};

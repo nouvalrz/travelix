@@ -8,7 +8,7 @@ import { zodResolver } from "@hookform/resolvers/zod";
 import { useState } from "react";
 import { addToast } from "@heroui/toast";
 import { Eye, EyeOff } from "lucide-react";
-import { useRouter } from "next/navigation";
+import { useRouter, useSearchParams } from "next/navigation";
 
 import { LoginSchema, LoginType } from "@/types/schemas/login.schema";
 import { fetchLogin } from "@/lib/data/client/login";
@@ -16,6 +16,7 @@ import { AppError } from "@/lib/appError";
 
 const LoginForm = () => {
   const router = useRouter();
+  const searchParams = useSearchParams();
   const [loading, setLoading] = useState<boolean>(false);
   const [isPasswordVisible, setIsPasswordVisible] = useState<boolean>(false);
   const {
@@ -35,7 +36,13 @@ const LoginForm = () => {
         color: "success",
         description: "Welcome to Travelix!",
       });
-      router.refresh();
+      const prevUrl = searchParams.get("prevUrl");
+
+      if (prevUrl) {
+        router.replace(decodeURIComponent(String(prevUrl)));
+      } else {
+        router.refresh();
+      }
     } catch (error) {
       addToast({
         title: "Error",

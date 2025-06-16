@@ -1,19 +1,25 @@
 import { Chip } from "@heroui/chip";
 import React from "react";
 
-import { TransactionStatus } from "@/types/transaction.type";
+import { TransactionStatusWithAdditional } from "@/lib/store/useTransactiosListStore";
 
 const colorByStatus: Record<
-  TransactionStatus,
+  TransactionStatusWithAdditional,
   "primary" | "success" | "warning" | "danger"
 > = {
   pending: "primary",
   success: "success",
   cancelled: "warning",
   failed: "danger",
+  expired: "warning",
+  waiting_confirmation: "warning",
 };
 
-const TransactionStatusChip = ({ status }: { status: TransactionStatus }) => {
+const TransactionStatusChip = ({
+  status,
+}: {
+  status: TransactionStatusWithAdditional;
+}) => {
   return (
     <Chip
       className="capitalize"
@@ -21,7 +27,7 @@ const TransactionStatusChip = ({ status }: { status: TransactionStatus }) => {
       size="md"
       variant="flat"
     >
-      {status}
+      {status === "waiting_confirmation" ? "Waiting for Confirmation" : status}
     </Chip>
   );
 };

@@ -7,9 +7,9 @@ import { Input } from "@heroui/input";
 import { Search } from "lucide-react";
 import { Select, SelectItem } from "@heroui/select";
 
-import { TransactionStatus } from "@/types/transaction.type";
 import {
   TransactionListSort,
+  TransactionStatusWithAdditional,
   useTransactionsListStore,
 } from "@/lib/store/useTransactiosListStore";
 
@@ -27,12 +27,20 @@ const TransactionsListQuery = () => {
     sortSelected,
     setSortSelected,
     transactions,
+    searchKeyword,
+    setSearchKeyword,
   } = useTransactionsListStore();
 
-  const filterOptions: Record<TransactionStatus | "", number> = {
+  const filterOptions: Record<TransactionStatusWithAdditional | "", number> = {
     "": transactions.length,
     pending: transactions.filter(
       (transaction) => transaction.status === "pending"
+    ).length,
+    waiting_confirmation: transactions.filter(
+      (transaction) => transaction.status === "waiting_confirmation"
+    ).length,
+    expired: transactions.filter(
+      (transaction) => transaction.status === "expired"
     ).length,
     success: transactions.filter(
       (transaction) => transaction.status === "success"
@@ -50,8 +58,10 @@ const TransactionsListQuery = () => {
       <div className="flex items-center gap-3">
         <div className="flex-grow">
           <Input
-            placeholder="Search by invoice..."
+            placeholder="Search by invoice ID or destination name..."
             startContent={<Search className="size-5 text-gray-500" />}
+            value={searchKeyword}
+            onValueChange={(keyword) => setSearchKeyword(keyword)}
           />
         </div>
         <div className="w-[300px] flex-shrink-0">
@@ -74,9 +84,16 @@ const TransactionsListQuery = () => {
             className={clsx("capitalize border-1")}
             color="primary"
             variant={statusFilter === key ? "solid" : "bordered"}
-            onPress={() => setStatusFilter(key as TransactionStatus | "")}
+            onPress={() =>
+              setStatusFilter(key as TransactionStatusWithAdditional | "")
+            }
           >
-            {key || "All"} ({value})
+            {key === "waiting_confirmation"
+              ? "Waiting for Confirmation"
+              : key
+                ? key
+                : "All"}{" "}
+            ({value})
           </Button>
         ))}
       </div>

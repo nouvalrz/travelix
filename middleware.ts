@@ -11,7 +11,12 @@ export const middleware = async (req: NextRequest) => {
   }
 
   if (isUserRoute(pathname) && !token) {
-    return NextResponse.redirect(new URL("/login", req.url));
+    // prev url search param
+    const loginUrl = new URL("/login", req.url);
+
+    loginUrl.searchParams.set("prevUrl", req.nextUrl.pathname);
+
+    return NextResponse.redirect(loginUrl);
   }
 
   if ((isUserRoute(pathname) || isAdminRoute(pathname)) && token) {
@@ -47,7 +52,7 @@ const isAuthRoute = (pathname: string): boolean => {
 // };
 
 const isUserRoute = (pathname: string): boolean => {
-  const userRoutes = ["/carts", "/transactions", "/profile"];
+  const userRoutes = ["/carts", "/me"];
 
   return userRoutes.some((route) => pathname.startsWith(route));
 };
