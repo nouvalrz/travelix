@@ -13,6 +13,7 @@ import { addToast } from "@heroui/toast";
 import { Destination } from "@/types/destination.type";
 import { formatRupiah } from "@/lib/formatRupiah";
 import { useCartsStore } from "@/lib/store/useCartsStore";
+import { useRedirectLoginMiddleware } from "@/lib/hooks/useRedirectLoginMiddleware";
 
 const DestinationDetailSidebar = ({
   destination,
@@ -21,11 +22,12 @@ const DestinationDetailSidebar = ({
   destination: Destination;
   headerShown: boolean;
 }) => {
+  const withUser = useRedirectLoginMiddleware();
   const { addCart } = useCartsStore();
   const [quantity, setQuantity] = useState<number>(1);
   const [addCartLoading, setAddCartLoading] = useState<boolean>(false);
 
-  const handleAddCart = async () => {
+  const handleAddCart = withUser(async () => {
     setAddCartLoading(true);
     await addCart(destination.id, quantity);
     setAddCartLoading(false);
@@ -34,7 +36,7 @@ const DestinationDetailSidebar = ({
       description: "Successfully added to cart!",
       color: "success",
     });
-  };
+  });
 
   return (
     <Card shadow="sm">

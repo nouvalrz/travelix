@@ -1,10 +1,8 @@
 import NavbarClient from "./NavbarClient";
 
-import { getAuthUser } from "@/lib/data/server/authUser";
+import { AuthUserType } from "@/types/authUser.type";
 
-const Navbar = async () => {
-  const authUser = await getAuthUser();
-
+const Navbar = async ({ authUser }: { authUser: AuthUserType | null }) => {
   return <NavbarClient authUser={authUser} />;
 };
 
