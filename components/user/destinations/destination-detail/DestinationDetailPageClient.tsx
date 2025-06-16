@@ -5,9 +5,11 @@ import { Pin, Star } from "lucide-react";
 import { Chip } from "@heroui/chip";
 import DOMPurify from "isomorphic-dompurify";
 import { useRef } from "react";
+import { useMediaQuery } from "react-responsive";
+import clsx from "clsx";
 
 import LocationMap from "./LocationMap";
-import DestinationDetailSidebar from "./DestinationDetailSidebar";
+import DestinationDetailCartAction from "./DestinationDetailCartAction";
 
 import Breadcrumb from "@/components/Breadcrumb";
 import { Destination } from "@/types/destination.type";
@@ -18,6 +20,7 @@ const DestinationDetailPageClient = ({
 }: {
   destination: Destination;
 }) => {
+  const isMobile = useMediaQuery({ maxWidth: 1023 });
   const titleRef = useRef<HTMLHeadingElement>(null);
   const isTitleOutView = useScrollObserver(titleRef, -70);
 
@@ -88,7 +91,7 @@ const DestinationDetailPageClient = ({
             src={destination.imageUrls[4]}
           />
         </div>
-        <div className="my-12 flex gap-8 items-start">
+        <div className="my-12 flex gap-0 lg:gap-8 items-start">
           <div className="flex-grow">
             <Chip color="primary">{destination.category?.name}</Chip>
             <h1 ref={titleRef} className="capitalize text-3xl font-bold mt-2">
@@ -132,8 +135,12 @@ const DestinationDetailPageClient = ({
               </div>
             </div>
           </div>
-          <div className="max-w-[400px] w-full flex-shrink-0 sticky top-24">
-            <DestinationDetailSidebar
+          <div
+            className={clsx("max-w-[400px] w-0 lg:w-full flex-shrink-0", {
+              "lg:sticky top-24": !isMobile,
+            })}
+          >
+            <DestinationDetailCartAction
               destination={destination}
               headerShown={isTitleOutView}
             />

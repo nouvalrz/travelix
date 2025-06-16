@@ -6,7 +6,7 @@ function LocationMap({ maps }: { maps: string }) {
       dangerouslySetInnerHTML={{
         __html: maps,
       }}
-      className="mt-4"
+      className="mt-4 maps-wrapper"
     />
   );
 }
