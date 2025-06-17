@@ -5,9 +5,9 @@ import Breadcrumb from "@/components/Breadcrumb";
 
 const layout = ({ children }: { children: React.ReactNode }) => {
   return (
-    <div className="mx-auto container py-8">
-      <div className="flex gap-6 items-start">
-        <div className="w-[280px]">
+    <div className="mx-auto container py-8 px-4">
+      <div className="flex gap-6 items-start lg:flex-row flex-col">
+        <div className="w-full lg:w-[280px]">
           <Suspense fallback={<p>Loading...</p>}>
             <MeSidebar />
           </Suspense>

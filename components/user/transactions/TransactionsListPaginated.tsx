@@ -3,8 +3,10 @@ import { Pagination } from "@heroui/pagination";
 
 import TransactionListItem from "./TransactionListItem";
 
-import { useTransactionsListStore } from "@/lib/store/useTransactiosListStore";
-import { Transaction } from "@/types/transaction.type";
+import {
+  TransactionWithAdditionalStatus,
+  useTransactionsListStore,
+} from "@/lib/store/useTransactiosListStore";
 import EmptyPlaceholder from "@/components/EmptyPlaceholder";
 
 const TransactionsListPaginated = () => {
@@ -18,7 +20,10 @@ const TransactionsListPaginated = () => {
     paginationLimit,
   } = useTransactionsListStore();
 
-  const sortTransaction = (a: Transaction, b: Transaction) => {
+  const sortTransaction = (
+    a: TransactionWithAdditionalStatus,
+    b: TransactionWithAdditionalStatus
+  ) => {
     if (sortSelected === "Newest") {
       return new Date(b.createdAt).getTime() - new Date(a.createdAt).getTime();
     }

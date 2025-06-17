@@ -8,11 +8,15 @@ import Link from "next/link";
 
 import TransactionStatusChip from "./TransactionStatusChip";
 
-import { Transaction } from "@/types/transaction.type";
 import { formatDateTime } from "@/lib/formatDate";
 import { formatRupiah } from "@/lib/formatRupiah";
+import { TransactionWithAdditionalStatus } from "@/lib/store/useTransactiosListStore";
 
-const TransactionListItem = ({ transaction }: { transaction: Transaction }) => {
+const TransactionListItem = ({
+  transaction,
+}: {
+  transaction: TransactionWithAdditionalStatus;
+}) => {
   const totalPrice = transaction.transaction_items.reduce(
     (acc, item) => acc + item.quantity * (item.price_discount ?? item.price),
     0
@@ -22,7 +26,7 @@ const TransactionListItem = ({ transaction }: { transaction: Transaction }) => {
     <Card key={transaction.id} shadow="sm">
       <CardHeader>
         <div className="flex items-center justify-between w-full">
-          <div className="flex gap-5 items-center">
+          <div className="flex gap-0 lg:gap-5 items-start lg:items-center lg:flex-row flex-col ">
             <p className="font-semibold">{transaction.invoiceId}</p>
             <p className="text-sm">{formatDateTime(transaction.createdAt)}</p>
           </div>

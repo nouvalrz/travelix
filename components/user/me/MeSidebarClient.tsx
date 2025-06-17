@@ -18,19 +18,31 @@ const MeSidebarClient = ({ authUser }: { authUser: AuthUserType }) => {
     <Card shadow="sm">
       <CardBody>
         <div>
-          <div className="flex gap-3 items-center">
-            <Image
-              className="w-12 h-12 object-cover rounded-full"
-              src={authUser?.profilePictureUrl}
-            />
-            <div>
-              <p>{authUser?.name}</p>
-              <Chip
-                className="capitalize mt-1"
-                color={authUser?.role === "admin" ? "danger" : "primary"}
+          <div className="flex items-center justify-between">
+            <div className="flex gap-3 items-center">
+              <Image
+                className="w-12 h-12 object-cover rounded-full"
+                src={authUser?.profilePictureUrl}
+              />
+              <div>
+                <p>{authUser?.name}</p>
+                <Chip
+                  className="capitalize mt-1"
+                  color={authUser?.role === "admin" ? "danger" : "primary"}
+                >
+                  {authUser?.role}
+                </Chip>
+              </div>
+            </div>
+            <div className="lg:hidden block">
+              <Button
+                className="justify-start"
+                color="danger"
+                startContent={<DoorOpen className="size-5" />}
+                variant="light"
               >
-                {authUser?.role}
-              </Chip>
+                Logout
+              </Button>
             </div>
           </div>
           <hr className="my-4" />
@@ -54,8 +66,8 @@ const MeSidebarClient = ({ authUser }: { authUser: AuthUserType }) => {
               Transactions
             </Button>
           </div>
-          <hr className="my-4" />
-          <div>
+          <hr className="lg:block hidden my-4" />
+          <div className="lg:block hidden">
             <Button
               className="justify-start"
               color="danger"

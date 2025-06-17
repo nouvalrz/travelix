@@ -64,7 +64,7 @@ const TransactionsListQuery = () => {
             onValueChange={(keyword) => setSearchKeyword(keyword)}
           />
         </div>
-        <div className="w-[300px] flex-shrink-0">
+        <div className="md:w-[200px] w-[160px] lg:w-[300px] flex-shrink-0">
           <Select
             selectedKeys={new Set([sortSelected])}
             onSelectionChange={(key) =>
@@ -77,7 +77,7 @@ const TransactionsListQuery = () => {
           </Select>
         </div>
       </div>
-      <div className="flex gap-2 items-center  mt-3">
+      <div className="flex gap-2 items-center  mt-3 flex-wrap">
         {Object.entries(filterOptions).map(([key, value]) => (
           <Button
             key={key}
