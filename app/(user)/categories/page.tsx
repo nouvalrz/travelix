@@ -4,6 +4,7 @@ import CategoriesHeader from "@/components/user/categories/CategoriesHeader";
 import CategoryListPlaceholder from "@/components/user/categories/CategoryListPlaceholder";
 import CategoryListWrapper from "@/components/user/categories/CategoryListWrapper";
 import FeaturedCategoryWrapper from "@/components/user/categories/FeaturedCategoryWrapper";
+import FeaturedCategoryPlaceholder from "@/components/user/categories/FeaturedCategoryPlaceholder";
 const CategoriesPage = () => {
   return (
     <>
@@ -20,7 +21,7 @@ const CategoriesPage = () => {
         </div>
       </section>
       <section className="px-4 mb-12">
-        <Suspense fallback={<p>Loading...</p>}>
+        <Suspense fallback={<FeaturedCategoryPlaceholder />}>
           <FeaturedCategoryWrapper />
         </Suspense>
       </section>

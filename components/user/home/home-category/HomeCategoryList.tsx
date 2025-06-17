@@ -9,6 +9,9 @@ const HomeCategoryList = async () => {
     headers: {
       "Content-Type": "application/json",
     },
+    next: {
+      revalidate: 60 * 5,
+    },
   });
 
   const categories = (await response.json()).data as Category[];

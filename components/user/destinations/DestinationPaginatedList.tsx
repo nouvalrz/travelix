@@ -12,6 +12,7 @@ const DestinationPaginatedList = () => {
     paginationCurrent,
     getPageTotal,
     setPaginationCurrent,
+    destinationsLoading,
   } = useDestinationsStore();
 
   const start = (paginationCurrent - 1) * paginationLimit;
@@ -23,6 +24,10 @@ const DestinationPaginatedList = () => {
   const handlePageChange = (page: number) => {
     setPaginationCurrent(page);
   };
+
+  if (destinationsLoading) {
+    return null;
+  }
 
   return (
     <>

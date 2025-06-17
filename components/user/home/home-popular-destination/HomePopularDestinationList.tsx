@@ -7,6 +7,9 @@ const HomePopularDestinationList = async () => {
   const response = await fetch(BASE_URL + "/api/proxy/activities", {
     method: "GET",
     headers: { "Content-Type": "application/json" },
+    next: {
+      revalidate: 60 * 5,
+    },
   });
 
   const destinations = (await response.json()).data as Destination[];

@@ -28,13 +28,13 @@ const DestinationDetailPageClient = ({
     <div className="py-4 px-4">
       <div className="container mx-auto">
         <Breadcrumb includeHome uuidReplaceName={destination.title} />
-        <div className="grid grid-cols-4 grid-rows-2 gap-4 w-full h-[300px] mt-4 ">
+        <div className="grid grid-cols-4 grid-rows-3 lg:grid-rows-2 gap-4 w-full h-[300px] mt-4 ">
           {/* Big left box */}
           <Image
             isBlurred
             classNames={{
               wrapper:
-                "bg-no-repeat bg-cover bg-center  col-span-2 row-span-2 !max-w-none",
+                "bg-no-repeat bg-cover bg-center col-span-4 lg:col-span-2 row-span-2 lg:row-span-2 !max-w-none",
               img: "w-full h-full object-cover",
             }}
             fallbackSrc="/images/fallback-image.jpg"

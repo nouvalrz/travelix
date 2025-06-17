@@ -1,8 +1,8 @@
 import { Card, CardBody, CardFooter } from "@heroui/card";
 import React from "react";
-import { Image } from "@heroui/image";
 import clsx from "clsx";
 import Link from "next/link";
+import { Image } from "@heroui/image";
 
 import { Category } from "@/types/category.type";
 

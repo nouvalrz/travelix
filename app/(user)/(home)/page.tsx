@@ -1,4 +1,5 @@
 import Image from "next/image";
+import { Suspense } from "react";
 
 import Explorer from "@/components/user/home/Explorer";
 import HomeCategoryWrapper from "@/components/user/home/home-category/HomeCategoryWrapper";
@@ -7,6 +8,7 @@ import HomePopularDestinationWrapper from "@/components/user/home/home-popular-d
 import HomePromoWrapper from "@/components/user/home/home-promo/HomePromoWrapper";
 import HomeReviewWrapper from "@/components/user/home/home-reviews/HomeReviewWrapper";
 import HomeFaqWrapper from "@/components/user/home/home-faq/HomeFaqWrapper";
+import HomeBannerPlaceholder from "@/components/user/home/home-banner/HomeBannerPlaceholder";
 
 export default function Home() {
   return (
@@ -37,7 +39,9 @@ export default function Home() {
         </div>
       </section>
       <section>
-        <HomeBannerWrapper />
+        <Suspense fallback={<HomeBannerPlaceholder />}>
+          <HomeBannerWrapper />
+        </Suspense>
       </section>
       <section>
         <HomeCategoryWrapper />
