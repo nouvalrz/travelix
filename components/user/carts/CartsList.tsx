@@ -2,13 +2,13 @@ import { Card, CardBody } from "@heroui/card";
 import { Checkbox } from "@heroui/checkbox";
 import React, { useCallback } from "react";
 import { Image } from "@heroui/image";
-import { NumberInput } from "@heroui/number-input";
 import debounce from "lodash.debounce";
 import { Loader2, Trash2 } from "lucide-react";
 import { Button } from "@heroui/button";
 
 import { useCreateTransactionStore } from "@/lib/store/useCreateTransactionStore";
 import { formatRupiah } from "@/lib/formatRupiah";
+import QuantityInput from "@/components/QuantityInput";
 
 const CartsList = () => {
   const {
@@ -53,13 +53,17 @@ const CartsList = () => {
                     isSelected={cart.isSelected}
                     onChange={() => toggleCartSelected(cart.id)}
                   />
-                  <Image
-                    alt={cart.activity.title}
-                    className="w-16 h-16 rounded-lg object-cover"
-                    classNames={{ wrapper: "bg-no-repeat bg-cover bg-center" }}
-                    fallbackSrc="/images/fallback-image.jpg"
-                    src={cart.activity.imageUrls[0]}
-                  />
+                  <div className="flex-shrink-0">
+                    <Image
+                      alt={cart.activity.title}
+                      className="w-16 h-16 rounded-lg object-cover"
+                      classNames={{
+                        wrapper: "bg-no-repeat bg-cover bg-center",
+                      }}
+                      fallbackSrc="/images/fallback-image.jpg"
+                      src={cart.activity.imageUrls[0]}
+                    />
+                  </div>
                   <div>
                     <p className="font-medium line-clamp-1">
                       {cart.activity.title}
@@ -101,8 +105,18 @@ const CartsList = () => {
                       <Trash2 className="size-5 text-gray-500" />
                     </Button>
 
-                    <div className="w-[84px]">
-                      <NumberInput
+                    <div className="w-[160px]">
+                      {/* <NumberInput
+                        defaultValue={cart.quantity}
+                        isDisabled={cart.isLoading}
+                        minValue={1}
+                        placeholder="Input quantity"
+                        size="sm"
+                        onValueChange={(value) =>
+                          handleUpdateCartQuantity(cart.id, value)
+                        }
+                      /> */}
+                      <QuantityInput
                         defaultValue={cart.quantity}
                         isDisabled={cart.isLoading}
                         minValue={1}
