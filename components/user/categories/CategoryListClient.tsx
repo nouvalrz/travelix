@@ -1,6 +1,6 @@
 "use client";
 
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { Button } from "@heroui/button";
 
 import CategoryCard from "./CategoryCard";
@@ -26,6 +26,10 @@ const CategoryListClient = ({ categories }: { categories: Category[] }) => {
 
   const visibleCategories = filteredCategories.slice(0, page * dataPerPage);
 
+  useEffect(() => {
+    setPage(1);
+  }, [searchKeyword]);
+
   return (
     <>
       {filteredCategories.length > 0 ? (
@@ -38,7 +42,7 @@ const CategoryListClient = ({ categories }: { categories: Category[] }) => {
 
           {page < totalPages && (
             <div className="mt-8 flex justify-center">
-              <Button color="primary" variant="flat" onClick={handleLoadMore}>
+              <Button color="primary" variant="flat" onPress={handleLoadMore}>
                 Load More
               </Button>
             </div>

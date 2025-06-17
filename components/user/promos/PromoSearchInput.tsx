@@ -12,7 +12,7 @@ const PromoSearchInput = () => {
     <Input
       isClearable
       className="mt-6"
-      placeholder="Search category..."
+      placeholder="Search promo..."
       startContent={<Search className="size-5 text-gray-600" />}
       value={searchKeyword}
       onClear={() => setSearchKeyword("")}
