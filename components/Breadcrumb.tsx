@@ -44,7 +44,9 @@ const Breadcrumb = ({
       )}
       {routeMap.map((segment) => (
         <BreadcrumbItem key={segment.route} className="capitalize">
-          <Link href={segment.route}>{segment.name}</Link>
+          <Link href={segment.route}>
+            {segment.name === "admin" ? "dashboard" : segment.name}
+          </Link>
         </BreadcrumbItem>
       ))}
     </Breadcrumbs>
