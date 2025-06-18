@@ -1,5 +1,5 @@
 "use client";
-import React, { useCallback, useMemo, useState } from "react";
+import React, { useCallback, useEffect, useMemo, useState } from "react";
 import { SortDescriptor } from "@react-types/shared";
 import {
   Table,
@@ -66,6 +66,10 @@ const CategoriesClient = ({ categories }: { categories: Category[] }) => {
 
     return categoriesSorted.slice(start, end);
   }, [currentPage, categoriesSorted]);
+
+  useEffect(() => {
+    setCurrentPage(1);
+  }, [searchKeyword, sortDescriptor.direction]);
 
   const renderCell = useCallback((category: Category, columnKey: React.Key) => {
     const cellValue = category[columnKey as keyof Category];
