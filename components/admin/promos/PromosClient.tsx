@@ -1,6 +1,6 @@
 "use client";
 
-import React, { useCallback, useMemo, useState } from "react";
+import React, { useCallback, useEffect, useMemo, useState } from "react";
 import { SortDescriptor } from "@react-types/shared";
 import { Button } from "@heroui/button";
 import { Pencil, Plus, Trash2 } from "lucide-react";
@@ -40,17 +40,10 @@ const PromosClient = ({ promos }: { promos: Promo[] }) => {
 
   const pages = Math.ceil(promosSearched.length / rowsPerPage) || 1;
 
-  const promosPaginated = useMemo(() => {
-    const start = (currentPage - 1) * rowsPerPage;
-    const end = start + rowsPerPage;
-
-    return promosSearched.slice(start, end);
-  }, [currentPage, promosSearched]);
-
   const promosSorted = useMemo(() => {
     const column = sortDescriptor.column;
 
-    return promosPaginated.sort((a, b) => {
+    return [...promosSearched].sort((a, b) => {
       let aValue: string | number = a[column as keyof Promo];
       let bValue: string | number = b[column as keyof Promo];
 
@@ -66,7 +59,18 @@ const PromosClient = ({ promos }: { promos: Promo[] }) => {
 
       return 0;
     });
-  }, [sortDescriptor, promosPaginated]);
+  }, [sortDescriptor, promosSearched]);
+
+  const promosPaginated = useMemo(() => {
+    const start = (currentPage - 1) * rowsPerPage;
+    const end = start + rowsPerPage;
+
+    return promosSorted.slice(start, end);
+  }, [currentPage, promosSorted]);
+
+  useEffect(() => {
+    setCurrentPage(1);
+  }, [searchKeyword, sortDescriptor.direction]);
 
   const renderCell = useCallback((promo: Promo, columnKey: React.Key) => {
     const cellValue = promo[columnKey as keyof Promo];
@@ -147,7 +151,7 @@ const PromosClient = ({ promos }: { promos: Promo[] }) => {
           </TableColumn>
           <TableColumn key="actions">Actions</TableColumn>
         </TableHeader>
-        <TableBody emptyContent={<EmptyPlaceholder />} items={promosSorted}>
+        <TableBody emptyContent={<EmptyPlaceholder />} items={promosPaginated}>
           {(item) => (
             <TableRow key={item.id}>
               {(columnKey) => (
