@@ -1,8 +1,7 @@
 "use client";
 
-import React, { useCallback, useMemo, useState } from "react";
+import React, { useCallback, useEffect, useMemo, useState } from "react";
 import { SortDescriptor } from "@react-types/shared";
-import { Image } from "@heroui/image";
 import { Button } from "@heroui/button";
 import Link from "next/link";
 import { Pencil, Plus, Trash2 } from "lucide-react";
@@ -17,6 +16,7 @@ import {
 } from "@heroui/table";
 import { Pagination } from "@heroui/pagination";
 import { Autocomplete, AutocompleteItem } from "@heroui/autocomplete";
+import { Image } from "@heroui/image";
 
 import { Destination } from "@/types/destination.type";
 import { formatDateTime } from "@/lib/formatDate";
@@ -55,21 +55,14 @@ const DestinationsClient = ({
     return destinationsCategoryFiltered.filter((destination) =>
       destination.title.toLowerCase().includes(searchKeyword.toLowerCase())
     );
-  }, [searchKeyword, categoryFilterSelected]);
+  }, [searchKeyword, destinationsCategoryFiltered]);
 
   const pages = Math.ceil(destinationsSearched.length / rowsPerPage) || 1;
-
-  const destinationsPaginated = useMemo(() => {
-    const start = (currentPage - 1) * rowsPerPage;
-    const end = start + rowsPerPage;
-
-    return destinationsSearched.slice(start, end);
-  }, [currentPage, destinationsSearched]);
 
   const destinationsSorted = useMemo(() => {
     const column = sortDescriptor.column;
 
-    return destinationsPaginated.sort((a, b) => {
+    return [...destinationsSearched].sort((a, b) => {
       let aValue: string | number = a[column as keyof Destination] as string;
       let bValue: string | number = b[column as keyof Destination] as string;
 
@@ -85,7 +78,18 @@ const DestinationsClient = ({
 
       return 0;
     });
-  }, [sortDescriptor, destinationsPaginated]);
+  }, [sortDescriptor, destinationsSearched]);
+
+  const destinationsPaginated = useMemo(() => {
+    const start = (currentPage - 1) * rowsPerPage;
+    const end = start + rowsPerPage;
+
+    return destinationsSorted.slice(start, end);
+  }, [currentPage, destinationsSorted]);
+
+  useEffect(() => {
+    setCurrentPage(1);
+  }, [searchKeyword, categoryFilterSelected, sortDescriptor.direction]);
 
   const renderCell = useCallback(
     (destination: Destination, columnKey: React.Key) => {
@@ -101,7 +105,7 @@ const DestinationsClient = ({
               className="w-24 h-24 object-cover"
               classNames={{ wrapper: "bg-no-repeat bg-cover bg-center" }}
               fallbackSrc="/images/fallback-image.jpg"
-              src={(images[0] as string) ?? undefined}
+              src={images.find(Boolean)}
             />
           );
         case "category":
@@ -203,7 +207,7 @@ const DestinationsClient = ({
         </TableHeader>
         <TableBody
           emptyContent={<EmptyPlaceholder />}
-          items={destinationsSorted}
+          items={destinationsPaginated}
         >
           {(item) => (
             <TableRow key={item.id}>
