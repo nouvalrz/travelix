@@ -39,17 +39,10 @@ const CategoriesClient = ({ categories }: { categories: Category[] }) => {
 
   const pages = Math.ceil(categoriesSearched.length / rowsPerPage) || 1;
 
-  const categoriesPaginated = useMemo(() => {
-    const start = (currentPage - 1) * rowsPerPage;
-    const end = start + rowsPerPage;
-
-    return categoriesSearched.slice(start, end);
-  }, [currentPage, categoriesSearched]);
-
   const categoriesSorted = useMemo(() => {
     const column = sortDescriptor.column;
 
-    return categoriesPaginated.sort((a, b) => {
+    return [...categoriesSearched].sort((a, b) => {
       let aValue: string | number = a[column as keyof Category];
       let bValue: string | number = b[column as keyof Category];
 
@@ -65,7 +58,14 @@ const CategoriesClient = ({ categories }: { categories: Category[] }) => {
 
       return 0;
     });
-  }, [sortDescriptor, categoriesPaginated]);
+  }, [sortDescriptor, categoriesSearched]);
+
+  const categoriesPaginated = useMemo(() => {
+    const start = (currentPage - 1) * rowsPerPage;
+    const end = start + rowsPerPage;
+
+    return categoriesSorted.slice(start, end);
+  }, [currentPage, categoriesSorted]);
 
   const renderCell = useCallback((category: Category, columnKey: React.Key) => {
     const cellValue = category[columnKey as keyof Category];
@@ -144,7 +144,10 @@ const CategoriesClient = ({ categories }: { categories: Category[] }) => {
           </TableColumn>
           <TableColumn key="actions">Actions</TableColumn>
         </TableHeader>
-        <TableBody emptyContent={<EmptyPlaceholder />} items={categoriesSorted}>
+        <TableBody
+          emptyContent={<EmptyPlaceholder />}
+          items={categoriesPaginated}
+        >
           {(item) => (
             <TableRow key={item.id}>
               {(columnKey) => (
