@@ -1,6 +1,6 @@
 "use client";
 
-import React, { useCallback, useMemo, useState } from "react";
+import React, { useCallback, useEffect, useMemo, useState } from "react";
 import { SortDescriptor } from "@react-types/shared";
 import { Button } from "@heroui/button";
 import Link from "next/link";
@@ -100,6 +100,10 @@ const TransactionsClient = ({
 
     return transactionsSorted.slice(start, end);
   }, [currentPage, transactionsSorted]);
+
+  useEffect(() => {
+    setCurrentPage(1);
+  }, [searchKeyword, sortDescriptor.direction, statusSelected]);
 
   const renderCell = useCallback(
     (transaction: TransactionWithAdditionalStatus, columnKey: React.Key) => {
