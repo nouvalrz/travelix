@@ -1,6 +1,6 @@
 "use client";
 
-import React, { useCallback, useMemo, useState } from "react";
+import React, { useCallback, useEffect, useMemo, useState } from "react";
 import { SortDescriptor } from "@react-types/shared";
 import { Button } from "@heroui/button";
 import { Pencil, Plus, Trash2 } from "lucide-react";
@@ -40,17 +40,10 @@ const BannersClient = ({ banners }: { banners: Banner[] }) => {
 
   const pages = Math.ceil(bannersSearched.length / rowsPerPage) || 1;
 
-  const bannersPaginated = useMemo(() => {
-    const start = (currentPage - 1) * rowsPerPage;
-    const end = start + rowsPerPage;
-
-    return bannersSearched.slice(start, end);
-  }, [currentPage, bannersSearched]);
-
   const bannersSorted = useMemo(() => {
     const column = sortDescriptor.column;
 
-    return bannersPaginated.sort((a, b) => {
+    return [...bannersSearched].sort((a, b) => {
       let aValue: string | number = a[column as keyof Banner];
       let bValue: string | number = b[column as keyof Banner];
 
@@ -66,7 +59,18 @@ const BannersClient = ({ banners }: { banners: Banner[] }) => {
 
       return 0;
     });
-  }, [sortDescriptor, bannersPaginated]);
+  }, [sortDescriptor, bannersSearched]);
+
+  const bannersPaginated = useMemo(() => {
+    const start = (currentPage - 1) * rowsPerPage;
+    const end = start + rowsPerPage;
+
+    return bannersSorted.slice(start, end);
+  }, [currentPage, bannersSorted]);
+
+  useEffect(() => {
+    setCurrentPage(1);
+  }, [searchKeyword, sortDescriptor.direction]);
 
   const renderCell = useCallback((banner: Banner, columnKey: React.Key) => {
     const cellValue = banner[columnKey as keyof Banner];
@@ -113,7 +117,7 @@ const BannersClient = ({ banners }: { banners: Banner[] }) => {
           onValueChange={setSearchKeyword}
         />
         <Button color="primary" startContent={<Plus className="size-12" />}>
-          Add Category
+          Add Banner
         </Button>
       </div>
       <Table
@@ -144,7 +148,7 @@ const BannersClient = ({ banners }: { banners: Banner[] }) => {
           </TableColumn>
           <TableColumn key="actions">Actions</TableColumn>
         </TableHeader>
-        <TableBody emptyContent={<EmptyPlaceholder />} items={bannersSorted}>
+        <TableBody emptyContent={<EmptyPlaceholder />} items={bannersPaginated}>
           {(item) => (
             <TableRow key={item.id}>
               {(columnKey) => (
