@@ -17,11 +17,8 @@ const CategoriesWrapper = async () => {
   });
 
   const categories = (await response.json()).data as Category[];
-  const sortedCategories = categories.sort((a, b) =>
-    a.name.localeCompare(b.name)
-  );
 
-  return <CategoriesClient categories={sortedCategories} />;
+  return <CategoriesClient categories={categories} />;
 };
 
 export default CategoriesWrapper;
