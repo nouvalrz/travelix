@@ -5,11 +5,11 @@ import Breadcrumb from "@/components/Breadcrumb";
 
 const layout = ({ children }: { children: React.ReactNode }) => {
   return (
-    <div className="flex flex-col lg:flex-row min-h-screen items-start">
+    <div className="flex flex-col lg:flex-row max-h-screen items-start">
       <div className="h-full w-full lg:max-w-[280px]">
         <AdminNavbar />
       </div>
-      <div className="flex-1 p-4">
+      <div className="flex-1 p-4 overflow-y-scroll h-screen">
         <Breadcrumb />
         <div className="mt-2 lg:mt-4">{children}</div>
       </div>
