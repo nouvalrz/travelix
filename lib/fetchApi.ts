@@ -9,6 +9,11 @@ type FetchApiType = {
   headers?: Record<string, string>;
   body?: any;
   token?: string;
+} & {
+  next?: {
+    revalidate?: number | false;
+    tags?: string[];
+  };
 };
 
 export const fetchApiFromServer = async (

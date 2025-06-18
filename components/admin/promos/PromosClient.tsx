@@ -4,6 +4,8 @@ import React, { useCallback, useMemo, useState } from "react";
 import { SortDescriptor } from "@react-types/shared";
 import { Button } from "@heroui/button";
 import { Pencil, Plus, Trash2 } from "lucide-react";
+import { Image } from "@heroui/image";
+import Link from "next/link";
 import { Input } from "@heroui/input";
 import {
   TableHeader,
@@ -14,14 +16,12 @@ import {
   Table,
 } from "@heroui/table";
 import { Pagination } from "@heroui/pagination";
-import { Image } from "@heroui/image";
-import Link from "next/link";
 
-import EmptyPlaceholder from "@/components/EmptyPlaceholder";
 import { formatDateTime } from "@/lib/formatDate";
-import { Banner } from "@/types/banner.type";
+import { Promo } from "@/types/promo.type";
+import EmptyPlaceholder from "@/components/EmptyPlaceholder";
 
-const BannersClient = ({ banners }: { banners: Banner[] }) => {
+const PromosClient = ({ promos }: { promos: Promo[] }) => {
   const [searchKeyword, setSearchKeyword] = useState<string>("");
   const rowsPerPage = 10;
 
@@ -32,27 +32,27 @@ const BannersClient = ({ banners }: { banners: Banner[] }) => {
     direction: "descending",
   });
 
-  const bannersSearched = useMemo(() => {
-    return banners.filter((banner) =>
-      banner.name.toLowerCase().includes(searchKeyword.toLowerCase())
+  const promosSearched = useMemo(() => {
+    return promos.filter((promo) =>
+      promo.title.toLowerCase().includes(searchKeyword.toLowerCase())
     );
-  }, [searchKeyword, banners]);
+  }, [searchKeyword, promos]);
 
-  const pages = Math.ceil(bannersSearched.length / rowsPerPage) || 1;
+  const pages = Math.ceil(promosSearched.length / rowsPerPage) || 1;
 
-  const bannersPaginated = useMemo(() => {
+  const promosPaginated = useMemo(() => {
     const start = (currentPage - 1) * rowsPerPage;
     const end = start + rowsPerPage;
 
-    return bannersSearched.slice(start, end);
-  }, [currentPage, bannersSearched]);
+    return promosSearched.slice(start, end);
+  }, [currentPage, promosSearched]);
 
-  const bannersSorted = useMemo(() => {
+  const promosSorted = useMemo(() => {
     const column = sortDescriptor.column;
 
-    return bannersPaginated.sort((a, b) => {
-      let aValue: string | number = a[column as keyof Banner];
-      let bValue: string | number = b[column as keyof Banner];
+    return promosPaginated.sort((a, b) => {
+      let aValue: string | number = a[column as keyof Promo];
+      let bValue: string | number = b[column as keyof Promo];
 
       if (column === "createdAt") {
         aValue = new Date(aValue).getTime();
@@ -66,22 +66,22 @@ const BannersClient = ({ banners }: { banners: Banner[] }) => {
 
       return 0;
     });
-  }, [sortDescriptor, bannersPaginated]);
+  }, [sortDescriptor, promosPaginated]);
 
-  const renderCell = useCallback((banner: Banner, columnKey: React.Key) => {
-    const cellValue = banner[columnKey as keyof Banner];
+  const renderCell = useCallback((promo: Promo, columnKey: React.Key) => {
+    const cellValue = promo[columnKey as keyof Promo];
 
     switch (columnKey) {
       case "imageUrl":
         return (
           <Image
-            alt={cellValue}
+            alt={cellValue as string}
             className="w-24 h-24 object-cover"
-            src={cellValue}
+            src={cellValue as string}
           />
         );
       case "createdAt":
-        return <p>{formatDateTime(cellValue)}</p>;
+        return <p>{formatDateTime(cellValue as string)}</p>;
       case "actions":
         return (
           <div className="flex gap-2 items-center">
@@ -89,7 +89,7 @@ const BannersClient = ({ banners }: { banners: Banner[] }) => {
               isIconOnly
               as={Link}
               color="primary"
-              href={"/admin/banners/" + banner.id}
+              href={"/admin/promos/" + promo.id}
               variant="flat"
             >
               <Pencil className="size-5" />
@@ -122,7 +122,7 @@ const BannersClient = ({ banners }: { banners: Banner[] }) => {
         topContent={
           <div className="flex justify-between w-full items-center">
             <p className="text-sm font-medium">
-              Total Banners : {banners.length}
+              Total Promos : {promos.length}
             </p>
             <Pagination
               showControls
@@ -136,15 +136,18 @@ const BannersClient = ({ banners }: { banners: Banner[] }) => {
       >
         <TableHeader>
           <TableColumn key="imageUrl">Image</TableColumn>
-          <TableColumn key="name" allowsSorting>
+          <TableColumn key="title" allowsSorting>
             Name
+          </TableColumn>
+          <TableColumn key="promo_code" allowsSorting>
+            Promo Code
           </TableColumn>
           <TableColumn key="createdAt" allowsSorting>
             Created At
           </TableColumn>
           <TableColumn key="actions">Actions</TableColumn>
         </TableHeader>
-        <TableBody emptyContent={<EmptyPlaceholder />} items={bannersSorted}>
+        <TableBody emptyContent={<EmptyPlaceholder />} items={promosSorted}>
           {(item) => (
             <TableRow key={item.id}>
               {(columnKey) => (
@@ -158,4 +161,4 @@ const BannersClient = ({ banners }: { banners: Banner[] }) => {
   );
 };
 
-export default BannersClient;
+export default PromosClient;

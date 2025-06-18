@@ -2,11 +2,11 @@ import React from "react";
 
 import CategoriesClient from "./CategoriesClient";
 
-import { BASE_URL } from "@/config/credentials";
 import { Category } from "@/types/category.type";
+import { fetchApiFromServer } from "@/lib/fetchApi";
 
 const CategoriesWrapper = async () => {
-  const response = await fetch(BASE_URL! + "/api/proxy/categories", {
+  const response = await fetchApiFromServer("/categories", {
     method: "GET",
     headers: {
       "Content-Type": "application/json",

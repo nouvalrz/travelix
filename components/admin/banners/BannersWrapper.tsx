@@ -2,11 +2,11 @@ import React from "react";
 
 import BannersClient from "./BannersClient";
 
-import { BASE_URL } from "@/config/credentials";
 import { Banner } from "@/types/banner.type";
+import { fetchApiFromServer } from "@/lib/fetchApi";
 
 const BannersWrapper = async () => {
-  const response = await fetch(BASE_URL! + "/api/proxy/banners", {
+  const response = await fetchApiFromServer("/banners", {
     method: "GET",
     headers: {
       "Content-Type": "application/json",
