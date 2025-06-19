@@ -81,7 +81,11 @@ const PromosClient = ({ promos }: { promos: Promo[] }) => {
           <Image
             alt={cellValue as string}
             className="w-24 h-24 object-cover"
-            src={cellValue as string}
+            classNames={{
+              wrapper: "bg-no-repeat bg-cover bg-center",
+            }}
+            fallbackSrc="/images/fallback-image.jpg"
+            src={(cellValue as string) || "error"}
           />
         );
       case "createdAt":

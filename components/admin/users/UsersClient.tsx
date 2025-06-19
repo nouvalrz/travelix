@@ -3,27 +3,31 @@
 import React, { useCallback, useEffect, useMemo, useState } from "react";
 import { SortDescriptor } from "@react-types/shared";
 import { Button } from "@heroui/button";
-import { Pencil, Plus, Trash2 } from "lucide-react";
+import Link from "next/link";
+import { Pencil, Trash2 } from "lucide-react";
 import { Input } from "@heroui/input";
+import { Select, SelectItem } from "@heroui/select";
 import {
-  TableHeader,
-  TableColumn,
-  TableBody,
-  TableRow,
-  TableCell,
   Table,
+  TableBody,
+  TableCell,
+  TableColumn,
+  TableHeader,
+  TableRow,
 } from "@heroui/table";
 import { Pagination } from "@heroui/pagination";
 import { Image } from "@heroui/image";
-import Link from "next/link";
 
+import { User, UserRole } from "@/types/user.type";
 import EmptyPlaceholder from "@/components/EmptyPlaceholder";
-import { formatDateTime } from "@/lib/formatDate";
-import { Banner } from "@/types/banner.type";
+import RoleChip from "@/components/RoleChip";
 
-const BannersClient = ({ banners }: { banners: Banner[] }) => {
+const roleValues: (UserRole | "")[] = ["", "admin", "user"];
+
+const UsersClient = ({ users }: { users: User[] }) => {
   const [searchKeyword, setSearchKeyword] = useState<string>("");
-  const rowsPerPage = 10;
+  const [roleSelected, setRoleSelected] = useState<UserRole | "">("");
+  const rowsPerPage = 15;
 
   const [currentPage, setCurrentPage] = useState(1);
 
@@ -32,20 +36,26 @@ const BannersClient = ({ banners }: { banners: Banner[] }) => {
     direction: "descending",
   });
 
-  const bannersSearched = useMemo(() => {
-    return banners.filter((banner) =>
-      banner.name.toLowerCase().includes(searchKeyword.toLowerCase())
+  const usersRoleFiltered = useMemo(() => {
+    return users.filter((user) =>
+      !roleSelected ? true : user.role === roleSelected
     );
-  }, [searchKeyword, banners]);
+  }, [users, roleSelected]);
 
-  const pages = Math.ceil(bannersSearched.length / rowsPerPage) || 1;
+  const usersSearched = useMemo(() => {
+    return usersRoleFiltered.filter((user) =>
+      user.name.toLowerCase().includes(searchKeyword.toLowerCase())
+    );
+  }, [searchKeyword, usersRoleFiltered]);
 
-  const bannersSorted = useMemo(() => {
+  const pages = Math.ceil(usersSearched.length / rowsPerPage) || 1;
+
+  const usersSorted = useMemo(() => {
     const column = sortDescriptor.column;
 
-    return [...bannersSearched].sort((a, b) => {
-      let aValue: string | number = a[column as keyof Banner];
-      let bValue: string | number = b[column as keyof Banner];
+    return [...usersSearched].sort((a, b) => {
+      let aValue: string | number = a[column as keyof User] as string;
+      let bValue: string | number = b[column as keyof User] as string;
 
       if (column === "createdAt") {
         aValue = new Date(aValue).getTime();
@@ -59,37 +69,41 @@ const BannersClient = ({ banners }: { banners: Banner[] }) => {
 
       return 0;
     });
-  }, [sortDescriptor, bannersSearched]);
+  }, [sortDescriptor, usersSearched]);
 
-  const bannersPaginated = useMemo(() => {
+  const usersPaginated = useMemo(() => {
     const start = (currentPage - 1) * rowsPerPage;
     const end = start + rowsPerPage;
 
-    return bannersSorted.slice(start, end);
-  }, [currentPage, bannersSorted]);
+    return usersSorted.slice(start, end);
+  }, [currentPage, usersSorted]);
 
   useEffect(() => {
     setCurrentPage(1);
-  }, [searchKeyword, sortDescriptor.direction]);
+  }, [searchKeyword, sortDescriptor.direction, roleSelected]);
 
-  const renderCell = useCallback((banner: Banner, columnKey: React.Key) => {
-    const cellValue = banner[columnKey as keyof Banner];
+  const renderCell = useCallback((user: User, columnKey: React.Key) => {
+    const cellValue = user[columnKey as keyof User];
 
     switch (columnKey) {
-      case "imageUrl":
+      case "profilePictureUrl":
         return (
           <Image
             alt={cellValue}
-            className="w-24 h-24 object-cover"
+            className="w-16 h-16 object-cover rounded-full"
             classNames={{
-              wrapper: "bg-no-repeat bg-cover bg-center",
+              wrapper: "bg-no-repeat bg-cover bg-center rounded-full",
             }}
             fallbackSrc="/images/fallback-image.jpg"
             src={cellValue || "error"}
           />
         );
-      case "createdAt":
-        return <p>{formatDateTime(cellValue)}</p>;
+
+      case "role":
+        const role = cellValue as UserRole;
+
+        return <RoleChip role={role} />;
+
       case "actions":
         return (
           <div className="flex gap-2 items-center">
@@ -97,7 +111,7 @@ const BannersClient = ({ banners }: { banners: Banner[] }) => {
               isIconOnly
               as={Link}
               color="primary"
-              href={"/admin/banners/" + banner.id}
+              href={"/admin/transactions/" + user.id}
               variant="flat"
             >
               <Pencil className="size-5" />
@@ -108,7 +122,7 @@ const BannersClient = ({ banners }: { banners: Banner[] }) => {
           </div>
         );
       default:
-        return cellValue;
+        return cellValue?.toString();
     }
   }, []);
 
@@ -116,22 +130,35 @@ const BannersClient = ({ banners }: { banners: Banner[] }) => {
     <div className="mt-6">
       <div className="flex items-center gap-3">
         <Input
+          isClearable
           placeholder="Search by name..."
           value={searchKeyword}
           onValueChange={setSearchKeyword}
         />
-        <Button color="primary" startContent={<Plus className="size-12" />}>
-          Add Banner
-        </Button>
+
+        <div className="max-w-[240px] w-full">
+          <Select
+            classNames={{ value: "capitalize" }}
+            maxListboxHeight={600}
+            selectedKeys={new Set([roleSelected])}
+            onSelectionChange={(value) => {
+              setRoleSelected(value.currentKey as UserRole | "");
+            }}
+          >
+            {roleValues.map((role) => (
+              <SelectItem key={role} textValue={role || "All role"}>
+                <RoleChip role={role} />
+              </SelectItem>
+            ))}
+          </Select>
+        </div>
       </div>
       <Table
         className="mt-4"
         sortDescriptor={sortDescriptor}
         topContent={
           <div className="flex justify-between w-full items-center">
-            <p className="text-sm font-medium">
-              Total Banners : {banners.length}
-            </p>
+            <p className="text-sm font-medium">Total users : {users.length}</p>
             <Pagination
               showControls
               page={currentPage}
@@ -143,16 +170,13 @@ const BannersClient = ({ banners }: { banners: Banner[] }) => {
         onSortChange={setSortDescriptor}
       >
         <TableHeader>
-          <TableColumn key="imageUrl">Image</TableColumn>
-          <TableColumn key="name" allowsSorting>
-            Name
-          </TableColumn>
-          <TableColumn key="createdAt" allowsSorting>
-            Created At
-          </TableColumn>
+          <TableColumn key="profilePictureUrl">Profile</TableColumn>
+          <TableColumn key="name">Name</TableColumn>
+          <TableColumn key="email">Email</TableColumn>
+          <TableColumn key="role">Role</TableColumn>
           <TableColumn key="actions">Actions</TableColumn>
         </TableHeader>
-        <TableBody emptyContent={<EmptyPlaceholder />} items={bannersPaginated}>
+        <TableBody emptyContent={<EmptyPlaceholder />} items={usersPaginated}>
           {(item) => (
             <TableRow key={item.id}>
               {(columnKey) => (
@@ -166,4 +190,4 @@ const BannersClient = ({ banners }: { banners: Banner[] }) => {
   );
 };
 
-export default BannersClient;
+export default UsersClient;

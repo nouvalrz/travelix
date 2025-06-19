@@ -274,6 +274,7 @@ import { useRef, useState } from "react";
 // import { Area } from "react-easy-crop/types";
 import Cropper from "react-cropper";
 import "cropperjs/dist/cropper.css";
+import { Image } from "@heroui/image";
 
 type ImageInputFieldType = {
   label?: string;
@@ -281,6 +282,7 @@ type ImageInputFieldType = {
   errorMessage?: string;
   previewClassName?: string;
   onClick: () => void;
+  previousImageUrl?: string | null;
 };
 
 export const ImageInputField: React.FC<ImageInputFieldType> = ({
@@ -288,11 +290,12 @@ export const ImageInputField: React.FC<ImageInputFieldType> = ({
   errorMessage,
   image,
   previewClassName,
+  previousImageUrl,
   onClick,
 }) => {
   return (
     // eslint-disable-next-line jsx-a11y/click-events-have-key-events, jsx-a11y/no-static-element-interactions
-    <div onClick={onClick}>
+    <div className="inline-block" onClick={onClick}>
       {label && <p className="text-sm text-primary-900 mb-2">{label}</p>}
       {image ? (
         // eslint-disable-next-line @next/next/no-img-element
@@ -304,6 +307,14 @@ export const ImageInputField: React.FC<ImageInputFieldType> = ({
           )}
           src={URL.createObjectURL(image)}
         />
+      ) : previousImageUrl ? (
+        <Image
+          className={clsx(
+            "w-32 h-32 object-cover cursor-pointer",
+            previewClassName
+          )}
+          src={previousImageUrl}
+        />
       ) : (
         <div
           className={clsx(
@@ -314,7 +325,9 @@ export const ImageInputField: React.FC<ImageInputFieldType> = ({
           <p className="text-xs text-gray-600">Upload Image</p>
         </div>
       )}
-      {errorMessage && <p>{errorMessage}</p>}
+      {errorMessage && (
+        <p className="text-xs text-red-500 mt-1">{errorMessage}</p>
+      )}
     </div>
   );
 };

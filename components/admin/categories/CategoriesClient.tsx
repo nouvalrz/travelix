@@ -80,7 +80,11 @@ const CategoriesClient = ({ categories }: { categories: Category[] }) => {
           <Image
             alt={cellValue}
             className="w-24 h-24 object-cover"
-            src={cellValue}
+            classNames={{
+              wrapper: "bg-no-repeat bg-cover bg-center",
+            }}
+            fallbackSrc="/images/fallback-image.jpg"
+            src={cellValue || "error"}
           />
         );
 
@@ -116,7 +120,12 @@ const CategoriesClient = ({ categories }: { categories: Category[] }) => {
           value={searchKeyword}
           onValueChange={setSearchKeyword}
         />
-        <Button color="primary" startContent={<Plus className="size-12" />}>
+        <Button
+          as={Link}
+          color="primary"
+          href="/admin/categories/add"
+          startContent={<Plus className="size-12" />}
+        >
           Add Category
         </Button>
       </div>

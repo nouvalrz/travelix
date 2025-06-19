@@ -1,0 +1,32 @@
+// Project-local debug tasks
+//
+// For more documentation on how to configure debug tasks,
+// see: https://zed.dev/docs/debugger
+[
+  {
+    "label": "Next.js: debug full stack",
+    "adapter": "JavaScript",
+    "name": "Next.js: debug full stack",
+    "type": "node",
+    "request": "launch",
+    "program": "${workspaceFolder}/node_modules/next/dist/bin/next",
+    "runtimeArgs": ["--inspect"],
+    "skipFiles": ["<node_internals>/**"],
+    "serverReadyAction": {
+      "action": "debugWithChrome",
+      "killOnServerStop": true,
+      "pattern": "- Local:.+(https?://.+)",
+      "uriFormat": "%s",
+      "webRoot": "${workspaceFolder}"
+    }
+  },
+  {
+    "label": "Inspect ",
+    "adapter": "JavaScript",
+    "type": "pwa-chrome",
+    "request": "launch",
+    "url": "http://localhost:5500", // Fill your URL here.
+    "program": "$ZED_FILE",
+    "webRoot": "${ZED_WORKTREE_ROOT}"
+  }
+]
