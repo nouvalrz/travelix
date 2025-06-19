@@ -46,3 +46,17 @@ export const fetchUpdateCategory = async (
 
   return responseData;
 };
+
+export const fetchDeleteCategory = async (id: string) => {
+  const response = await fetch("/api/proxy/delete-category/" + id, {
+    method: "DELETE",
+    headers: {
+      "Content-Type": "application/json",
+    },
+    credentials: "same-origin",
+  });
+
+  const responseData = await response.json();
+
+  return responseData;
+};

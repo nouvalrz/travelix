@@ -15,12 +15,21 @@ import { Pagination } from "@heroui/pagination";
 import { Button } from "@heroui/button";
 import { Pencil, Plus, Trash2 } from "lucide-react";
 import Link from "next/link";
+import { useDisclosure } from "@heroui/modal";
+import { addToast } from "@heroui/toast";
+import { useRouter } from "next/navigation";
+
+import DeleteModal from "../DeleteModal";
 
 import { Category } from "@/types/category.type";
 import { formatDateTime } from "@/lib/formatDate";
 import EmptyPlaceholder from "@/components/EmptyPlaceholder";
+import { fetchDeleteCategory } from "@/lib/data/client/categories";
 
 const CategoriesClient = ({ categories }: { categories: Category[] }) => {
+  const router = useRouter();
+  const [selectedDelete, setSelectedDelete] = useState<Category | null>(null);
+  const { isOpen, onOpen, onOpenChange, onClose } = useDisclosure();
   const [searchKeyword, setSearchKeyword] = useState<string>("");
   const rowsPerPage = 10;
 
@@ -67,6 +76,32 @@ const CategoriesClient = ({ categories }: { categories: Category[] }) => {
     return categoriesSorted.slice(start, end);
   }, [currentPage, categoriesSorted]);
 
+  const handleDeleteCategory = useCallback(async () => {
+    try {
+      await fetchDeleteCategory(selectedDelete!.id);
+      onClose();
+      addToast({
+        color: "success",
+        title: "Success",
+        description: "Successfully delete category",
+      });
+      router.refresh();
+    } catch (error) {
+      if (error instanceof Error) {
+        addToast({
+          color: "danger",
+          title: "Error",
+          description: error.message,
+        });
+      }
+    }
+  }, [selectedDelete]);
+
+  const handleOpenModalDelete = (category: Category) => {
+    setSelectedDelete(category);
+    onOpen();
+  };
+
   useEffect(() => {
     setCurrentPage(1);
   }, [searchKeyword, sortDescriptor.direction]);
@@ -102,7 +137,12 @@ const CategoriesClient = ({ categories }: { categories: Category[] }) => {
             >
               <Pencil className="size-5" />
             </Button>
-            <Button isIconOnly color="danger" variant="flat">
+            <Button
+              isIconOnly
+              color="danger"
+              variant="flat"
+              onPress={() => handleOpenModalDelete(category)}
+            >
               <Trash2 className="size-5" />
             </Button>
           </div>
@@ -170,6 +210,16 @@ const CategoriesClient = ({ categories }: { categories: Category[] }) => {
           )}
         </TableBody>
       </Table>
+      <DeleteModal
+        modalProps={{ isOpen: isOpen, onOpenChange: onOpenChange }}
+        title="Delete Category"
+        onDelete={handleDeleteCategory}
+      >
+        <p>
+          Are you sure want to delete{" "}
+          <span className="text-primary">{selectedDelete?.name}</span>?
+        </p>
+      </DeleteModal>
     </div>
   );
 };
