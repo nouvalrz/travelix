@@ -16,13 +16,22 @@ import {
 import { Pagination } from "@heroui/pagination";
 import { Image } from "@heroui/image";
 import Link from "next/link";
+import { useDisclosure } from "@heroui/modal";
+import { addToast } from "@heroui/toast";
+import { useRouter } from "next/navigation";
+
+import DeleteModal from "../DeleteModal";
 
 import EmptyPlaceholder from "@/components/EmptyPlaceholder";
 import { formatDateTime } from "@/lib/formatDate";
 import { Banner } from "@/types/banner.type";
+import { fetchDeleteBanner } from "@/lib/data/client/banners";
 
 const BannersClient = ({ banners }: { banners: Banner[] }) => {
+  const router = useRouter();
   const [searchKeyword, setSearchKeyword] = useState<string>("");
+  const [selectedDelete, setSelectedDelete] = useState<Banner | null>(null);
+  const { isOpen, onOpen, onOpenChange, onClose } = useDisclosure();
   const rowsPerPage = 10;
 
   const [currentPage, setCurrentPage] = useState(1);
@@ -68,6 +77,32 @@ const BannersClient = ({ banners }: { banners: Banner[] }) => {
     return bannersSorted.slice(start, end);
   }, [currentPage, bannersSorted]);
 
+  const handleDeleteBanner = useCallback(async () => {
+    try {
+      await fetchDeleteBanner(selectedDelete!.id);
+      onClose();
+      addToast({
+        color: "success",
+        title: "Success",
+        description: "Successfully delete banner",
+      });
+      router.refresh();
+    } catch (error) {
+      if (error instanceof Error) {
+        addToast({
+          color: "danger",
+          title: "Error",
+          description: error.message,
+        });
+      }
+    }
+  }, [selectedDelete]);
+
+  const handleOpenModalDelete = (banner: Banner) => {
+    setSelectedDelete(banner);
+    onOpen();
+  };
+
   useEffect(() => {
     setCurrentPage(1);
   }, [searchKeyword, sortDescriptor.direction]);
@@ -102,7 +137,12 @@ const BannersClient = ({ banners }: { banners: Banner[] }) => {
             >
               <Pencil className="size-5" />
             </Button>
-            <Button isIconOnly color="danger" variant="flat">
+            <Button
+              isIconOnly
+              color="danger"
+              variant="flat"
+              onPress={() => handleOpenModalDelete(banner)}
+            >
               <Trash2 className="size-5" />
             </Button>
           </div>
@@ -120,7 +160,12 @@ const BannersClient = ({ banners }: { banners: Banner[] }) => {
           value={searchKeyword}
           onValueChange={setSearchKeyword}
         />
-        <Button color="primary" startContent={<Plus className="size-12" />}>
+        <Button
+          as={Link}
+          color="primary"
+          href="/admin/banners/add"
+          startContent={<Plus className="size-12" />}
+        >
           Add Banner
         </Button>
       </div>
@@ -162,6 +207,16 @@ const BannersClient = ({ banners }: { banners: Banner[] }) => {
           )}
         </TableBody>
       </Table>
+      <DeleteModal
+        modalProps={{ isOpen: isOpen, onOpenChange: onOpenChange }}
+        title="Delete Banner"
+        onDelete={handleDeleteBanner}
+      >
+        <p>
+          Are you sure want to delete{" "}
+          <span className="text-primary">{selectedDelete?.name}</span>?
+        </p>
+      </DeleteModal>
     </div>
   );
 };

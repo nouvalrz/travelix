@@ -294,40 +294,42 @@ export const ImageInputField: React.FC<ImageInputFieldType> = ({
   onClick,
 }) => {
   return (
-    // eslint-disable-next-line jsx-a11y/click-events-have-key-events, jsx-a11y/no-static-element-interactions
-    <div className="inline-block" onClick={onClick}>
-      {label && <p className="text-sm text-primary-900 mb-2">{label}</p>}
-      {image ? (
-        // eslint-disable-next-line @next/next/no-img-element
-        <img
-          alt="profile-preview"
-          className={clsx(
-            "w-32 h-32 rounded-full cursor-pointer",
-            previewClassName
-          )}
-          src={URL.createObjectURL(image)}
-        />
-      ) : previousImageUrl ? (
-        <Image
-          className={clsx(
-            "w-32 h-32 object-cover cursor-pointer",
-            previewClassName
-          )}
-          src={previousImageUrl}
-        />
-      ) : (
-        <div
-          className={clsx(
-            "w-32 h-32 rounded-full bg-gray-100 flex justify-center items-center cursor-pointer",
-            previewClassName
-          )}
-        >
-          <p className="text-xs text-gray-600">Upload Image</p>
-        </div>
-      )}
-      {errorMessage && (
-        <p className="text-xs text-red-500 mt-1">{errorMessage}</p>
-      )}
+    <div className="w-full">
+      {/* eslint-disable-next-line jsx-a11y/click-events-have-key-events, jsx-a11y/no-static-element-interactions */}
+      <div className="inline-block" onClick={onClick}>
+        {label && <p className="text-sm text-primary-900 mb-2">{label}</p>}
+        {image ? (
+          // eslint-disable-next-line @next/next/no-img-element
+          <img
+            alt="profile-preview"
+            className={clsx(
+              "w-32 h-32 rounded-full cursor-pointer",
+              previewClassName
+            )}
+            src={URL.createObjectURL(image)}
+          />
+        ) : previousImageUrl ? (
+          <Image
+            className={clsx(
+              "w-32 h-32 object-cover cursor-pointer",
+              previewClassName
+            )}
+            src={previousImageUrl}
+          />
+        ) : (
+          <div
+            className={clsx(
+              "w-32 h-32 rounded-full bg-gray-100 flex justify-center items-center cursor-pointer",
+              previewClassName
+            )}
+          >
+            <p className="text-xs text-gray-600">Upload Image</p>
+          </div>
+        )}
+        {errorMessage && (
+          <p className="text-xs text-red-500 mt-1">{errorMessage}</p>
+        )}
+      </div>
     </div>
   );
 };
@@ -341,6 +343,7 @@ type ImageInputPickerType = {
   cropShape?: string;
   description?: React.ReactNode;
   maxSizeInMb?: number;
+  aspectRatio?: number;
 };
 
 export const ImageInputPicker: React.FC<ImageInputPickerType> = ({
@@ -350,6 +353,7 @@ export const ImageInputPicker: React.FC<ImageInputPickerType> = ({
   onResult,
   compress = 0.7,
   cropShape = "rect",
+  aspectRatio,
   description,
   maxSizeInMb = 2,
 }) => {
@@ -371,7 +375,7 @@ export const ImageInputPicker: React.FC<ImageInputPickerType> = ({
         addToast({
           color: "danger",
           title: "File size limit",
-          description: "Max image size is 2MB",
+          description: `Max image size is ${maxSizeInMb}MB`,
         });
 
         return;
@@ -430,7 +434,7 @@ export const ImageInputPicker: React.FC<ImageInputPickerType> = ({
                 <div className="relative w-[400px] h-[400px]">
                   <Cropper
                     ref={cropperRef}
-                    aspectRatio={NaN} // free aspect ratio
+                    aspectRatio={aspectRatio}
                     autoCropArea={1}
                     background={false}
                     cropBoxMovable={true}
