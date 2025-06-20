@@ -16,14 +16,24 @@ import {
   Table,
 } from "@heroui/table";
 import { Pagination } from "@heroui/pagination";
+import { useDisclosure } from "@heroui/modal";
+import { addToast } from "@heroui/toast";
+import { useRouter } from "next/navigation";
+
+import DeleteModal from "../DeleteModal";
 
 import { formatDateTime } from "@/lib/formatDate";
 import { Promo } from "@/types/promo.type";
 import EmptyPlaceholder from "@/components/EmptyPlaceholder";
+import { fetchDeletePromo } from "@/lib/data/client/promos";
 
 const PromosClient = ({ promos }: { promos: Promo[] }) => {
+  const router = useRouter();
   const [searchKeyword, setSearchKeyword] = useState<string>("");
   const rowsPerPage = 10;
+
+  const [selectedDelete, setSelectedDelete] = useState<Promo | null>(null);
+  const { isOpen, onOpen, onOpenChange, onClose } = useDisclosure();
 
   const [currentPage, setCurrentPage] = useState(1);
 
@@ -68,6 +78,32 @@ const PromosClient = ({ promos }: { promos: Promo[] }) => {
     return promosSorted.slice(start, end);
   }, [currentPage, promosSorted]);
 
+  const handleDeletePromo = useCallback(async () => {
+    try {
+      await fetchDeletePromo(selectedDelete!.id);
+      onClose();
+      addToast({
+        color: "success",
+        title: "Success",
+        description: "Successfully delete banner",
+      });
+      router.refresh();
+    } catch (error) {
+      if (error instanceof Error) {
+        addToast({
+          color: "danger",
+          title: "Error",
+          description: error.message,
+        });
+      }
+    }
+  }, [selectedDelete]);
+
+  const handleOpenModalDelete = (promo: Promo) => {
+    setSelectedDelete(promo);
+    onOpen();
+  };
+
   useEffect(() => {
     setCurrentPage(1);
   }, [searchKeyword, sortDescriptor.direction]);
@@ -102,7 +138,12 @@ const PromosClient = ({ promos }: { promos: Promo[] }) => {
             >
               <Pencil className="size-5" />
             </Button>
-            <Button isIconOnly color="danger" variant="flat">
+            <Button
+              isIconOnly
+              color="danger"
+              variant="flat"
+              onPress={() => handleOpenModalDelete(promo)}
+            >
               <Trash2 className="size-5" />
             </Button>
           </div>
@@ -120,8 +161,13 @@ const PromosClient = ({ promos }: { promos: Promo[] }) => {
           value={searchKeyword}
           onValueChange={setSearchKeyword}
         />
-        <Button color="primary" startContent={<Plus className="size-12" />}>
-          Add Category
+        <Button
+          as={Link}
+          color="primary"
+          href="/admin/promos/add"
+          startContent={<Plus className="size-12" />}
+        >
+          Add Promo
         </Button>
       </div>
       <Table
@@ -165,6 +211,16 @@ const PromosClient = ({ promos }: { promos: Promo[] }) => {
           )}
         </TableBody>
       </Table>
+      <DeleteModal
+        modalProps={{ isOpen: isOpen, onOpenChange: onOpenChange }}
+        title="Delete Banner"
+        onDelete={handleDeletePromo}
+      >
+        <p>
+          Are you sure want to delete{" "}
+          <span className="text-primary">{selectedDelete?.title}</span>?
+        </p>
+      </DeleteModal>
     </div>
   );
 };
