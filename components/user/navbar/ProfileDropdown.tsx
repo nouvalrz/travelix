@@ -53,8 +53,8 @@ const ProfileDropdown = ({
             <Link href="/admin">Admin Dashboard</Link>
           </DropdownItem>
         ) : null}
-        <DropdownItem key="profile" startContent={<User className="size-5" />}>
-          <Link href="/profile">Profile</Link>
+        <DropdownItem key="me" startContent={<User className="size-5" />}>
+          <Link href="/me">Profile</Link>
         </DropdownItem>
         <DropdownItem
           key="logout"
