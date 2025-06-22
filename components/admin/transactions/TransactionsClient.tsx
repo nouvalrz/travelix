@@ -4,7 +4,7 @@ import React, { useCallback, useEffect, useMemo, useState } from "react";
 import { SortDescriptor } from "@react-types/shared";
 import { Button } from "@heroui/button";
 import Link from "next/link";
-import { Pencil, Trash2 } from "lucide-react";
+import { Pencil } from "lucide-react";
 import { Input } from "@heroui/input";
 import {
   Table,
@@ -141,9 +141,6 @@ const TransactionsClient = ({
                 variant="flat"
               >
                 <Pencil className="size-5" />
-              </Button>
-              <Button isIconOnly color="danger" variant="flat">
-                <Trash2 className="size-5" />
               </Button>
             </div>
           );

@@ -20,8 +20,12 @@ const TimerFromISO = dynamic(() => import("@/components/TimerFromISO"), {
 
 const TransactionPaymentInfo = ({
   transaction,
+  hideReminder = false,
+  disableUplaod = false,
 }: {
   transaction: TransactionWithAdditionalStatus;
+  hideReminder?: boolean;
+  disableUplaod?: boolean;
 }) => {
   const totalPrice = transaction.transaction_items.reduce(
     (acc, item) => acc + item.quantity * (item.price_discount ?? item.price),
@@ -41,7 +45,7 @@ const TransactionPaymentInfo = ({
 
   return (
     <div>
-      {transaction.status === "pending" && (
+      {!hideReminder && transaction.status === "pending" && (
         <Card shadow="sm">
           <CardBody>
             <div className="flex justify-between items-center">
@@ -113,7 +117,9 @@ const TransactionPaymentInfo = ({
                       <ImageInputField
                         image={image}
                         previewClassName="w-60 !h-auto !min-h-60 !object-contain !rounded-lg"
-                        onClick={toggleModalImagePicker}
+                        onClick={
+                          disableUplaod ? () => {} : toggleModalImagePicker
+                        }
                       />
                     </div>
                     <ImageInputPicker
@@ -124,7 +130,7 @@ const TransactionPaymentInfo = ({
                   </div>
                 )}
               </div>
-              {transaction.status === "pending" && (
+              {!disableUplaod && transaction.status === "pending" && (
                 <div className="flex justify-end mt-2">
                   <Button
                     color="primary"

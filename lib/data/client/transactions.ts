@@ -1,3 +1,5 @@
+import { TransactionStatusWithAdditional } from "@/lib/store/useTransactiosListStore";
+
 export const fetchTransactions = async () => {
   const response = await fetch("/api/proxy/my-transactions", {
     method: "GET",
@@ -40,6 +42,27 @@ export const fetchUpdatePaymentProof = async (
         "Content-Type": "application/json",
       },
       body: JSON.stringify({ proofPaymentUrl: proofUrl }),
+    }
+  );
+
+  const responseData = await response.json();
+
+  return responseData;
+};
+
+export const fetchUpdateTransactionStatus = async (
+  transactionId: string,
+  newStatus: TransactionStatusWithAdditional
+) => {
+  const response = await fetch(
+    "/api/proxy/update-transaction-status/" + transactionId,
+    {
+      method: "POST",
+      credentials: "same-origin",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify({ status: newStatus }),
     }
   );
 
