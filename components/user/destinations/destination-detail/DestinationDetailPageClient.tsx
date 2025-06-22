@@ -125,7 +125,7 @@ const DestinationDetailPageClient = ({
                   dangerouslySetInnerHTML={{
                     __html: DOMPurify.sanitize(destination.facilities),
                   }}
-                  className="mt-4"
+                  className="mt-4 prose"
                 />
               </div>
               <div>

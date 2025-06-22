@@ -169,8 +169,10 @@ const DestinationsClient = ({
         </div>
 
         <Button
+          as={Link}
           className="flex-shrink-0"
           color="primary"
+          href="/admin/destinations/add"
           startContent={<Plus className="size-5" />}
         >
           Add Destination

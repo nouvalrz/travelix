@@ -276,6 +276,72 @@ import Cropper from "react-cropper";
 import "cropperjs/dist/cropper.css";
 import { Image } from "@heroui/image";
 
+type MultipleImageInputFieldProps = {
+  label?: string;
+  images?: (File | string)[];
+  errorMessage?: string;
+  previewClassName?: string;
+  onClick: () => void;
+  previousImageUrls?: string[];
+  onDeleteImage: (index: number) => void;
+};
+
+export const MultipleImageInputField = ({
+  onClick,
+  errorMessage,
+  images,
+  label,
+  previewClassName,
+  onDeleteImage,
+}: MultipleImageInputFieldProps) => {
+  return (
+    <div className="w-full">
+      {label && <p className="text-sm text-primary-900 mb-2">{label}</p>}
+      <div className="w-full flex gap-3 rounded-lg p-3 border border-gray-300 border-dashed items-center">
+        <button
+          className="w-48 h-48 bg-gray-100 flex justify-center items-center cursor-pointer flex-shrink-0 rounded-lg"
+          type="button"
+          onClick={onClick}
+        >
+          <p className="text-xs text-gray-600">Add Image</p>
+        </button>
+        <div className="flex-grow overflow-x-scroll flex items-center gap-3">
+          {images &&
+            images.map((image, index) => {
+              const isFile = image instanceof File;
+
+              return (
+                <div
+                  key={isFile ? image.name : image}
+                  className="relative group flex-shrink-0"
+                >
+                  <Button
+                    className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2  hidden group-hover:flex z-20"
+                    onPress={() => onDeleteImage(index)}
+                  >
+                    Delete Image
+                  </Button>
+                  <Image
+                    className="w-64 aspect-[4/3] object-contain "
+                    src={isFile ? URL.createObjectURL(image) : image}
+                  />
+                </div>
+              );
+            })}
+          {/* {Array.from({ length: 100 }).map((_, index) => (
+            <div key={index} className="w-64 h-32 bg-gray-500 flex-shrink-0">
+              p
+            </div>
+          ))} */}
+        </div>
+      </div>
+      {errorMessage && (
+        <p className="text-xs text-red-500 mt-1">{errorMessage}</p>
+      )}
+    </div>
+  );
+};
+
 type ImageInputFieldType = {
   label?: string;
   image?: File | null;
@@ -411,7 +477,9 @@ export const ImageInputPicker: React.FC<ImageInputPickerType> = ({
 
             return;
           }
-          const file = new File([blob], "cropped.jpg", { type: "image/jpeg" });
+          const file = new File([blob], `cropped-${new Date()}.jpg`, {
+            type: "image/jpeg",
+          });
 
           resolve(file);
         },
@@ -475,6 +543,8 @@ export const ImageInputPicker: React.FC<ImageInputPickerType> = ({
                   const result = await getCroppedImage();
 
                   if (result) onResult(result);
+                  setImageSrc(null);
+                  if (inputRef.current) inputRef.current.value = "";
                   onClose();
                 }}
               >

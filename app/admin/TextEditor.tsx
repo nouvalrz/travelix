@@ -25,6 +25,7 @@ const TextEditor = (props: TextEditorProps) => {
       {props.label && <p className="text-sm">{props.label}</p>}
       <ReactQuill
         className="mt-1 flex-grow"
+        defaultValue=""
         formats={formats}
         modules={modules}
         placeholder="Write your content..."

@@ -23,5 +23,5 @@ export const fetchUploadImage = async (file: File) => {
     });
   }
 
-  return responseData;
+  return responseData as { url: string };
 };
