@@ -27,7 +27,10 @@ import {
 import { parseGoogleMapsIframeLatLng } from "@/lib/mapsIframe";
 import { AppError } from "@/lib/appError";
 import { fetchUploadImage } from "@/lib/data/client/uploadImage";
-import { fetchAddDestination } from "@/lib/data/client/destinations";
+import {
+  fetchAddDestination,
+  fetchUpdateDestination,
+} from "@/lib/data/client/destinations";
 
 type DestinationFormProps = {
   destination?: Destination;
@@ -131,7 +134,24 @@ const DestinationForm = ({
 
     await fetchAddDestination({ ...data, imageUrls: destinationImageUrls });
   };
-  const handleUpdateDestination = async (data: DestinationFormType) => {};
+  const handleUpdateDestination = async (data: DestinationFormType) => {
+    const destinationImageUrls = await Promise.all(
+      data.imageUrls.map(async (image) => {
+        if (image instanceof File) {
+          const { url } = await fetchUploadImage(image);
+
+          return url;
+        }
+
+        return image;
+      })
+    );
+
+    await fetchUpdateDestination(destination!.id, {
+      ...data,
+      imageUrls: destinationImageUrls,
+    });
+  };
 
   return (
     <Card shadow="sm">

@@ -1,10 +1,13 @@
 export function parseGoogleMapsIframeLatLng(
-  iframeUrl: string
+  iframeHtml: string
 ): { lat: number; lng: number } | null {
   try {
-    const url = new URL(iframeUrl);
+    const srcMatch = iframeHtml.match(/src=['"]([^'"]+)['"]/);
 
-    // Case: /maps/embed?q=LAT,LNG
+    if (!srcMatch || !srcMatch[1]) return null;
+
+    const url = new URL(srcMatch[1]);
+
     const q = url.searchParams.get("q");
 
     if (q && /^[\d\.\-]+,[\d\.\-]+$/.test(q)) {
@@ -13,16 +16,16 @@ export function parseGoogleMapsIframeLatLng(
       return { lat, lng };
     }
 
-    // Case: /maps/embed?pb=... and extract !2dLNG!3dLAT
     const pb = url.searchParams.get("pb");
 
     if (pb) {
-      const match = pb.match(/!2d([-\d.]+)!3d([-\d.]+)/);
+      const latMatch = pb.match(/!3d([-\d.]+)/);
+      const lngMatch = pb.match(/!2d([-\d.]+)/);
 
-      if (match) {
+      if (latMatch && lngMatch) {
         return {
-          lat: parseFloat(match[2]),
-          lng: parseFloat(match[1]),
+          lat: parseFloat(latMatch[1]),
+          lng: parseFloat(lngMatch[1]),
         };
       }
     }
@@ -32,6 +35,7 @@ export function parseGoogleMapsIframeLatLng(
     return null;
   }
 }
+
 export function generateGoogleMapsIframeLatLng(
   lat: number,
   lng: number,
