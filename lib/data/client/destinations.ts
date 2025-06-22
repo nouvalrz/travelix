@@ -32,3 +32,19 @@ export const fetchUpdateDestination = async (
 
   return responseData;
 };
+
+export const fetchDeleteDestination = async (id: string) => {
+  const response = await fetch("/api/proxy/delete-activity/" + id, {
+    method: "DELETE",
+    headers: {
+      "Content-Type": "application/json",
+    },
+    credentials: "same-origin",
+  });
+
+  const responseData = await response.json();
+
+  if (!response.ok) throw new Error(responseData.errors);
+
+  return responseData;
+};

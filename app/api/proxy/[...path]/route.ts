@@ -23,9 +23,9 @@ export const GET = async (req: NextRequest) => {
       },
     });
 
-    const data = await response.arrayBuffer();
+    const data = await response.json();
 
-    return new NextResponse(data, {
+    return NextResponse.json(data, {
       status: response.status,
       headers: response.headers,
     });
@@ -71,9 +71,9 @@ export const POST = async (req: NextRequest) => {
       body: body,
     });
 
-    const responseBody = await response.arrayBuffer();
+    const data = await response.json();
 
-    return new NextResponse(responseBody, {
+    return NextResponse.json(data, {
       status: response.status,
       headers: response.headers,
     });
@@ -105,9 +105,9 @@ export const DELETE = async (req: NextRequest) => {
       },
     });
 
-    const data = await response.arrayBuffer();
+    const data = await response.json();
 
-    return new NextResponse(data, {
+    return NextResponse.json(data, {
       status: response.status,
       headers: response.headers,
     });

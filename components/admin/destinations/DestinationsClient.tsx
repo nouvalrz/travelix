@@ -17,11 +17,18 @@ import {
 import { Pagination } from "@heroui/pagination";
 import { Autocomplete, AutocompleteItem } from "@heroui/autocomplete";
 import { Image } from "@heroui/image";
+import { useDisclosure } from "@heroui/modal";
+import { addToast } from "@heroui/toast";
+import { useRouter } from "next/navigation";
+
+import DeleteModal from "../DeleteModal";
 
 import { Destination } from "@/types/destination.type";
 import { formatDateTime } from "@/lib/formatDate";
 import EmptyPlaceholder from "@/components/EmptyPlaceholder";
 import { Category } from "@/types/category.type";
+import { fetchDeleteDestination } from "@/lib/data/client/destinations";
+import { AppError } from "@/lib/appError";
 
 const DestinationsClient = ({
   destinations,
@@ -30,6 +37,7 @@ const DestinationsClient = ({
   destinations: Destination[];
   categories: Category[];
 }) => {
+  const router = useRouter();
   const [searchKeyword, setSearchKeyword] = useState<string>("");
   const [categoryFilterSelected, setCategoryFilterSelected] = useState<
     string | null
@@ -37,6 +45,11 @@ const DestinationsClient = ({
   const rowsPerPage = 10;
 
   const [currentPage, setCurrentPage] = useState(1);
+
+  const [selectedDelete, setSelectedDelete] = useState<Destination | null>(
+    null
+  );
+  const { isOpen, onOpen, onOpenChange, onClose } = useDisclosure();
 
   const [sortDescriptor, setSortDescriptor] = useState<SortDescriptor>({
     column: "createdAt",
@@ -87,6 +100,39 @@ const DestinationsClient = ({
     return destinationsSorted.slice(start, end);
   }, [currentPage, destinationsSorted]);
 
+  const handleDeletePromo = useCallback(async () => {
+    try {
+      await fetchDeleteDestination(selectedDelete!.id);
+      onClose();
+      addToast({
+        color: "success",
+        title: "Success",
+        description: "Successfully delete destination",
+      });
+      router.refresh();
+    } catch (error) {
+      if (error instanceof AppError) {
+        addToast({
+          color: "danger",
+          title: error.message,
+          description: error.errors?.join(", "),
+        });
+      }
+      if (error instanceof Error) {
+        addToast({
+          color: "danger",
+          title: "Error",
+          description: error.message,
+        });
+      }
+    }
+  }, [selectedDelete]);
+
+  const handleOpenModalDelete = (destination: Destination) => {
+    setSelectedDelete(destination);
+    onOpen();
+  };
+
   useEffect(() => {
     setCurrentPage(1);
   }, [searchKeyword, categoryFilterSelected, sortDescriptor.direction]);
@@ -127,7 +173,12 @@ const DestinationsClient = ({
               >
                 <Pencil className="size-5" />
               </Button>
-              <Button isIconOnly color="danger" variant="flat">
+              <Button
+                isIconOnly
+                color="danger"
+                variant="flat"
+                onPress={() => handleOpenModalDelete(destination)}
+              >
                 <Trash2 className="size-5" />
               </Button>
             </div>
@@ -220,6 +271,16 @@ const DestinationsClient = ({
           )}
         </TableBody>
       </Table>
+      <DeleteModal
+        modalProps={{ isOpen: isOpen, onOpenChange: onOpenChange }}
+        title="Delete Destination"
+        onDelete={handleDeletePromo}
+      >
+        <p>
+          Are you sure want to delete{" "}
+          <span className="text-primary">{selectedDelete?.title}</span>?
+        </p>
+      </DeleteModal>
     </div>
   );
 };
