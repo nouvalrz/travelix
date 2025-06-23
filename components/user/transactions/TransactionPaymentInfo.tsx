@@ -68,38 +68,38 @@ const TransactionPaymentInfo = ({
         <hr />
         <CardBody>
           <div>
-            <div className="grid grid-cols-2">
+            <div className="flex items-start lg:gap-8 lg:flex-row flex-col gap-4">
               <div>
-                <p>Virtual Account Number</p>
+                <p className="text-sm font-medium">Virtual Account Number</p>
                 <Snippet className="mt-1" symbol="">
                   {transaction.payment_method.virtual_account_number}
                 </Snippet>
               </div>
-              <div className="flex gap-8">
-                <div>
-                  <p>Payment Method</p>
-                  <p>{transaction.payment_method.virtual_account_name}</p>
-                </div>
-                <div>
-                  <p>Payment Method</p>
-                  <Image
-                    alt={transaction.payment_method.name}
-                    className="w-32 h-12 object-contain mt-1"
-                    classNames={{ wrapper: "bg-no-repeat bg-cover bg-center" }}
-                    fallbackSrc="/images/fallback-image.jpg"
-                    src={transaction.payment_method.imageUrl}
-                  />
-                </div>
+              <div>
+                <p className="text-sm font-medium">Payment Account Name</p>
+                <Snippet className="mt-1" symbol="">
+                  {transaction.payment_method.virtual_account_name}
+                </Snippet>
+              </div>
+              <div>
+                <p className="text-sm font-medium">Payment Method</p>
+                <Image
+                  alt={transaction.payment_method.name}
+                  className="w-32 h-12 object-contain mt-1"
+                  classNames={{ wrapper: "bg-no-repeat bg-cover bg-center" }}
+                  fallbackSrc="/images/fallback-image.jpg"
+                  src={transaction.payment_method.imageUrl}
+                />
               </div>
             </div>
             <div className="mt-4">
-              <p>Total Price</p>
+              <p className="text-sm font-medium">Total Price</p>
               <p className="mt-1 font-semibold text-lg text-red-600">
                 {formatRupiah(totalPrice)}
               </p>
             </div>
             <div className="mt-4">
-              <p>Payment Proof</p>
+              <p className="text-sm font-medium">Payment Proof</p>
               <div className="w-full p-2 border border-gray-300 border-dashed mt-2 rounded-lg flex justify-center">
                 {(transaction.status === "cancelled" ||
                   transaction.status === "expired") && <p>No Payment Proof</p>}

@@ -77,11 +77,11 @@ const TransactionsListQuery = () => {
           </Select>
         </div>
       </div>
-      <div className="flex gap-2 items-center  mt-3 flex-wrap">
+      <div className="flex gap-2 items-center  mt-3 overflow-x-auto">
         {Object.entries(filterOptions).map(([key, value]) => (
           <Button
             key={key}
-            className={clsx("capitalize border-1")}
+            className={clsx("capitalize border-1 flex-shrink-0")}
             color="primary"
             variant={statusFilter === key ? "solid" : "bordered"}
             onPress={() =>

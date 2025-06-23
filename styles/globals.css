@@ -38,3 +38,8 @@
   width: 100% !important;
   height: 400px !important;
 }
+
+.cropper-point {
+  width: 18px !important;
+  height: 18px !important;
+}

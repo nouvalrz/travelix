@@ -9,6 +9,7 @@ import { useState } from "react";
 import { addToast } from "@heroui/toast";
 import { Eye, EyeOff } from "lucide-react";
 import { useRouter, useSearchParams } from "next/navigation";
+import Link from "next/link";
 
 import { LoginSchema, LoginType } from "@/types/schemas/login.schema";
 import { fetchLogin } from "@/lib/data/client/login";
@@ -103,6 +104,15 @@ const LoginForm = () => {
             Login
           </Button>
         </form>
+
+        <div className="mt-6 flex justify-end text-sm text-gray-700">
+          <p>
+            Don&apos;t have an account?{" "}
+            <Link className="underline" href="/register">
+              Register
+            </Link>
+          </p>
+        </div>
       </CardBody>
     </Card>
   );

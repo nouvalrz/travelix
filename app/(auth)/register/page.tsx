@@ -15,12 +15,7 @@ const RegsiterPage = () => {
         />
         <div className="absolute inset-0 bg-gradient-to-b lg:bg-gradient-to-r from-transparent via-white/95 to-white" />
       </div>
-      <div className="flex container mx-auto justify-end lg:justify-between items-end lg:items-center h-full relative z-10">
-        <div className="self-end hidden lg:block mb-24">
-          <h1 className="text-4xl text-white font-extrabold whitespace-pre-line leading-[56px] opacity-0">
-            Your Gateway to{"\n"}Unforgettable Journeys
-          </h1>
-        </div>
+      <div className="flex container mx-auto justify-end items-end lg:items-center h-full relative z-10">
         <div className="w-full lg:max-w-lg flex flex-col gap-8">
           <TravelixLogoHorizontal className="mx-auto" width={160} />
           <RegisterForm />

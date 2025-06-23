@@ -10,6 +10,7 @@ import { Eye, EyeOff } from "lucide-react";
 import { useDisclosure } from "@heroui/modal";
 import { addToast } from "@heroui/toast";
 import { useRouter } from "next/navigation";
+import Link from "next/link";
 
 import { ImageInputField, ImageInputPicker } from "../ImageInput";
 
@@ -195,6 +196,14 @@ const RegisterForm = () => {
             Register
           </Button>
         </form>
+        <div className="mt-6 flex justify-end text-sm text-gray-700">
+          <p>
+            Already have an account?{" "}
+            <Link className="underline" href="/login">
+              Login
+            </Link>
+          </p>
+        </div>
       </CardBody>
     </Card>
   );

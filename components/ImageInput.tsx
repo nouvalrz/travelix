@@ -503,7 +503,7 @@ export const ImageInputPicker: React.FC<ImageInputPickerType> = ({
             </ModalHeader>
             <ModalBody>
               {imageSrc && (
-                <div className="relative w-[400px] h-[400px]">
+                <div className="relative w-full max-w-[400px] h-[400px]">
                   <Cropper
                     ref={cropperRef}
                     aspectRatio={aspectRatio}

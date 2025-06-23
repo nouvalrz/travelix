@@ -1,12 +1,13 @@
 import Image from "next/image";
 
-import { TravelixLogoHorizontal } from "@/components/icons";
 import LoginForm from "@/components/auth/LoginForm";
+import { TravelixLogoHorizontal } from "@/components/icons";
 
 const LoginPage = () => {
   return (
-    <div className="p-4 flex-1 relative">
-      <div className=" h-full w-full absolute inset-0">
+    <div className="h-screen w-full p-4 relative overflow-clip">
+      {/* Background */}
+      <div className="absolute inset-0 h-full w-full">
         <Image
           fill
           alt="auth-cover"
@@ -15,12 +16,9 @@ const LoginPage = () => {
         />
         <div className="absolute inset-0 bg-gradient-to-b lg:bg-gradient-to-r from-transparent via-white/95 to-white" />
       </div>
-      <div className="flex container mx-auto justify-end lg:justify-between items-end lg:items-center h-full relative z-10">
-        <div className="self-end hidden lg:block mb-24">
-          <h1 className="text-4xl text-white font-extrabold whitespace-pre-line leading-[56px] opacity-0">
-            Your Gateway to{"\n"}Unforgettable Journeys
-          </h1>
-        </div>
+
+      {/* Content */}
+      <div className="relative z-10 h-full w-full flex items-center justify-end container mx-auto">
         <div className="w-full lg:max-w-lg flex flex-col gap-8">
           <TravelixLogoHorizontal className="mx-auto" width={160} />
           <LoginForm />
