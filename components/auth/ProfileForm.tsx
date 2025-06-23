@@ -8,14 +8,23 @@ import { Input } from "@heroui/input";
 import { Button } from "@heroui/button";
 import { addToast } from "@heroui/toast";
 import { useRouter } from "next/navigation";
+import { Select, SelectedItems, SelectItem } from "@heroui/select";
 
 import { ImageInputField, ImageInputPicker } from "../ImageInput";
+import RoleChip from "../RoleChip";
 
-import { User } from "@/types/user.type";
+import { User, UserRole } from "@/types/user.type";
 import { UserFormType, UserSchema } from "@/types/schemas/user.schema";
 import { AppError } from "@/lib/appError";
-import { fetchUpdateUserProfile } from "@/lib/data/client/users";
+import {
+  fetchUpdateUserProfile,
+  fetchUpdateUserRole,
+} from "@/lib/data/client/users";
 import { fetchUploadImage } from "@/lib/data/client/uploadImage";
+
+type RoleOption = { value: UserRole };
+
+const statusValues: RoleOption[] = [{ value: "admin" }, { value: "user" }];
 
 const ProfileForm = ({
   user,
@@ -62,7 +71,7 @@ const ProfileForm = ({
 
     try {
       if (isAdmin) {
-        await handleAdminUpdateRole();
+        await handleAdminUpdateRole(user.id, data.role);
       } else {
         await handleUserUpdateProfile(data);
       }
@@ -108,7 +117,11 @@ const ProfileForm = ({
     });
   };
 
-  const handleAdminUpdateRole = async () => {};
+  const handleAdminUpdateRole = async (id: string, newRole: UserRole) => {
+    await fetchUpdateUserRole(id, newRole);
+  };
+
+  const role = watch("role");
 
   return (
     <Card shadow="sm">
@@ -138,6 +151,33 @@ const ProfileForm = ({
             labelPlacement="outside"
             placeholder="Enter your phone number"
           />
+          {isAdmin && (
+            <div className="max-w-sm w-full">
+              <Select
+                classNames={{ value: "capitalize" }}
+                items={statusValues}
+                label="Role"
+                labelPlacement="outside"
+                maxListboxHeight={600}
+                placeholder="Select role"
+                renderValue={(items: SelectedItems<RoleOption>) => {
+                  return items.map((status) => (
+                    <RoleChip key={status.key} role={status.data!.value!} />
+                  ));
+                }}
+                selectedKeys={new Set(role ? [role] : [])}
+                onSelectionChange={(value) => {
+                  setValue("role", value.currentKey as UserRole);
+                }}
+              >
+                {(item) => (
+                  <SelectItem key={item.value}>
+                    <RoleChip role={item.value} />
+                  </SelectItem>
+                )}
+              </Select>
+            </div>
+          )}
           <ImageInputField
             image={
               getValues("profilePictureUrl") instanceof File
@@ -147,7 +187,7 @@ const ProfileForm = ({
             label="Profile Image"
             previewClassName="rounded-full"
             previousImageUrl={user.profilePictureUrl}
-            onClick={toggleModalImage}
+            onClick={!isAdmin ? toggleModalImage : () => {}}
           />
           <ImageInputPicker
             aspectRatio={1}
@@ -167,6 +207,7 @@ const ProfileForm = ({
             onOpenChange={toggleModalImage}
             onResult={(value: File) => setValue("profilePictureUrl", value)}
           />
+
           <div className="flex justify-end mt-4 w-full">
             <Button
               color="primary"

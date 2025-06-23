@@ -380,6 +380,10 @@ export const ImageInputField: React.FC<ImageInputFieldType> = ({
               "w-32 h-32 object-cover cursor-pointer",
               previewClassName
             )}
+            classNames={{
+              wrapper: "bg-no-repeat bg-cover bg-center",
+            }}
+            fallbackSrc="/images/fallback-image.jpg"
             src={previousImageUrl}
           />
         ) : (
