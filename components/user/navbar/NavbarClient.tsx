@@ -125,6 +125,7 @@ const NavbarClient = ({ authUser }: NavbarClientProps) => {
     <Navbar
       isBordered
       className="font-medium"
+      isMenuOpen={isMenuOpen}
       maxWidth="xl"
       position={position}
       onMenuOpenChange={setIsMenuOpen}
@@ -157,7 +158,9 @@ const NavbarClient = ({ authUser }: NavbarClientProps) => {
       <NavbarMenu>
         {navigations.map((navigation, index) => (
           <NavbarMenuItem key={index} className="text-base">
-            <Link href={navigation.href}>{navigation.title}</Link>
+            <Link href={navigation.href} onClick={() => setIsMenuOpen(false)}>
+              {navigation.title}
+            </Link>
           </NavbarMenuItem>
         ))}
       </NavbarMenu>

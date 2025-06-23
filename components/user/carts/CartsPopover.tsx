@@ -26,7 +26,7 @@ const CartsPopover = ({ carts }: { carts: Cart[] }) => {
     <Popover
       classNames={{
         base: "p-0 ",
-        content: "p-0 overflow-clip w-[420px]",
+        content: "p-0 overflow-clip max-w-[420px] !w-full",
       }}
       isOpen={isOpen}
       placement="bottom"
@@ -85,7 +85,7 @@ const CartsPopover = ({ carts }: { carts: Cart[] }) => {
               ))}
             </div>
           ) : (
-            <div className="flex-1 flex justify-center items-center my-8">
+            <div className="flex-1 flex justify-center items-center my-8 w-[380px] ">
               <EmptyPlaceholder
                 description="Go to explore our destinations"
                 imageClassName="!w-32"
