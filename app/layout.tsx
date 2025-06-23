@@ -1,6 +1,7 @@
 import "@/styles/globals.css";
 import { Metadata, Viewport } from "next";
 import clsx from "clsx";
+import NextTopLoader from "nextjs-toploader";
 
 import { Providers } from "./providers";
 
@@ -40,6 +41,7 @@ export default function RootLayout({
           fontGeist.variable
         )}
       >
+        <NextTopLoader />
         <Providers themeProps={{ attribute: "class", defaultTheme: "dark" }}>
           <div className="relative flex flex-col min-h-screen">
             <main className="flex-1 flex flex-col">{children}</main>

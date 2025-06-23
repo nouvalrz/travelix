@@ -9,6 +9,7 @@ import HomePromoWrapper from "@/components/user/home/home-promo/HomePromoWrapper
 import HomeReviewWrapper from "@/components/user/home/home-reviews/HomeReviewWrapper";
 import HomeFaqWrapper from "@/components/user/home/home-faq/HomeFaqWrapper";
 import HomeBannerPlaceholder from "@/components/user/home/home-banner/HomeBannerPlaceholder";
+import homeCover from "@/src/assets/images/home-cover-3.webp";
 
 export default function Home() {
   return (
@@ -17,9 +18,12 @@ export default function Home() {
         <div className="h-[600px] md:h-[500px] w-full relative">
           <Image
             fill
+            priority
             alt="home-cover"
+            blurDataURL={homeCover.blurDataURL}
             className="object-cover absolute inset-0 object-[0%_45%]"
-            src="/images/home-cover-3.webp"
+            placeholder="blur"
+            src={homeCover}
           />
           <div className="relative z-10 flex flex-col items-center justify-center h-full px-4">
             <h1
