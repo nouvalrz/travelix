@@ -10,7 +10,7 @@ export const middleware = async (req: NextRequest) => {
     return NextResponse.redirect(new URL("/", req.url));
   }
 
-  if (isUserRoute(pathname) && !token) {
+  if ((isUserRoute(pathname) || isAdminRoute(pathname)) && !token) {
     // prev url search param
     const loginUrl = new URL("/login", req.url);
 
