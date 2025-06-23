@@ -3,6 +3,7 @@ import Image from "next/image";
 
 import CategorySearchInput from "./CategorySearchInput";
 
+import categoryCover from "@/src/assets/images/category-cover-1.webp";
 import Breadcrumb from "@/components/Breadcrumb";
 
 const CategoriesHeader = () => {
@@ -10,9 +11,12 @@ const CategoriesHeader = () => {
     <>
       <Image
         fill
+        priority
         alt="home-cover"
+        blurDataURL={categoryCover.blurDataURL}
         className="object-cover absolute inset-0 object-[0%_45%]"
-        src="/images/category-cover-1.webp"
+        placeholder="blur"
+        src={categoryCover}
       />
       <div className="relative z-10 h-full px-4 flex flex-col">
         <div className="mx-auto container mt-4">
