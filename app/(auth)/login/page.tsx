@@ -3,6 +3,7 @@ import { Suspense } from "react";
 
 import LoginForm from "@/components/auth/LoginForm";
 import { TravelixLogoHorizontal } from "@/components/icons";
+import loginCover from "@/src/assets/images/auth-cover-1.webp";
 
 const LoginPage = () => {
   return (
@@ -11,9 +12,12 @@ const LoginPage = () => {
       <div className="absolute inset-0 h-full w-full">
         <Image
           fill
+          priority
           alt="auth-cover"
+          blurDataURL={loginCover.blurDataURL}
           className="object-cover object-left-bottom lg:object-left bg-gradient-to-r from-transparent via-transparent to-white"
-          src="/images/auth-cover-1.webp"
+          placeholder="blur"
+          src={loginCover}
         />
         <div className="absolute inset-0 bg-gradient-to-b lg:bg-gradient-to-r from-transparent via-white/95 to-white" />
       </div>
