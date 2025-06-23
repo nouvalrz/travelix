@@ -32,7 +32,7 @@ const DestinationsToolbar = ({ className }: { className?: string }) => {
           </div>
 
           <form
-            className="flex gap-4 w-[320px] md:w-[370px] lg:w-[440px]"
+            className="flex gap-4 w-[300px] md:w-[370px] lg:w-[440px]"
             onSubmit={(e) => {
               e.preventDefault();
               setSearchKeyword(search);

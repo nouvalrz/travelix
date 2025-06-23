@@ -76,7 +76,7 @@ const DestinationCard = ({
           </p>
         </div>
         <div className="flex justify-between w-full mt-3">
-          <div className="flex flex-row gap-2 items-center">
+          <div className="flex flex-row gap-2 items-center flex-wrap">
             <p className="text-base font-bold text-red-600">
               {destination.price_discount !== null
                 ? formatRupiah(destination.price_discount)

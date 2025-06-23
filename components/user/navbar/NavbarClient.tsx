@@ -138,7 +138,9 @@ const NavbarClient = ({ authUser }: NavbarClientProps) => {
           className="md:hidden"
         />
         <NavbarBrand>
-          <TravelixLogoHorizontal width={isSmallMobile ? 75 : 120} />
+          <div className="w-[80px] md:w-[100px] lg:w-[120px]">
+            <TravelixLogoHorizontal />
+          </div>
         </NavbarBrand>
       </NavbarContent>
       <NavbarContent className="hidden md:flex gap-6" justify="center">

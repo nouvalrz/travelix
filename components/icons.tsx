@@ -11,7 +11,7 @@ export const TravelixLogoHorizontal: React.FC<
       fill="none"
       height="100%"
       viewBox="0 0 251 55"
-      width={width || 250}
+      width={width || "100%"}
       xmlns="http://www.w3.org/2000/svg"
     >
       <g clipPath="url(#clip0_1_26)">
