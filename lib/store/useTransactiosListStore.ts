@@ -20,6 +20,7 @@ export interface TransactionWithAdditionalStatus
 }
 
 type TransactionListsStore = {
+  initialized: boolean;
   transactions: TransactionWithAdditionalStatus[];
   setTransactions: (transactions: Transaction[]) => void;
   searchKeyword: string;
@@ -37,6 +38,7 @@ type TransactionListsStore = {
 export const useTransactionsListStore = create<TransactionListsStore>(
   (set, get) => {
     return {
+      initialized: false,
       transactions: [],
       setTransactions: (transactions) => {
         const transactionsWithExpired = transactions.map(
@@ -44,6 +46,7 @@ export const useTransactionsListStore = create<TransactionListsStore>(
         );
 
         set({ transactions: transactionsWithExpired });
+        set({ initialized: true });
       },
       searchKeyword: "",
       setSearchKeyword: (keyword) => set({ searchKeyword: keyword }),

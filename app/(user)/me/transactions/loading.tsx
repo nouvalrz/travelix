@@ -1,7 +1,9 @@
 import React from "react";
 
+import TransactionListItemPlaceholder from "@/components/user/transactions/TransactionListItemPlaceholder";
+
 const loading = () => {
-  return <div>loading</div>;
+  return <TransactionListItemPlaceholder />;
 };
 
 export default loading;
