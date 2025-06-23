@@ -4,7 +4,11 @@ import { fetchApiFromServer } from "@/lib/fetchApi";
 import ProfileForm from "@/components/auth/ProfileForm";
 import { User } from "@/types/user.type";
 
-const EditUserPage = async ({ params }: { params: { id: string } }) => {
+const EditUserPage = async ({
+  params,
+}: {
+  params: Promise<{ id: string }>;
+}) => {
   const { id } = await params;
 
   const response = await fetchApiFromServer("/all-user", {

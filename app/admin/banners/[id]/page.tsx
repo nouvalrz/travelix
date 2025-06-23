@@ -4,7 +4,11 @@ import { fetchApiFromServer } from "@/lib/fetchApi";
 import { Banner } from "@/types/banner.type";
 import BannerForm from "@/components/admin/banners/BannerForm";
 
-const EditBannerPage = async ({ params }: { params: { id: string } }) => {
+const EditBannerPage = async ({
+  params,
+}: {
+  params: Promise<{ id: string }>;
+}) => {
   const { id } = await params;
 
   const response = await fetchApiFromServer("/banner/" + id, {

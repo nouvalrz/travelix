@@ -1,4 +1,5 @@
 import Image from "next/image";
+import { Suspense } from "react";
 
 import LoginForm from "@/components/auth/LoginForm";
 import { TravelixLogoHorizontal } from "@/components/icons";
@@ -21,7 +22,9 @@ const LoginPage = () => {
       <div className="relative z-10 h-full w-full flex items-center justify-end container mx-auto">
         <div className="w-full lg:max-w-lg flex flex-col gap-8">
           <TravelixLogoHorizontal className="mx-auto" width={160} />
-          <LoginForm />
+          <Suspense fallback={null}>
+            <LoginForm />
+          </Suspense>
         </div>
       </div>
     </div>

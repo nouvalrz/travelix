@@ -4,7 +4,11 @@ import PromoForm from "@/components/admin/promos/PromoForm";
 import { fetchApiFromServer } from "@/lib/fetchApi";
 import { Promo } from "@/types/promo.type";
 
-const EditPromoPage = async ({ params }: { params: { id: string } }) => {
+const EditPromoPage = async ({
+  params,
+}: {
+  params: Promise<{ id: string }>;
+}) => {
   const { id } = await params;
 
   const response = await fetchApiFromServer("/promo/" + id, {

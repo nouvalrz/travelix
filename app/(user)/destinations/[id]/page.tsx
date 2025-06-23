@@ -3,9 +3,7 @@ import { BASE_URL } from "@/config/credentials";
 import { Destination } from "@/types/destination.type";
 
 type DestinationDetailProps = {
-  params: {
-    id: string;
-  };
+  params: Promise<{ id: string }>;
 };
 
 const DestinationDetailPage = async ({ params }: DestinationDetailProps) => {

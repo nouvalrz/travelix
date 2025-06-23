@@ -5,7 +5,11 @@ import { Destination } from "@/types/destination.type";
 import DestinationForm from "@/components/admin/destinations/DestinationForm";
 import { Category } from "@/types/category.type";
 
-const EditDestinationPage = async ({ params }: { params: { id: string } }) => {
+const EditDestinationPage = async ({
+  params,
+}: {
+  params: Promise<{ id: string }>;
+}) => {
   const { id } = await params;
 
   const destinationResponse = await fetchApiFromServer("/activity/" + id, {

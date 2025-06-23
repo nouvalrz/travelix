@@ -4,7 +4,11 @@ import CategoryForm from "@/components/user/categories/CategoryForm";
 import { fetchApiFromServer } from "@/lib/fetchApi";
 import { Category } from "@/types/category.type";
 
-const EditCategoryPage = async ({ params }: { params: { id: string } }) => {
+const EditCategoryPage = async ({
+  params,
+}: {
+  params: Promise<{ id: string }>;
+}) => {
   const { id } = await params;
 
   const response = await fetchApiFromServer("/category/" + id, {

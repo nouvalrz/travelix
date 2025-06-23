@@ -7,7 +7,7 @@ import TransactionDetailClient from "@/components/user/transactions/TransactionD
 const TransactionDetailPage = async ({
   params,
 }: {
-  params: { id: string };
+  params: Promise<{ id: string }>;
 }) => {
   const { id } = await params;
   const response = await fetchApiFromServer("/transaction/" + id, {

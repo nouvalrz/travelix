@@ -5,7 +5,11 @@ import { convertToTransactionAdditionalStatus } from "@/lib/convertToTransaction
 import { fetchApiFromServer } from "@/lib/fetchApi";
 import { Transaction } from "@/types/transaction.type";
 
-const EditTransactionPage = async ({ params }: { params: { id: string } }) => {
+const EditTransactionPage = async ({
+  params,
+}: {
+  params: Promise<{ id: string }>;
+}) => {
   const { id } = await params;
 
   const response = await fetchApiFromServer("/transaction/" + id, {
