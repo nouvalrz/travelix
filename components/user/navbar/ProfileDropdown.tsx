@@ -31,7 +31,7 @@ const ProfileDropdown = ({
             color="primary"
             src={authUser.profilePictureUrl}
           />
-          {authUser.name.split(" ")[0]}
+          <p className="line-clamp-1">{authUser.name.split(" ")[0]}</p>
         </Button>
       </DropdownTrigger>
       <DropdownMenu aria-label="Static Actions">

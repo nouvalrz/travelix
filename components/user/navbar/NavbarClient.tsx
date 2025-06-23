@@ -14,6 +14,7 @@ import { Button } from "@heroui/button";
 import { ReceiptText } from "lucide-react";
 import { Badge } from "@heroui/badge";
 import clsx from "clsx";
+import { useMediaQuery } from "react-responsive";
 
 import { TravelixLogoHorizontal } from "../../icons";
 import CartsPopover from "../carts/CartsPopover";
@@ -120,6 +121,7 @@ const NavbarClient = ({ authUser }: NavbarClientProps) => {
   const [isMenuOpen, setIsMenuOpen] = useState<boolean>(false);
   const [modalLogout, setModalLogout] = useState<boolean>(false);
   const position = useNavbarPosition();
+  const isSmallMobile = useMediaQuery({ maxWidth: 639 });
 
   return (
     <Navbar
@@ -136,7 +138,7 @@ const NavbarClient = ({ authUser }: NavbarClientProps) => {
           className="md:hidden"
         />
         <NavbarBrand>
-          <TravelixLogoHorizontal width={120} />
+          <TravelixLogoHorizontal width={isSmallMobile ? 75 : 120} />
         </NavbarBrand>
       </NavbarContent>
       <NavbarContent className="hidden md:flex gap-6" justify="center">

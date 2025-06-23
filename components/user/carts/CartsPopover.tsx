@@ -72,10 +72,10 @@ const CartsPopover = ({ carts }: { carts: Cart[] }) => {
                     <p className="font-medium">
                       {cart.quantity} x{" "}
                       {formatRupiah(
-                        cart.activity.price_discount || cart.activity.price
+                        cart.activity.price_discount ?? cart.activity.price
                       )}
                     </p>
-                    {cart.activity.price_discount && (
+                    {cart.activity.price_discount !== null && (
                       <p className="line-through text-xs font-light">
                         {formatRupiah(cart.activity.price)}
                       </p>

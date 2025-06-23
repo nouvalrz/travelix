@@ -109,10 +109,10 @@ const DestinationDetailCartAction = ({
                 <div className="flex gap-2 items-center">
                   <p className="text-red-600 text-xl font-bold">
                     {formatRupiah(
-                      destination.price_discount || destination.price
+                      destination.price_discount ?? destination.price
                     )}
                   </p>
-                  {destination.price_discount && (
+                  {destination.price_discount !== null && (
                     <p className="text-sm line-through text-gray-600">
                       {formatRupiah(destination.price)}
                     </p>

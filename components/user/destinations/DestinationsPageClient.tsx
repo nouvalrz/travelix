@@ -59,7 +59,7 @@ const DestinationsPageClient = ({
               </div>
             )}
             <div className="flex-grow ">
-              <div className="flex justify-between items-end">
+              <div className="flex justify-between items-end flex-wrap gap-2 lg:gap-0">
                 <h2 className="text-lg md:text-xl font-semibold">
                   Showing{" "}
                   {searchKeyword ? (

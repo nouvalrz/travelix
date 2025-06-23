@@ -78,11 +78,11 @@ const DestinationCard = ({
         <div className="flex justify-between w-full mt-3">
           <div className="flex flex-row gap-2 items-center">
             <p className="text-base font-bold text-red-600">
-              {destination.price_discount
+              {destination.price_discount !== null
                 ? formatRupiah(destination.price_discount)
                 : formatRupiah(destination.price)}
             </p>
-            {destination.price_discount && (
+            {destination.price_discount !== null && (
               <p className="line-through text-xs text-gray-600">
                 {formatRupiah(destination.price)}
               </p>
