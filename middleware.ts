@@ -25,7 +25,7 @@ export const middleware = async (req: NextRequest) => {
       const { role } = jwtPayload.data;
 
       if (isAdminRoute(pathname) && role !== "admin") {
-        return NextResponse.redirect(new URL("/unauthorized", req.url));
+        return NextResponse.redirect(new URL("/404", req.url));
       }
     } catch (e) {
       return NextResponse.redirect(new URL("/login", req.url));

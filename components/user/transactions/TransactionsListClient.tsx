@@ -16,10 +16,8 @@ const TransactionsListClient = ({
   const { setTransactions, initialized } = useTransactionsListStore();
 
   useEffect(() => {
-    if (transactions.length > 0) {
-      setTransactions(transactions);
-    }
-  }, [transactions]);
+    setTransactions(transactions);
+  }, []);
 
   if (!initialized) return <TransactionListItemPlaceholder />;
 

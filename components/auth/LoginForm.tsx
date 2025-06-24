@@ -41,6 +41,7 @@ const LoginForm = () => {
 
       if (prevUrl) {
         router.replace(decodeURIComponent(String(prevUrl)));
+        router.refresh();
       } else {
         router.refresh();
       }
