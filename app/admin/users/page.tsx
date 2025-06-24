@@ -3,6 +3,10 @@ import React, { Suspense } from "react";
 import UsersWrapper from "@/components/admin/users/UsersWrapper";
 import AdminTablePagePlaceholder from "@/components/admin/AdminTablePagePlaceholder";
 
+export const metadata = {
+  title: "Admin Users",
+};
+
 const AdminUsersPage = () => {
   return (
     <div>

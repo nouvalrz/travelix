@@ -4,6 +4,10 @@ import { Transaction } from "@/types/transaction.type";
 import TransactionsListClient from "@/components/user/transactions/TransactionsListClient";
 import { fetchApiFromServer } from "@/lib/fetchApi";
 
+export const metadata = {
+  title: "Transactions",
+};
+
 const TransactionsPage = async () => {
   const response = await fetchApiFromServer("/my-transactions", {
     method: "GET",

@@ -2,6 +2,10 @@ import DestinationsPageClient from "@/components/user/destinations/DestinationsP
 import { BASE_URL } from "@/config/credentials";
 import { Destination } from "@/types/destination.type";
 
+export const metadata = {
+  title: "Destinations",
+};
+
 const DestinationsPage = async () => {
   const response = await fetch(BASE_URL + "/api/proxy/activities", {
     method: "GET",

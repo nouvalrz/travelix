@@ -2,6 +2,10 @@ import React from "react";
 
 import PromoForm from "@/components/admin/promos/PromoForm";
 
+export const metadata = {
+  title: "Add Promo",
+};
+
 const AddPromoPage = () => {
   return (
     <div>

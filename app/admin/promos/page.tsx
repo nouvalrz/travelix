@@ -3,6 +3,10 @@ import React, { Suspense } from "react";
 import PromosWrapper from "@/components/admin/promos/PromosWrapper";
 import AdminTablePagePlaceholder from "@/components/admin/AdminTablePagePlaceholder";
 
+export const metadata = {
+  title: "Admin Promos",
+};
+
 const AdminPromosPage = () => {
   return (
     <div>

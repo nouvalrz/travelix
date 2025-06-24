@@ -4,6 +4,10 @@ import { TravelixLogoHorizontal } from "@/components/icons";
 import RegisterForm from "@/components/auth/RegisterForm";
 import registerCover from "@/src/assets/images/auth-cover-3.webp";
 
+export const metadata = {
+  title: "Register",
+};
+
 const RegsiterPage = () => {
   return (
     <div className="p-4 flex-1 relative">

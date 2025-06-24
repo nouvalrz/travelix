@@ -2,6 +2,10 @@ import React from "react";
 
 import BannerForm from "@/components/admin/banners/BannerForm";
 
+export const metadata = {
+  title: "Add Banner",
+};
+
 const AddBannerPage = () => {
   return (
     <div>

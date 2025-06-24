@@ -3,6 +3,11 @@ import { Suspense } from "react";
 import PromoListWrapper from "@/components/user/promos/PromoListWrapper";
 import PromosHeader from "@/components/user/promos/PromosHeader";
 import PromoListPlaceholder from "@/components/user/promos/PromoListPlaceholder";
+
+export const metadata = {
+  title: "Promos",
+};
+
 const PromosPage = () => {
   return (
     <>

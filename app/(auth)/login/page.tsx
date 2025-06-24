@@ -5,6 +5,10 @@ import LoginForm from "@/components/auth/LoginForm";
 import { TravelixLogoHorizontal } from "@/components/icons";
 import loginCover from "@/src/assets/images/auth-cover-1.webp";
 
+export const metadata = {
+  title: "Login",
+};
+
 const LoginPage = () => {
   return (
     <div className="h-screen w-full p-4 relative overflow-clip">

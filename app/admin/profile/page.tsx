@@ -2,6 +2,10 @@ import React, { Suspense } from "react";
 
 import ProfileWrapper from "@/components/admin/Profile/ProfileWrapper";
 
+export const metadata = {
+  title: "Admin Profile",
+};
+
 const AdminProfilePage = () => {
   return (
     <div>

@@ -4,6 +4,10 @@ import PromoForm from "@/components/admin/promos/PromoForm";
 import { fetchApiFromServer } from "@/lib/fetchApi";
 import { Promo } from "@/types/promo.type";
 
+export const metadata = {
+  title: "Edit Promo",
+};
+
 const EditPromoPage = async ({
   params,
 }: {

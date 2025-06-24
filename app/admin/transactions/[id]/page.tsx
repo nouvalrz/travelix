@@ -5,6 +5,10 @@ import { convertToTransactionAdditionalStatus } from "@/lib/convertToTransaction
 import { fetchApiFromServer } from "@/lib/fetchApi";
 import { Transaction } from "@/types/transaction.type";
 
+export const metadata = {
+  title: "Edit Transaction",
+};
+
 const EditTransactionPage = async ({
   params,
 }: {

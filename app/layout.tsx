@@ -5,17 +5,17 @@ import NextTopLoader from "nextjs-toploader";
 
 import { Providers } from "./providers";
 
-import { siteConfig } from "@/config/site";
 import { fontGeist, fontManrope } from "@/config/fonts";
 
 export const metadata: Metadata = {
   title: {
-    default: siteConfig.name,
-    template: `%s - ${siteConfig.name}`,
+    default: "Travelix",
+    template: `%s | Travelix`,
   },
-  description: siteConfig.description,
+  description:
+    "Travelix is your ultimate travel companion for booking tours, attractions, and experiences around the world. Discover top destinations, compare prices, and reserve tickets in just a few clicks.",
   icons: {
-    icon: "/favicon.ico",
+    icon: "/travelix-icon.svg",
   },
 };
 

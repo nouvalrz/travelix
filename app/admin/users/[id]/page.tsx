@@ -4,6 +4,10 @@ import { fetchApiFromServer } from "@/lib/fetchApi";
 import ProfileForm from "@/components/auth/ProfileForm";
 import { User } from "@/types/user.type";
 
+export const metadata = {
+  title: "Edit User",
+};
+
 const EditUserPage = async ({
   params,
 }: {

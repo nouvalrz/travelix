@@ -3,6 +3,10 @@ import React, { Suspense } from "react";
 import TransactionsWrapper from "@/components/admin/transactions/TransactionsWrapper";
 import AdminTablePagePlaceholder from "@/components/admin/AdminTablePagePlaceholder";
 
+export const metadata = {
+  title: "Admin Transactions",
+};
+
 const AdminTransactionsPage = () => {
   return (
     <div>

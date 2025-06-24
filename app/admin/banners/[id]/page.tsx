@@ -4,6 +4,10 @@ import { fetchApiFromServer } from "@/lib/fetchApi";
 import { Banner } from "@/types/banner.type";
 import BannerForm from "@/components/admin/banners/BannerForm";
 
+export const metadata = {
+  title: "Edit Banner",
+};
+
 const EditBannerPage = async ({
   params,
 }: {

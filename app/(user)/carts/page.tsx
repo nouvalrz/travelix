@@ -3,6 +3,10 @@ import { fetchApiFromServer } from "@/lib/fetchApi";
 import { Cart } from "@/types/cart.type";
 import { PaymentMethod } from "@/types/paymentMethod.type";
 
+export const metadata = {
+  title: "Carts",
+};
+
 const CartsPage = async () => {
   const cartsReponse = await fetchApiFromServer("/carts", {
     method: "GET",

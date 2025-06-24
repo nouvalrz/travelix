@@ -3,6 +3,10 @@ import React, { Suspense } from "react";
 import DestinationsWrapper from "@/components/admin/destinations/DestinationsWrapper";
 import AdminTablePagePlaceholder from "@/components/admin/AdminTablePagePlaceholder";
 
+export const metadata = {
+  title: "Admin Destinations",
+};
+
 const AdminDestinationsPage = () => {
   return (
     <div>

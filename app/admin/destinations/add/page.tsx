@@ -4,6 +4,10 @@ import { fetchApiFromServer } from "@/lib/fetchApi";
 import { Category } from "@/types/category.type";
 import DestinationForm from "@/components/admin/destinations/DestinationForm";
 
+export const metadata = {
+  title: "Add Destination",
+};
+
 const AddDestinationPage = async () => {
   const response = await fetchApiFromServer("/categories", {
     method: "GET",

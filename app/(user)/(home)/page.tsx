@@ -11,6 +11,10 @@ import HomeFaqWrapper from "@/components/user/home/home-faq/HomeFaqWrapper";
 import HomeBannerPlaceholder from "@/components/user/home/home-banner/HomeBannerPlaceholder";
 import homeCover from "@/src/assets/images/home-cover-3.webp";
 
+export const metadata = {
+  title: "Home",
+};
+
 export default function Home() {
   return (
     <>

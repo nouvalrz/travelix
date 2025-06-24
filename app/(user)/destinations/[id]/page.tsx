@@ -6,15 +6,29 @@ type DestinationDetailProps = {
   params: Promise<{ id: string }>;
 };
 
-const DestinationDetailPage = async ({ params }: DestinationDetailProps) => {
-  const { id } = await params;
-
+const fetchDestination = async (id: string): Promise<Destination> => {
   const response = await fetch(BASE_URL + "/api/proxy/activity/" + id, {
     method: "GET",
     headers: { "Content-Type": "application/json" },
   });
 
-  const destination = (await response.json()).data as Destination;
+  return (await response.json()).data;
+};
+
+export const generateMetadata = async ({ params }: DestinationDetailProps) => {
+  const { id } = await params;
+  const destination = await fetchDestination(id);
+
+  return {
+    title: `${destination.title}`,
+    description: `${destination.description}`,
+  };
+};
+
+const DestinationDetailPage = async ({ params }: DestinationDetailProps) => {
+  const { id } = await params;
+
+  const destination = await fetchDestination(id);
 
   return <DestinationDetailPageClient destination={destination} />;
 };

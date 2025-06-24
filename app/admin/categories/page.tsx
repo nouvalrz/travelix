@@ -3,6 +3,10 @@ import React, { Suspense } from "react";
 import CategoriesWrapper from "@/components/admin/categories/CategoriesWrapper";
 import AdminTablePagePlaceholder from "@/components/admin/AdminTablePagePlaceholder";
 
+export const metadata = {
+  title: "Admin Categories",
+};
+
 const AdminCategoriesPage = () => {
   return (
     <div>

@@ -5,6 +5,11 @@ import CategoryListPlaceholder from "@/components/user/categories/CategoryListPl
 import CategoryListWrapper from "@/components/user/categories/CategoryListWrapper";
 import FeaturedCategoryWrapper from "@/components/user/categories/FeaturedCategoryWrapper";
 import FeaturedCategoryPlaceholder from "@/components/user/categories/FeaturedCategoryPlaceholder";
+
+export const metadata = {
+  title: "Categories",
+};
+
 const CategoriesPage = () => {
   return (
     <>

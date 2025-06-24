@@ -2,6 +2,10 @@ import React from "react";
 
 import CategoryForm from "@/components/user/categories/CategoryForm";
 
+export const metadata = {
+  title: "Add Category",
+};
+
 const AddCategoryPage = () => {
   return (
     <div>

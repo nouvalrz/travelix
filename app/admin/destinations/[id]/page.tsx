@@ -5,6 +5,10 @@ import { Destination } from "@/types/destination.type";
 import DestinationForm from "@/components/admin/destinations/DestinationForm";
 import { Category } from "@/types/category.type";
 
+export const metadata = {
+  title: "Edit Destination",
+};
+
 const EditDestinationPage = async ({
   params,
 }: {

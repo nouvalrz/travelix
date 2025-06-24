@@ -3,6 +3,10 @@ import React from "react";
 import ProfileForm from "@/components/auth/ProfileForm";
 import { getAuthUser } from "@/lib/data/server/authUser";
 
+export const metadata = {
+  title: "Profile",
+};
+
 const ProfilePage = async () => {
   const authUser = await getAuthUser();
 

@@ -4,6 +4,10 @@ import CategoryForm from "@/components/user/categories/CategoryForm";
 import { fetchApiFromServer } from "@/lib/fetchApi";
 import { Category } from "@/types/category.type";
 
+export const metadata = {
+  title: "Edit Category",
+};
+
 const EditCategoryPage = async ({
   params,
 }: {
