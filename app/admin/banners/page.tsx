@@ -1,12 +1,13 @@
 import React, { Suspense } from "react";
 
 import BannersWrapper from "@/components/admin/banners/BannersWrapper";
+import AdminTablePagePlaceholder from "@/components/admin/AdminTablePagePlaceholder";
 
 const AdminBannersPage = () => {
   return (
     <div>
       <h1 className="font-semibold text-xl">Banners Management</h1>
-      <Suspense fallback={<p>Loading...</p>}>
+      <Suspense fallback={<AdminTablePagePlaceholder />}>
         <BannersWrapper />
       </Suspense>
     </div>

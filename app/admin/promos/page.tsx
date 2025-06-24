@@ -1,12 +1,13 @@
 import React, { Suspense } from "react";
 
 import PromosWrapper from "@/components/admin/promos/PromosWrapper";
+import AdminTablePagePlaceholder from "@/components/admin/AdminTablePagePlaceholder";
 
 const AdminPromosPage = () => {
   return (
     <div>
       <h1 className="font-semibold text-xl">Promos Management</h1>
-      <Suspense fallback={<p>Loading...</p>}>
+      <Suspense fallback={<AdminTablePagePlaceholder />}>
         <PromosWrapper />
       </Suspense>
     </div>

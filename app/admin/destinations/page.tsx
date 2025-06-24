@@ -1,12 +1,13 @@
 import React, { Suspense } from "react";
 
 import DestinationsWrapper from "@/components/admin/destinations/DestinationsWrapper";
+import AdminTablePagePlaceholder from "@/components/admin/AdminTablePagePlaceholder";
 
 const AdminDestinationsPage = () => {
   return (
     <div>
       <h1 className="font-semibold text-xl">Destinations Management</h1>
-      <Suspense fallback={<p>Loading...</p>}>
+      <Suspense fallback={<AdminTablePagePlaceholder />}>
         <DestinationsWrapper />
       </Suspense>
     </div>
