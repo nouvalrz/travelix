@@ -1,6 +1,5 @@
 "use client";
 
-import { Image } from "@heroui/image";
 import { Pin, Star } from "lucide-react";
 import { Chip } from "@heroui/chip";
 import DOMPurify from "isomorphic-dompurify";
@@ -14,6 +13,7 @@ import DestinationDetailCartAction from "./DestinationDetailCartAction";
 import Breadcrumb from "@/components/Breadcrumb";
 import { Destination } from "@/types/destination.type";
 import { useScrollObserver } from "@/lib/hooks/useScrollObserver";
+import AppImage from "@/components/AppImage";
 
 const DestinationDetailPageClient = ({
   destination,
@@ -30,65 +30,70 @@ const DestinationDetailPageClient = ({
         <Breadcrumb includeHome uuidReplaceName={destination.title} />
         <div className="grid grid-cols-4 grid-rows-3 lg:grid-rows-2 gap-4 w-full h-[300px] mt-4 ">
           {/* Big left box */}
-          <Image
+          <AppImage
             isBlurred
             classNames={{
               wrapper:
                 "bg-no-repeat bg-cover bg-center col-span-4 lg:col-span-2 row-span-2 lg:row-span-2 !max-w-none",
               img: "w-full h-full object-cover",
             }}
-            fallbackSrc="/images/fallback-image.jpg"
+            // fallbackSrc="/images/fallback-image.jpg"
+            fallbackSrc={`/api/fallback-image/destination?title=${encodeURIComponent(destination.title)}&wideText=true&size=md`}
             radius="lg"
             shadow="sm"
-            src={destination.imageUrls[0]}
+            src={destination.imageUrls[0] ?? "error"}
           />
 
-          <Image
+          <AppImage
             isBlurred
             classNames={{
               wrapper: "bg-no-repeat bg-cover bg-center   !max-w-none",
               img: "w-full h-full object-cover",
             }}
-            fallbackSrc="/images/fallback-image.jpg"
+            // fallbackSrc="/images/fallback-image.jpg"
+            fallbackSrc={`/api/fallback-image/destination?title=${encodeURIComponent(destination.title)}&wideText=true&size=md`}
             radius="lg"
             shadow="sm"
-            src={destination.imageUrls[1]}
+            src={destination.imageUrls[1] ?? "error"}
           />
 
-          <Image
+          <AppImage
             isBlurred
             classNames={{
               wrapper: "bg-no-repeat bg-cover bg-center   !max-w-none",
               img: "w-full h-full object-cover",
             }}
-            fallbackSrc="/images/fallback-image.jpg"
+            // fallbackSrc="/images/fallback-image.jpg"
+            fallbackSrc={`/api/fallback-image/destination?title=${encodeURIComponent(destination.title)}&wideText=true&size=md`}
             radius="lg"
             shadow="sm"
-            src={destination.imageUrls[2]}
+            src={destination.imageUrls[2] ?? "error"}
           />
 
-          <Image
+          <AppImage
             isBlurred
             classNames={{
               wrapper: "bg-no-repeat bg-cover bg-center   !max-w-none",
               img: "w-full h-full object-cover",
             }}
-            fallbackSrc="/images/fallback-image.jpg"
+            // fallbackSrc="/images/fallback-image.jpg"
+            fallbackSrc={`/api/fallback-image/destination?title=${encodeURIComponent(destination.title)}&wideText=true&size=md`}
             radius="lg"
             shadow="sm"
-            src={destination.imageUrls[3]}
+            src={destination.imageUrls[3] ?? "error"}
           />
 
-          <Image
+          <AppImage
             isBlurred
             classNames={{
               wrapper: "bg-no-repeat bg-cover bg-center   !max-w-none",
               img: "w-full h-full object-cover",
             }}
-            fallbackSrc="/images/fallback-image.jpg"
+            // fallbackSrc="/images/fallback-image.jpg"
+            fallbackSrc={`/api/fallback-image/destination?title=${encodeURIComponent(destination.title)}&wideText=true&size=md`}
             radius="lg"
             shadow="sm"
-            src={destination.imageUrls[4]}
+            src={destination.imageUrls[4] ?? "error"}
           />
         </div>
         <div className="my-12 flex gap-0 lg:gap-8 items-start">

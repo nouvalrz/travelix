@@ -1,11 +1,11 @@
 import { Card, CardBody, CardFooter } from "@heroui/card";
 import { Star, MapPin } from "lucide-react";
-import { Image } from "@heroui/image";
 import Link from "next/link";
 import clsx from "clsx";
 
 import { formatRupiah } from "@/lib/formatRupiah";
 import { Destination } from "@/types/destination.type";
+import AppImage from "@/components/AppImage";
 
 const DestinationCard = ({
   destination,
@@ -42,12 +42,12 @@ const DestinationCard = ({
         </div>
       )}
       <CardBody>
-        <Image
+        <AppImage
           isZoomed
           alt={destination.title}
           className="w-full h-[200px] object-cover"
           classNames={{ wrapper: "bg-no-repeat bg-cover bg-center" }}
-          fallbackSrc="/images/fallback-image.jpg"
+          fallbackSrc={`/api/fallback-image/destination?title=${encodeURIComponent(destination.title)}`}
           radius="lg"
           shadow="sm"
           src={destination.imageUrls.find(Boolean)}
