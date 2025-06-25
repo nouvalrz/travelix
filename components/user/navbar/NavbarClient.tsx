@@ -15,6 +15,7 @@ import { ReceiptText } from "lucide-react";
 import { Badge } from "@heroui/badge";
 import clsx from "clsx";
 import { useMediaQuery } from "react-responsive";
+import { usePathname } from "next/navigation";
 
 import { TravelixLogoHorizontal } from "../../icons";
 import CartsPopover from "../carts/CartsPopover";
@@ -118,6 +119,7 @@ const LoggedContent = ({ authUser, onModalLogoutOpen }: LoggedContentProps) => {
 };
 
 const NavbarClient = ({ authUser }: NavbarClientProps) => {
+  const pathname = usePathname();
   const [isMenuOpen, setIsMenuOpen] = useState<boolean>(false);
   const [modalLogout, setModalLogout] = useState<boolean>(false);
   const position = useNavbarPosition();
@@ -127,6 +129,22 @@ const NavbarClient = ({ authUser }: NavbarClientProps) => {
     <Navbar
       isBordered
       className="font-medium"
+      classNames={{
+        item: [
+          "flex",
+          "relative",
+          "h-full",
+          "items-center",
+          "data-[active=true]:after:content-['']",
+          "data-[active=true]:after:absolute",
+          "data-[active=true]:after:bottom-3",
+          "data-[active=true]:after:left-0",
+          "data-[active=true]:after:right-0",
+          "data-[active=true]:after:h-[2px]",
+          "data-[active=true]:after:rounded-[2px]",
+          "data-[active=true]:after:bg-primary",
+        ],
+      }}
       isMenuOpen={isMenuOpen}
       maxWidth="xl"
       position={position}
@@ -145,7 +163,7 @@ const NavbarClient = ({ authUser }: NavbarClientProps) => {
       </NavbarContent>
       <NavbarContent className="hidden md:flex gap-6" justify="center">
         {navigations.map((navigation, index) => (
-          <NavbarItem key={index}>
+          <NavbarItem key={index} isActive={pathname === navigation.href}>
             <Link href={navigation.href}>{navigation.title}</Link>
           </NavbarItem>
         ))}

@@ -11,7 +11,7 @@ const EmptyPlaceholder = ({
   imageClassName?: string;
 }) => {
   return (
-    <div className="flex flex-col items-center">
+    <div className="flex flex-col items-center h-full">
       <img
         alt="empty"
         className={clsx("w-60 h-auto", imageClassName)}

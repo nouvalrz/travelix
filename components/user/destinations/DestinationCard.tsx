@@ -45,7 +45,7 @@ const DestinationCard = ({
         <AppImage
           isZoomed
           alt={destination.title}
-          className="w-full h-[200px] object-cover"
+          className="w-full h-[200px] object-cover object-[35%_0%] lg:object-center"
           classNames={{ wrapper: "bg-no-repeat bg-cover bg-center" }}
           fallbackSrc={`/api/fallback-image/destination?title=${encodeURIComponent(destination.title)}`}
           radius="lg"

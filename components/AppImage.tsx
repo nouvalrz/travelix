@@ -6,6 +6,7 @@ import React, { useState } from "react";
 const AppImage = (props: ImageProps) => {
   const baseFallbackUrl = "/images/fallback-image.jpg";
   const [error, setError] = useState<boolean>(false);
+  const src = !props.src ? "error" : props.src;
 
   const handleError = () => {
     setError(true);
@@ -17,7 +18,7 @@ const AppImage = (props: ImageProps) => {
         <Image
           {...props}
           fallbackSrc={undefined}
-          src={props.src!}
+          src={src}
           onError={handleError}
         />
       ) : (

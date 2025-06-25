@@ -1,7 +1,6 @@
 import { Card, CardBody } from "@heroui/card";
 import { Checkbox } from "@heroui/checkbox";
 import React, { useCallback } from "react";
-import { Image } from "@heroui/image";
 import debounce from "lodash.debounce";
 import { Loader2, Trash2 } from "lucide-react";
 import { Button } from "@heroui/button";
@@ -9,6 +8,7 @@ import { Button } from "@heroui/button";
 import { useCreateTransactionStore } from "@/lib/store/useCreateTransactionStore";
 import { formatRupiah } from "@/lib/formatRupiah";
 import QuantityInput from "@/components/QuantityInput";
+import AppImage from "@/components/AppImage";
 
 const CartsList = () => {
   const {
@@ -54,13 +54,13 @@ const CartsList = () => {
                     onChange={() => toggleCartSelected(cart.id)}
                   />
                   <div className="flex-shrink-0">
-                    <Image
+                    <AppImage
                       alt={cart.activity.title}
                       className="w-16 h-16 rounded-lg object-cover"
                       classNames={{
                         wrapper: "bg-no-repeat bg-cover bg-center",
                       }}
-                      fallbackSrc="/images/fallback-image.jpg"
+                      fallbackSrc={`/api/fallback-image/destination?title=${encodeURIComponent(cart.activity.title)}`}
                       src={cart.activity.imageUrls[0]}
                     />
                   </div>
@@ -74,16 +74,16 @@ const CartsList = () => {
                   </div>
                 </div>
                 <div className="flex flex-col items-end">
-                  {cart.activity.price_discount && (
+                  {cart.activity.price_discount !== null && (
                     <p className="line-through text-sm text-gray-500">
                       {formatRupiah(cart.activity.price)}
                     </p>
                   )}
                   <p className="font-semibold text-sm">
                     {cart.quantity} x{" "}
-                    {formatRupiah(
-                      cart.activity.price_discount || cart.activity.price
-                    )}
+                    {cart.activity.price_discount !== null
+                      ? formatRupiah(cart.activity.price_discount)
+                      : formatRupiah(cart.activity.price)}
                   </p>
                   <p className="mt-3 font-semibold text-red-600">
                     {formatRupiah(

@@ -2,12 +2,12 @@ import React, { useState } from "react";
 import { Popover, PopoverTrigger, PopoverContent } from "@heroui/popover";
 import { Button } from "@heroui/button";
 import { ShoppingCart, TicketCheck } from "lucide-react";
-import { Image } from "@heroui/image";
 import { useRouter } from "next/navigation";
 
 import { Cart } from "@/types/cart.type";
 import { formatRupiah } from "@/lib/formatRupiah";
 import EmptyPlaceholder from "@/components/EmptyPlaceholder";
+import AppImage from "@/components/AppImage";
 
 const CartsPopover = ({ carts }: { carts: Cart[] }) => {
   const router = useRouter();
@@ -50,13 +50,13 @@ const CartsPopover = ({ carts }: { carts: Cart[] }) => {
                   className="flex justify-between items-start gap-4"
                 >
                   <div className="flex gap-3 items-start">
-                    <Image
+                    <AppImage
                       alt={cart.activity.title}
                       className="w-16 h-16 rounded-lg object-cover"
                       classNames={{
                         wrapper: "bg-no-repeat bg-cover bg-center",
                       }}
-                      fallbackSrc="/images/fallback-image.jpg"
+                      fallbackSrc={`/api/fallback-image/destination?title=${encodeURIComponent(cart.activity.title)}`}
                       src={cart.activity.imageUrls[0]}
                     />
                     <div>

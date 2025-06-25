@@ -2,9 +2,9 @@ import { Card, CardBody, CardFooter } from "@heroui/card";
 import React from "react";
 import clsx from "clsx";
 import Link from "next/link";
-import { Image } from "@heroui/image";
 
 import { Category } from "@/types/category.type";
+import AppImage from "@/components/AppImage";
 
 const CategoryCard = ({
   category,
@@ -22,7 +22,7 @@ const CategoryCard = ({
       shadow="sm"
     >
       <CardBody className="overflow-visible p-0">
-        <Image
+        <AppImage
           isZoomed
           alt={category.name}
           classNames={{
@@ -30,6 +30,7 @@ const CategoryCard = ({
             img: "w-full h-[140px] object-cover",
           }}
           fallbackSrc="/images/fallback-image.jpg"
+          loading="lazy"
           radius="lg"
           shadow="sm"
           src={category.imageUrl}
