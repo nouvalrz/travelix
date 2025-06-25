@@ -17,6 +17,7 @@ import {
 } from "@heroui/table";
 import { Pagination } from "@heroui/pagination";
 import { Image } from "@heroui/image";
+import { Card, CardBody } from "@heroui/card";
 
 import { User, UserRole } from "@/types/user.type";
 import EmptyPlaceholder from "@/components/EmptyPlaceholder";
@@ -150,39 +151,49 @@ const UsersClient = ({ users }: { users: User[] }) => {
           </Select>
         </div>
       </div>
-      <Table
-        className="mt-4"
-        sortDescriptor={sortDescriptor}
-        topContent={
-          <div className="flex justify-between w-full items-center">
-            <p className="text-sm font-medium">Total users : {users.length}</p>
-            <Pagination
-              showControls
-              page={currentPage}
-              total={pages}
-              onChange={setCurrentPage}
-            />
-          </div>
-        }
-        onSortChange={setSortDescriptor}
-      >
-        <TableHeader>
-          <TableColumn key="profilePictureUrl">Profile</TableColumn>
-          <TableColumn key="name">Name</TableColumn>
-          <TableColumn key="email">Email</TableColumn>
-          <TableColumn key="role">Role</TableColumn>
-          <TableColumn key="actions">Actions</TableColumn>
-        </TableHeader>
-        <TableBody emptyContent={<EmptyPlaceholder />} items={usersPaginated}>
-          {(item) => (
-            <TableRow key={item.id}>
-              {(columnKey) => (
-                <TableCell>{renderCell(item, columnKey)}</TableCell>
+      <Card className="mt-4" shadow="sm">
+        <CardBody>
+          <Table
+            removeWrapper
+            className="min-w-[700px]"
+            sortDescriptor={sortDescriptor}
+            topContent={
+              <div className="flex justify-between w-full items-center">
+                <p className="text-sm font-medium">
+                  Total users : {users.length}
+                </p>
+                <Pagination
+                  showControls
+                  page={currentPage}
+                  total={pages}
+                  onChange={setCurrentPage}
+                />
+              </div>
+            }
+            onSortChange={setSortDescriptor}
+          >
+            <TableHeader>
+              <TableColumn key="profilePictureUrl">Profile</TableColumn>
+              <TableColumn key="name">Name</TableColumn>
+              <TableColumn key="email">Email</TableColumn>
+              <TableColumn key="role">Role</TableColumn>
+              <TableColumn key="actions">Actions</TableColumn>
+            </TableHeader>
+            <TableBody
+              emptyContent={<EmptyPlaceholder />}
+              items={usersPaginated}
+            >
+              {(item) => (
+                <TableRow key={item.id}>
+                  {(columnKey) => (
+                    <TableCell>{renderCell(item, columnKey)}</TableCell>
+                  )}
+                </TableRow>
               )}
-            </TableRow>
-          )}
-        </TableBody>
-      </Table>
+            </TableBody>
+          </Table>
+        </CardBody>
+      </Card>
     </div>
   );
 };

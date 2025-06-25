@@ -20,6 +20,7 @@ import { Image } from "@heroui/image";
 import { useDisclosure } from "@heroui/modal";
 import { addToast } from "@heroui/toast";
 import { useRouter } from "next/navigation";
+import { Card, CardBody } from "@heroui/card";
 
 import DeleteModal from "../DeleteModal";
 
@@ -192,7 +193,7 @@ const DestinationsClient = ({
 
   return (
     <div className="mt-6">
-      <div className="flex items-center gap-3">
+      <div className="flex lg:items-center gap-3 md:flex-row flex-col">
         <Input
           isClearable
           placeholder="Search by name..."
@@ -200,77 +201,84 @@ const DestinationsClient = ({
           onValueChange={setSearchKeyword}
         />
 
-        <div className="max-w-[240px] w-full">
-          <Autocomplete
-            allowsCustomValue={false}
-            selectedKey={categoryFilterSelected}
-            onSelectionChange={(key) =>
-              setCategoryFilterSelected(key as string)
-            }
-          >
-            <>
-              <AutocompleteItem key="">All Category</AutocompleteItem>
-              {categories.map((category) => (
-                <AutocompleteItem key={String(category.id)}>
-                  {category.name}
-                </AutocompleteItem>
-              ))}
-            </>
-          </Autocomplete>
-        </div>
-
-        <Button
-          as={Link}
-          className="flex-shrink-0"
-          color="primary"
-          href="/admin/destinations/add"
-          startContent={<Plus className="size-5" />}
-        >
-          Add Destination
-        </Button>
-      </div>
-      <Table
-        className="mt-4"
-        sortDescriptor={sortDescriptor}
-        topContent={
-          <div className="flex justify-between w-full items-center">
-            <p className="text-sm font-medium">
-              Total destinations : {destinations.length}
-            </p>
-            <Pagination
-              showControls
-              page={currentPage}
-              total={pages}
-              onChange={setCurrentPage}
-            />
+        <div className="flex items-center gap-3 lg:max-w-[400px] flex-shrink-0">
+          <div className="w-full">
+            <Autocomplete
+              allowsCustomValue={false}
+              selectedKey={categoryFilterSelected}
+              onSelectionChange={(key) =>
+                setCategoryFilterSelected(key as string)
+              }
+            >
+              <>
+                <AutocompleteItem key="">All Category</AutocompleteItem>
+                {categories.map((category) => (
+                  <AutocompleteItem key={String(category.id)}>
+                    {category.name}
+                  </AutocompleteItem>
+                ))}
+              </>
+            </Autocomplete>
           </div>
-        }
-        onSortChange={setSortDescriptor}
-      >
-        <TableHeader>
-          <TableColumn key="imageUrls">Image</TableColumn>
-          <TableColumn key="title" allowsSorting>
-            Name
-          </TableColumn>
-          <TableColumn key="category">Category</TableColumn>
-          <TableColumn key="createdAt" allowsSorting>
-            Created At
-          </TableColumn>
-          <TableColumn key="actions">Actions</TableColumn>
-        </TableHeader>
-        <TableBody
-          emptyContent={<EmptyPlaceholder />}
-          items={destinationsPaginated}
-        >
-          {(item) => (
-            <TableRow key={item.id}>
-              {(columnKey) => (
-                <TableCell>{renderCell(item, columnKey)}</TableCell>
+
+          <Button
+            as={Link}
+            className="flex-shrink-0"
+            color="primary"
+            href="/admin/destinations/add"
+            startContent={<Plus className="size-5" />}
+          >
+            Add Destination
+          </Button>
+        </div>
+      </div>
+      <Card className="mt-4" shadow="sm">
+        <CardBody>
+          <Table
+            removeWrapper
+            className="min-w-[800px]"
+            sortDescriptor={sortDescriptor}
+            topContent={
+              <div className="flex justify-between w-full items-center">
+                <p className="text-sm font-medium">
+                  Total destinations : {destinations.length}
+                </p>
+                <Pagination
+                  showControls
+                  page={currentPage}
+                  total={pages}
+                  onChange={setCurrentPage}
+                />
+              </div>
+            }
+            onSortChange={setSortDescriptor}
+          >
+            <TableHeader>
+              <TableColumn key="imageUrls">Image</TableColumn>
+              <TableColumn key="title" allowsSorting>
+                Name
+              </TableColumn>
+              <TableColumn key="category">Category</TableColumn>
+              <TableColumn key="createdAt" allowsSorting>
+                Created At
+              </TableColumn>
+              <TableColumn key="actions">Actions</TableColumn>
+            </TableHeader>
+            <TableBody
+              emptyContent={<EmptyPlaceholder />}
+              items={destinationsPaginated}
+            >
+              {(item) => (
+                <TableRow key={item.id}>
+                  {(columnKey) => (
+                    <TableCell>{renderCell(item, columnKey)}</TableCell>
+                  )}
+                </TableRow>
               )}
-            </TableRow>
-          )}
-        </TableBody>
-      </Table>
+            </TableBody>
+          </Table>
+        </CardBody>
+      </Card>
       <DeleteModal
         modalProps={{ isOpen: isOpen, onOpenChange: onOpenChange }}
         title="Delete Destination"

@@ -9,9 +9,9 @@ const layout = ({ children }: { children: React.ReactNode }) => {
       <div className="h-full w-full lg:max-w-[280px]">
         <AdminNavbar />
       </div>
-      <div className="flex-1 p-4 overflow-y-scroll h-screen">
+      <div className="flex-grow p-4 overflow-auto h-screen w-full">
         <Breadcrumb />
-        <div className="mt-2 lg:mt-4">{children}</div>
+        <div className="mt-2 lg:mt-4 w-full ">{children}</div>
       </div>
     </div>
   );
