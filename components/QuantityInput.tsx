@@ -7,7 +7,7 @@ const QuantityInput = (props: NumberInputProps) => {
   const min = props.minValue !== undefined ? Number(props.minValue) : 0;
   const max = props.maxValue !== undefined ? Number(props.maxValue) : undefined;
   const [value, setValue] = useState<number>(
-    props.value ?? props.minValue ?? 1
+    props.defaultValue ?? props.value ?? props.minValue ?? 1
   );
 
   const handleChange = (newVal: number) => {

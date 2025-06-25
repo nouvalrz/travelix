@@ -93,7 +93,7 @@ const TransactionsListPaginated = () => {
             ))}
         </div>
       ) : (
-        <div className="flex flex-col items-center justify-center h-[400px]">
+        <div className="flex flex-col items-center justify-center h-[500px]">
           <EmptyPlaceholder
             description={`There are no ${statusFilter} transactions`}
           />

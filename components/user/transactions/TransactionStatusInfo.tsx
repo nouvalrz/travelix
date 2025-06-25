@@ -23,11 +23,11 @@ const TransactionStatusInfo = ({
             </div>
             <TransactionStatusChip status={transaction.status} />
           </div>
-          <p className="mt-1">
+          <p className="mt-1 text-sm">
             Order Date : {formatDateTime(transaction.orderDate)}
           </p>
           {transaction.status === "expired" && (
-            <p className="mt-1">
+            <p className="mt-1 text-sm">
               Expired Date : {formatDateTime(transaction.expiredDate)}
             </p>
           )}

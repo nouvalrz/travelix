@@ -6,6 +6,7 @@ import NextTopLoader from "nextjs-toploader";
 import { Providers } from "./providers";
 
 import { fontGeist, fontManrope } from "@/config/fonts";
+import ScrollToTop from "@/components/ScrollToTop";
 
 export const metadata: Metadata = {
   title: {
@@ -42,6 +43,7 @@ export default function RootLayout({
         )}
       >
         <NextTopLoader />
+        <ScrollToTop />
         <Providers themeProps={{ attribute: "class", defaultTheme: "dark" }}>
           <div className="relative flex flex-col min-h-screen">
             <main className="flex-1 flex flex-col">{children}</main>

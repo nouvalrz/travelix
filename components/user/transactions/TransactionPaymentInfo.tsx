@@ -7,12 +7,17 @@ import { Snippet } from "@heroui/snippet";
 import { Image } from "@heroui/image";
 import { Button } from "@heroui/button";
 import dynamic from "next/dynamic";
+import { useDisclosure } from "@heroui/modal";
+import { addToast } from "@heroui/toast";
+import { useRouter } from "next/navigation";
 
 import { formatDateTime } from "@/lib/formatDate";
 import { formatRupiah } from "@/lib/formatRupiah";
 import { ImageInputField, ImageInputPicker } from "@/components/ImageInput";
 import { useUplaodPaymentProof } from "@/lib/hooks/useUploadPaymentProof";
 import { TransactionWithAdditionalStatus } from "@/lib/store/useTransactiosListStore";
+import DeleteModal from "@/components/admin/DeleteModal";
+import { fetchCancelTransaction } from "@/lib/data/client/transactions";
 
 const TimerFromISO = dynamic(() => import("@/components/TimerFromISO"), {
   ssr: false,
@@ -27,6 +32,8 @@ const TransactionPaymentInfo = ({
   hideReminder?: boolean;
   disableUplaod?: boolean;
 }) => {
+  const router = useRouter();
+  const { isOpen, onOpen, onOpenChange, onClose } = useDisclosure();
   const totalPrice = transaction.transaction_items.reduce(
     (acc, item) => acc + item.quantity * (item.price_discount ?? item.price),
     0
@@ -40,6 +47,28 @@ const TransactionPaymentInfo = ({
   } = useUplaodPaymentProof(transaction.id);
 
   const [modalImagePicker, setModalImagePicker] = useState<boolean>(false);
+
+  const handleCancelTransaction = async () => {
+    if (transaction.status !== "pending") return;
+    try {
+      await fetchCancelTransaction(transaction.id);
+      onClose();
+      addToast({
+        color: "success",
+        title: "Success",
+        description: "Successfully cancel transaction",
+      });
+      router.refresh();
+    } catch (error) {
+      if (error instanceof Error) {
+        addToast({
+          color: "danger",
+          title: "Error",
+          description: error.message,
+        });
+      }
+    }
+  };
 
   const toggleModalImagePicker = () => setModalImagePicker(!modalImagePicker);
 
@@ -131,7 +160,10 @@ const TransactionPaymentInfo = ({
                 )}
               </div>
               {!disableUplaod && transaction.status === "pending" && (
-                <div className="flex justify-end mt-2">
+                <div className="flex justify-end mt-2 gap-3">
+                  <Button color="danger" variant="ghost" onPress={onOpen}>
+                    Cancel Transaction
+                  </Button>
                   <Button
                     color="primary"
                     isDisabled={!image}
@@ -146,6 +178,13 @@ const TransactionPaymentInfo = ({
           </div>
         </CardBody>
       </Card>
+      <DeleteModal
+        modalProps={{ isOpen: isOpen, onOpenChange: onOpenChange }}
+        title="Cancel Transaction"
+        onDelete={handleCancelTransaction}
+      >
+        <p>Are you sure want to cancel this transaction?</p>
+      </DeleteModal>
     </div>
   );
 };

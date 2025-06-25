@@ -70,3 +70,20 @@ export const fetchUpdateTransactionStatus = async (
 
   return responseData;
 };
+
+export const fetchCancelTransaction = async (transactionId: string) => {
+  const response = await fetch(
+    "/api/proxy/cancel-transaction/" + transactionId,
+    {
+      method: "POST",
+      credentials: "same-origin",
+      headers: {
+        "Content-Type": "application/json",
+      },
+    }
+  );
+
+  const responseData = await response.json();
+
+  return responseData;
+};
