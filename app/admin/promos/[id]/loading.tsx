@@ -1,7 +1,9 @@
 import React from "react";
 
+import AdminTablePagePlaceholder from "@/components/admin/AdminTablePagePlaceholder";
+
 const loading = () => {
-  return <div>loading</div>;
+  return <AdminTablePagePlaceholder />;
 };
 
 export default loading;

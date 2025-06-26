@@ -18,6 +18,7 @@ import { Pagination } from "@heroui/pagination";
 import { Select, SelectItem } from "@heroui/select";
 import { Chip } from "@heroui/chip";
 import { Card, CardBody } from "@heroui/card";
+import { useRouter, useSearchParams } from "next/navigation";
 
 import EmptyPlaceholder from "@/components/EmptyPlaceholder";
 import { formatDateTime } from "@/lib/formatDate";
@@ -43,10 +44,15 @@ const TransactionsClient = ({
 }: {
   transactions: TransactionWithAdditionalStatus[];
 }) => {
+  const router = useRouter();
+  const searchParams = useSearchParams();
+  const status =
+    (searchParams.get("status") as TransactionStatusWithAdditional | "") ?? "";
+
   const [searchKeyword, setSearchKeyword] = useState<string>("");
   const [statusSelected, setStatusSelected] = useState<
     TransactionStatusWithAdditional | ""
-  >("");
+  >(status);
   const rowsPerPage = 15;
 
   const [currentPage, setCurrentPage] = useState(1);
@@ -101,6 +107,14 @@ const TransactionsClient = ({
 
     return transactionsSorted.slice(start, end);
   }, [currentPage, transactionsSorted]);
+
+  useEffect(() => {
+    const params = new URLSearchParams(searchParams.toString());
+
+    params.set("status", statusSelected);
+
+    router.push(`?${params.toString()}`);
+  }, [statusSelected]);
 
   useEffect(() => {
     setCurrentPage(1);

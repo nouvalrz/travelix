@@ -12,7 +12,7 @@ import {
 } from "@heroui/table";
 import { Button } from "@heroui/button";
 import Link from "next/link";
-import { ChevronRight, Pencil } from "lucide-react";
+import { ChevronRight, ChevronRightCircle, Pencil } from "lucide-react";
 
 import {
   TransactionStatusWithAdditional,
@@ -96,9 +96,19 @@ const AdminDashboardClient = ({
           </CardHeader>
           <hr />
           <CardBody>
-            <div className="flex gap-2 items-center">
-              <p className="font-medium text-xl">{pendingTransactionCount}</p>
-              <p className="text-sm">Total</p>
+            <div className="flex items-center gap-2 justify-between">
+              <div className="flex gap-2 items-center">
+                <p className="font-medium text-xl">{pendingTransactionCount}</p>
+                <p className="text-sm">Total</p>
+              </div>
+              <Button
+                isIconOnly
+                as={Link}
+                href="/admin/transactions?status=pending"
+                variant="light"
+              >
+                <ChevronRightCircle className="size-5 text-gray-600" />
+              </Button>
             </div>
           </CardBody>
         </Card>
@@ -108,11 +118,21 @@ const AdminDashboardClient = ({
           </CardHeader>
           <hr />
           <CardBody>
-            <div className="flex gap-2 items-center">
-              <p className="font-medium text-xl">
-                {waitingConfirmationTransactionCount}
-              </p>
-              <p className="text-sm">Total</p>
+            <div className="flex items-center gap-2 justify-between">
+              <div className="flex gap-2 items-center">
+                <p className="font-medium text-xl">
+                  {waitingConfirmationTransactionCount}
+                </p>
+                <p className="text-sm">Total</p>
+              </div>
+              <Button
+                isIconOnly
+                as={Link}
+                href="/admin/transactions?status=waiting_confirmation"
+                variant="light"
+              >
+                <ChevronRightCircle className="size-5 text-gray-600" />
+              </Button>
             </div>
           </CardBody>
         </Card>
@@ -122,9 +142,19 @@ const AdminDashboardClient = ({
           </CardHeader>
           <hr />
           <CardBody>
-            <div className="flex gap-2 items-center">
-              <p className="font-medium text-xl">{expiredTransactionCount}</p>
-              <p className="text-sm">Total</p>
+            <div className="flex items-center gap-2 justify-between">
+              <div className="flex gap-2 items-center">
+                <p className="font-medium text-xl">{expiredTransactionCount}</p>
+                <p className="text-sm">Total</p>
+              </div>
+              <Button
+                isIconOnly
+                as={Link}
+                href="/admin/transactions?status=expired"
+                variant="light"
+              >
+                <ChevronRightCircle className="size-5 text-gray-600" />
+              </Button>
             </div>
           </CardBody>
         </Card>
@@ -134,9 +164,21 @@ const AdminDashboardClient = ({
           </CardHeader>
           <hr />
           <CardBody>
-            <div className="flex gap-2 items-center">
-              <p className="font-medium text-xl">{cancelledTransactionCount}</p>
-              <p className="text-sm">Total</p>
+            <div className="flex items-center gap-2 justify-between">
+              <div className="flex gap-2 items-center">
+                <p className="font-medium text-xl">
+                  {cancelledTransactionCount}
+                </p>
+                <p className="text-sm">Total</p>
+              </div>
+              <Button
+                isIconOnly
+                as={Link}
+                href="/admin/transactions?status=cancelled"
+                variant="light"
+              >
+                <ChevronRightCircle className="size-5 text-gray-600" />
+              </Button>
             </div>
           </CardBody>
         </Card>
@@ -146,9 +188,19 @@ const AdminDashboardClient = ({
           </CardHeader>
           <hr />
           <CardBody>
-            <div className="flex gap-2 items-center">
-              <p className="font-medium text-xl">{successTransactionCount}</p>
-              <p className="text-sm">Total</p>
+            <div className="flex items-center gap-2 justify-between">
+              <div className="flex gap-2 items-center">
+                <p className="font-medium text-xl">{successTransactionCount}</p>
+                <p className="text-sm">Total</p>
+              </div>
+              <Button
+                isIconOnly
+                as={Link}
+                href="/admin/transactions?status=success"
+                variant="light"
+              >
+                <ChevronRightCircle className="size-5 text-gray-600" />
+              </Button>
             </div>
           </CardBody>
         </Card>
@@ -158,9 +210,19 @@ const AdminDashboardClient = ({
           </CardHeader>
           <hr />
           <CardBody>
-            <div className="flex gap-2 items-center">
-              <p className="font-medium text-xl">{failedTransactionCount}</p>
-              <p className="text-sm">Total</p>
+            <div className="flex items-center gap-2 justify-between">
+              <div className="flex gap-2 items-center">
+                <p className="font-medium text-xl">{failedTransactionCount}</p>
+                <p className="text-sm">Total</p>
+              </div>
+              <Button
+                isIconOnly
+                as={Link}
+                href="/admin/transactions?status=failed"
+                variant="light"
+              >
+                <ChevronRightCircle className="size-5 text-gray-600" />
+              </Button>
             </div>
           </CardBody>
         </Card>

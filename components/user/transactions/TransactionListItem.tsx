@@ -25,7 +25,7 @@ const TransactionListItem = ({
   return (
     <Card key={transaction.id} shadow="sm">
       <CardHeader>
-        <div className="flex items-center justify-between w-full">
+        <div className="flex items-center justify-between w-full flex-wrap gap-2">
           <div className="flex gap-0 lg:gap-5 items-start lg:items-center lg:flex-row flex-col ">
             <p className="font-semibold">{transaction.invoiceId}</p>
             <p className="text-sm">{formatDateTime(transaction.createdAt)}</p>

@@ -47,7 +47,7 @@ const CartsList = () => {
         {carts.map((cart) => (
           <Card key={cart.id} shadow="sm">
             <CardBody>
-              <div className="flex gap-3 justify-between">
+              <div className="flex gap-3 md:justify-between md:flex-row flex-col">
                 <div className="flex gap-3 items-start">
                   <Checkbox
                     isSelected={cart.isSelected}
