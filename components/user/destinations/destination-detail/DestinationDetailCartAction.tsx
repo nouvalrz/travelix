@@ -25,7 +25,7 @@ const DestinationDetailCartAction = ({
 }) => {
   const isMobile = useMediaQuery({ maxWidth: 1023 });
   const withUser = useRedirectLoginMiddleware();
-  const { addCart } = useCartsStore();
+  const { addCart, onCartOpen } = useCartsStore();
   const [quantity, setQuantity] = useState<number>(1);
   const [addCartLoading, setAddCartLoading] = useState<boolean>(false);
 
@@ -33,6 +33,7 @@ const DestinationDetailCartAction = ({
     setAddCartLoading(true);
     try {
       await addCart(destination.id, quantity);
+      onCartOpen();
       setQuantity(1);
       addToast({
         title: "Success",

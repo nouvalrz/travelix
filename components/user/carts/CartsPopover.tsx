@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React from "react";
 import { Popover, PopoverTrigger, PopoverContent } from "@heroui/popover";
 import { Button } from "@heroui/button";
 import { ShoppingCart, TicketCheck } from "lucide-react";
@@ -8,12 +8,14 @@ import { Cart } from "@/types/cart.type";
 import { formatRupiah } from "@/lib/formatRupiah";
 import EmptyPlaceholder from "@/components/EmptyPlaceholder";
 import AppImage from "@/components/AppImage";
+import { useCartsStore } from "@/lib/store/useCartsStore";
 
 const CartsPopover = ({ carts }: { carts: Cart[] }) => {
   const router = useRouter();
-  const [isOpen, setIsOpen] = useState<boolean>(false);
+  // const [isOpen, setIsOpen] = useState<boolean>(false);
+  const { cartOpen, toggleCartOpen } = useCartsStore();
 
-  const toggleOpen = () => setIsOpen(!isOpen);
+  // const toggleOpen = () => setIsOpen(!isOpen);
 
   const totalPrice = carts.reduce(
     (acc, cart) =>
@@ -28,12 +30,12 @@ const CartsPopover = ({ carts }: { carts: Cart[] }) => {
         base: "p-0 ",
         content: "p-0 overflow-clip max-w-[420px] !w-full",
       }}
-      isOpen={isOpen}
+      isOpen={cartOpen}
       placement="bottom"
-      onOpenChange={toggleOpen}
+      onOpenChange={toggleCartOpen}
     >
       <PopoverTrigger>
-        <Button isIconOnly variant="light" onPress={toggleOpen}>
+        <Button isIconOnly variant="light" onPress={toggleCartOpen}>
           <ShoppingCart className="size-6" />
         </Button>
       </PopoverTrigger>
@@ -102,7 +104,7 @@ const CartsPopover = ({ carts }: { carts: Cart[] }) => {
               color="primary"
               startContent={<TicketCheck className="size-5" />}
               onPress={() => {
-                toggleOpen();
+                toggleCartOpen();
                 router.push("/carts");
               }}
             >

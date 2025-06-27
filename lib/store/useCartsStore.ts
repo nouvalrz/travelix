@@ -5,6 +5,9 @@ import { fetchAddCart, fetchCarts } from "../data/client/carts";
 import { Cart } from "@/types/cart.type";
 
 type CartsStore = {
+  cartOpen: boolean;
+  onCartOpen: () => void;
+  toggleCartOpen: () => void;
   carts: Cart[];
   cartsLoading: boolean;
   fetchCarts: () => Promise<void>;
@@ -14,6 +17,9 @@ type CartsStore = {
 
 export const useCartsStore = create<CartsStore>((set, get) => {
   return {
+    cartOpen: false,
+    onCartOpen: () => set({ cartOpen: true }),
+    toggleCartOpen: () => set({ cartOpen: !get().cartOpen }),
     carts: [],
     cartsLoading: true,
     fetchCarts: async () => {
