@@ -8,6 +8,7 @@ type CartsStore = {
   cartOpen: boolean;
   onCartOpen: () => void;
   toggleCartOpen: () => void;
+  setCartOpen: (value: boolean) => void;
   carts: Cart[];
   cartsLoading: boolean;
   fetchCarts: () => Promise<void>;
@@ -20,6 +21,7 @@ export const useCartsStore = create<CartsStore>((set, get) => {
     cartOpen: false,
     onCartOpen: () => set({ cartOpen: true }),
     toggleCartOpen: () => set({ cartOpen: !get().cartOpen }),
+    setCartOpen: (value) => set({ cartOpen: value }),
     carts: [],
     cartsLoading: true,
     fetchCarts: async () => {

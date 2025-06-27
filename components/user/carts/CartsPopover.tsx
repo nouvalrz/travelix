@@ -13,7 +13,7 @@ import { useCartsStore } from "@/lib/store/useCartsStore";
 const CartsPopover = ({ carts }: { carts: Cart[] }) => {
   const router = useRouter();
   // const [isOpen, setIsOpen] = useState<boolean>(false);
-  const { cartOpen, toggleCartOpen } = useCartsStore();
+  const { cartOpen, toggleCartOpen, setCartOpen } = useCartsStore();
 
   // const toggleOpen = () => setIsOpen(!isOpen);
 
@@ -32,7 +32,7 @@ const CartsPopover = ({ carts }: { carts: Cart[] }) => {
       }}
       isOpen={cartOpen}
       placement="bottom"
-      onOpenChange={toggleCartOpen}
+      onOpenChange={(value) => setCartOpen(value)}
     >
       <PopoverTrigger>
         <Button isIconOnly variant="light" onPress={toggleCartOpen}>
@@ -104,7 +104,7 @@ const CartsPopover = ({ carts }: { carts: Cart[] }) => {
               color="primary"
               startContent={<TicketCheck className="size-5" />}
               onPress={() => {
-                toggleCartOpen();
+                setCartOpen(false);
                 router.push("/carts");
               }}
             >
