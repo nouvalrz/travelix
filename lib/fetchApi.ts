@@ -47,7 +47,7 @@ export const fetchApiFromServer = async (
   const res = await fetch(url, {
     method: options.method || "GET",
     headers,
-    next: options.next,
+    // next: options.next,
     body: isFormData
       ? options.body
       : options.body
