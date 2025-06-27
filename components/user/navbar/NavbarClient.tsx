@@ -11,11 +11,18 @@ import {
 import { useEffect, useState } from "react";
 import Link from "next/link";
 import { Button } from "@heroui/button";
-import { ReceiptText } from "lucide-react";
+import {
+  BadgePercent,
+  House,
+  Layers2,
+  ReceiptText,
+  Ticket,
+} from "lucide-react";
 import { Badge } from "@heroui/badge";
 import clsx from "clsx";
 import { useMediaQuery } from "react-responsive";
 import { usePathname } from "next/navigation";
+import { useRouter } from "nextjs-toploader/app";
 
 import { TravelixLogoHorizontal } from "../../icons";
 import CartsPopover from "../carts/CartsPopover";
@@ -36,18 +43,22 @@ const navigations = [
   {
     title: "Home",
     href: "/",
+    icon: <House className="size-5" />,
   },
   {
     title: "Destinations",
     href: "/destinations",
+    icon: <Ticket className="size-5" />,
   },
   {
     title: "Categories",
     href: "/categories",
+    icon: <Layers2 className="size-5" />,
   },
   {
     title: "Promos",
     href: "/promos",
+    icon: <BadgePercent className="size-5" />,
   },
 ];
 
@@ -119,17 +130,24 @@ const LoggedContent = ({ authUser, onModalLogoutOpen }: LoggedContentProps) => {
 };
 
 const NavbarClient = ({ authUser }: NavbarClientProps) => {
+  const router = useRouter();
   const pathname = usePathname();
   const [isMenuOpen, setIsMenuOpen] = useState<boolean>(false);
   const [modalLogout, setModalLogout] = useState<boolean>(false);
   const position = useNavbarPosition();
   const isSmallMobile = useMediaQuery({ maxWidth: 639 });
 
+  const handleMenuClick = (href: string) => {
+    router.push(href);
+    setIsMenuOpen(false);
+  };
+
   return (
     <Navbar
       isBordered
       className="font-medium"
       classNames={{
+        menu: "bg-white",
         item: [
           "flex",
           "relative",
@@ -180,9 +198,20 @@ const NavbarClient = ({ authUser }: NavbarClientProps) => {
       <NavbarMenu>
         {navigations.map((navigation, index) => (
           <NavbarMenuItem key={index} className="text-base">
-            <Link href={navigation.href} onClick={() => setIsMenuOpen(false)}>
+            {/* <Link href={navigation.href} onClick={() => setIsMenuOpen(false)}>
               {navigation.title}
-            </Link>
+            </Link> */}
+            <Button
+              key={navigation.href}
+              fullWidth
+              className="justify-start"
+              color={pathname === navigation.href ? "primary" : "default"}
+              startContent={navigation.icon}
+              variant={pathname === navigation.href ? "flat" : "light"}
+              onPress={() => handleMenuClick(navigation.href)}
+            >
+              {navigation.title}
+            </Button>
           </NavbarMenuItem>
         ))}
       </NavbarMenu>

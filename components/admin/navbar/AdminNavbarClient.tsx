@@ -18,7 +18,7 @@ import {
 import { Image } from "@heroui/image";
 import { Chip } from "@heroui/chip";
 import Link from "next/link";
-import { usePathname, useRouter } from "next/navigation";
+import { usePathname } from "next/navigation";
 import {
   Navbar,
   NavbarBrand,
@@ -27,6 +27,7 @@ import {
   NavbarMenuItem,
   NavbarMenuToggle,
 } from "@heroui/navbar";
+import { useRouter } from "nextjs-toploader/app";
 
 import { AuthUserType } from "@/types/authUser.type";
 import { TravelixLogoHorizontal } from "@/components/icons";
