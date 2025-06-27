@@ -27,6 +27,8 @@ import {
   NavbarMenuItem,
   NavbarMenuToggle,
 } from "@heroui/navbar";
+
+// @ts-ignore
 import { useRouter } from "nextjs-toploader/app";
 
 import { AuthUserType } from "@/types/authUser.type";

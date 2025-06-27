@@ -22,6 +22,8 @@ import { Badge } from "@heroui/badge";
 import clsx from "clsx";
 import { useMediaQuery } from "react-responsive";
 import { usePathname } from "next/navigation";
+
+// @ts-ignore
 import { useRouter } from "nextjs-toploader/app";
 
 import { TravelixLogoHorizontal } from "../../icons";
