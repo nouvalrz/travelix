@@ -42,7 +42,7 @@ export const useCartsStore = create<CartsStore>((set, get) => {
         await fetchAddCart({ activityId: cartId });
       }
 
-      get().fetchCarts();
+      await get().fetchCarts();
     },
   };
 });
