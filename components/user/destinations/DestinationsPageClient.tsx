@@ -30,6 +30,7 @@ const DestinationsPageClient = ({
     initDestinations: setDestinations,
     fetchCategory,
     categorySelected,
+    setCategorySelected,
     categories,
     destinationQueryResults,
   } = useDestinationsStore();
@@ -41,6 +42,10 @@ const DestinationsPageClient = ({
   useEffect(() => {
     fetchCategory();
   }, [fetchCategory]);
+
+  useEffect(() => {
+    setCategorySelected("");
+  }, []);
 
   useDestinationQuery();
   useDestinationQueryUrlBindingToStore();
