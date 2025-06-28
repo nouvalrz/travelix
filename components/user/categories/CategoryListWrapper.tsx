@@ -10,7 +10,7 @@ const CategoryListWrapper = async () => {
       "Content-Type": "application/json",
     },
     next: {
-      revalidate: 60 * 5,
+      revalidate: 5,
     },
   });
 
