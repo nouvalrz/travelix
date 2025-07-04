@@ -299,6 +299,7 @@ export const MultipleImageInputField = ({
       {label && <p className="text-sm text-primary-900 mb-2">{label}</p>}
       <div className="w-full flex gap-3 rounded-lg p-3 border border-gray-300 border-dashed items-center">
         <button
+          aria-label="Add image"
           className="w-48 h-48 bg-gray-100 flex justify-center items-center cursor-pointer flex-shrink-0 rounded-lg"
           type="button"
           onClick={onClick}
@@ -316,6 +317,7 @@ export const MultipleImageInputField = ({
                   className="relative group flex-shrink-0"
                 >
                   <Button
+                    aria-label="delete image"
                     className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2  hidden group-hover:flex z-20"
                     onPress={() => onDeleteImage(index)}
                   >
@@ -531,6 +533,7 @@ export const ImageInputPicker: React.FC<ImageInputPickerType> = ({
 
               <Button
                 disableRipple
+                aria-label="choose file"
                 className="mx-auto"
                 color="default"
                 startContent={<ImageIcon className="size-5" />}
@@ -542,6 +545,7 @@ export const ImageInputPicker: React.FC<ImageInputPickerType> = ({
             </ModalBody>
             <ModalFooter>
               <Button
+                aria-label="save image"
                 color="primary"
                 onPress={async () => {
                   const result = await getCroppedImage();

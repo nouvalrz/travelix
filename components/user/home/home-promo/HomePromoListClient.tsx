@@ -22,7 +22,9 @@ const HomePromoListClient = ({ promos }: { promos: Promo[] }) => {
         <Button
           disableRipple
           isIconOnly
+          aria-label="previous promo"
           className="left-0  absolute z-20 top-1/2 -translate-y-1/2"
+          name="previous promo"
           radius="full"
           onPress={goLeft}
         >
@@ -33,7 +35,9 @@ const HomePromoListClient = ({ promos }: { promos: Promo[] }) => {
         <Button
           disableRipple
           isIconOnly
+          aria-label="next promo"
           className="right-0  absolute z-20 top-1/2 -translate-y-1/2"
+          name="next promo"
           radius="full"
           onPress={goRight}
         >

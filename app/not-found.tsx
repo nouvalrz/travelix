@@ -15,7 +15,13 @@ const NotFoundPage = () => {
         <img alt="empty" className={"w-60 h-auto"} src="/svg/not-found.svg" />
       </div>
       <h2 className="font-semibold text-xl">Page Not Found</h2>
-      <Button as={Link} className="mt-2" color="primary" href="/">
+      <Button
+        aria-label="Go to home"
+        as={Link}
+        className="mt-2"
+        color="primary"
+        href="/"
+      >
         Go Home
       </Button>
     </div>

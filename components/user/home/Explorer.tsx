@@ -74,7 +74,13 @@ const Finder = () => {
         startContent={<MapPin className="size-5 text-gray-500" />}
       />
       <DatePicker label="Date" labelPlacement="outside" />
-      <Button disableRipple isIconOnly color="primary">
+      <Button
+        disableRipple
+        isIconOnly
+        aria-label="search"
+        color="primary"
+        name="search"
+      >
         <MoveRight className="size-5" />
       </Button>
     </div>

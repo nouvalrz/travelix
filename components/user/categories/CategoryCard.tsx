@@ -24,7 +24,7 @@ const CategoryCard = ({
       <CardBody className="overflow-visible p-0">
         <AppImage
           isZoomed
-          alt={category.name}
+          alt={`${category.name}-${category.createdAt}`}
           classNames={{
             wrapper: "bg-no-repeat bg-cover bg-center !max-w-none",
             img: "w-full h-[140px] object-cover",

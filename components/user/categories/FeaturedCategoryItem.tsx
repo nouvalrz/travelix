@@ -61,7 +61,9 @@ const FeaturedCategoryItem = ({
             <Button
               disableRipple
               isIconOnly
+              aria-label="previous category"
               className="left-0 absolute z-20 top-1/2 -translate-y-1/2"
+              name="previous category"
               radius="full"
               onPress={goLeft}
             >
@@ -72,7 +74,9 @@ const FeaturedCategoryItem = ({
             <Button
               disableRipple
               isIconOnly
+              aria-label="next category"
               className="right-0 absolute z-20 top-1/2 -translate-y-1/2"
+              name="next category"
               radius="full"
               onPress={goRight}
             >

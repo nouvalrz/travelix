@@ -54,10 +54,20 @@ const LogoutModal = (props: Omit<ModalProps, "children">) => {
               <p className="text-sm">Are you sure want to logout?</p>
             </ModalBody>
             <ModalFooter>
-              <Button color="default" variant="light" onPress={onClose}>
+              <Button
+                aria-label="cancel"
+                color="default"
+                variant="light"
+                onPress={onClose}
+              >
                 Cancel
               </Button>
-              <Button color="primary" isLoading={loading} onPress={logout}>
+              <Button
+                aria-label="logout"
+                color="primary"
+                isLoading={loading}
+                onPress={logout}
+              >
                 Logout
               </Button>
             </ModalFooter>
