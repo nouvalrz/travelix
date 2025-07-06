@@ -50,6 +50,11 @@ const CartsList = () => {
               <div className="flex gap-3 md:justify-between md:flex-row flex-col">
                 <div className="flex gap-3 items-start">
                   <Checkbox
+                    aria-label={
+                      cart.isSelected
+                        ? "unselect this item"
+                        : "select this item"
+                    }
                     isSelected={cart.isSelected}
                     onChange={() => toggleCartSelected(cart.id)}
                   />
@@ -99,6 +104,7 @@ const CartsList = () => {
 
                     <Button
                       isIconOnly
+                      aria-label="remove this item"
                       variant="light"
                       onPress={() => deleteCart(cart.id)}
                     >

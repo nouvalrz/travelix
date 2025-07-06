@@ -116,7 +116,13 @@ const LoggedContent = ({ authUser, onModalLogoutOpen }: LoggedContentProps) => {
           isInvisible={!transactionsLoading && totalTransactions() === 0}
           shape="circle"
         >
-          <Button isIconOnly as={Link} href="/me/transactions" variant="light">
+          <Button
+            isIconOnly
+            aria-label="go to transactions page"
+            as={Link}
+            href="/me/transactions"
+            variant="light"
+          >
             <ReceiptText className="size-6" />
           </Button>
         </Badge>

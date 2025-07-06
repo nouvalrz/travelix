@@ -35,7 +35,12 @@ const CartsPopover = ({ carts }: { carts: Cart[] }) => {
       onOpenChange={(value) => setCartOpen(value)}
     >
       <PopoverTrigger>
-        <Button isIconOnly variant="light" onPress={toggleCartOpen}>
+        <Button
+          isIconOnly
+          aria-label="open cart"
+          variant="light"
+          onPress={toggleCartOpen}
+        >
           <ShoppingCart className="size-6" />
         </Button>
       </PopoverTrigger>
