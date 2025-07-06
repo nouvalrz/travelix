@@ -1,10 +1,10 @@
 import HomeBannerSliderClient from "./HomeBannerSliderClient";
 
-import { BASE_URL } from "@/config/credentials";
+import { fetchApiFromServer } from "@/lib/fetchApi";
 import { Banner } from "@/types/banner.type";
 
 const HomeBannerWrapper = async () => {
-  const response = await fetch(BASE_URL! + "/api/proxy/banners", {
+  const response = await fetchApiFromServer("/banners", {
     method: "GET",
     headers: { "Content-Type": "application/json" },
     next: {

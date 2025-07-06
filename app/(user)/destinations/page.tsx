@@ -1,5 +1,5 @@
 import DestinationsPageClient from "@/components/user/destinations/DestinationsPageClient";
-import { BASE_URL } from "@/config/credentials";
+import { fetchApiFromServer } from "@/lib/fetchApi";
 import { Destination } from "@/types/destination.type";
 
 export const metadata = {
@@ -7,7 +7,7 @@ export const metadata = {
 };
 
 const DestinationsPage = async () => {
-  const response = await fetch(BASE_URL + "/api/proxy/activities", {
+  const response = await fetchApiFromServer("/activities", {
     method: "GET",
     headers: {
       "Content-Type": "application/json",

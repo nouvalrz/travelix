@@ -24,6 +24,7 @@ const DestinationsToolbar = ({ className }: { className?: string }) => {
           <div className="lg:hidden block">
             <Button
               isIconOnly
+              aria-label="filter options"
               variant="flat"
               onPress={() => setMobileDrawerOpen(true)}
             >
@@ -40,6 +41,7 @@ const DestinationsToolbar = ({ className }: { className?: string }) => {
           >
             <Input
               isClearable
+              aria-label="search destination input"
               className="flex-grow"
               placeholder="Search destinations ..."
               startContent={<Search className="text-gray-600 size-5" />}
@@ -47,7 +49,11 @@ const DestinationsToolbar = ({ className }: { className?: string }) => {
               onClear={() => setSearchKeyword("")}
               onValueChange={setSearch}
             />
-            <Button color="primary" type="submit">
+            <Button
+              aria-label="go search destination"
+              color="primary"
+              type="submit"
+            >
               Search
             </Button>
           </form>

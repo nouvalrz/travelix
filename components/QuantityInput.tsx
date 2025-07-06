@@ -25,6 +25,7 @@ const QuantityInput = (props: NumberInputProps) => {
       endContent={
         <Button
           isIconOnly
+          aria-label="add one item"
           variant="light"
           onPress={() => handleChange(value + 1)}
         >
@@ -34,6 +35,7 @@ const QuantityInput = (props: NumberInputProps) => {
       startContent={
         <Button
           isIconOnly
+          aria-label="remove one item"
           variant="light"
           onPress={() => handleChange(value - 1)}
         >

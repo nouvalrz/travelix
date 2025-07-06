@@ -1,5 +1,5 @@
 import DestinationDetailPageClient from "@/components/user/destinations/destination-detail/DestinationDetailPageClient";
-import { BASE_URL } from "@/config/credentials";
+import { fetchApiFromServer } from "@/lib/fetchApi";
 import { Destination } from "@/types/destination.type";
 
 type DestinationDetailProps = {
@@ -7,7 +7,7 @@ type DestinationDetailProps = {
 };
 
 const fetchDestination = async (id: string): Promise<Destination> => {
-  const response = await fetch(BASE_URL + "/api/proxy/activity/" + id, {
+  const response = await fetchApiFromServer("/activity/" + id, {
     method: "GET",
     headers: { "Content-Type": "application/json" },
   });

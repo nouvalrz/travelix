@@ -1,10 +1,10 @@
 import HomePromoListClient from "./HomePromoListClient";
 
-import { BASE_URL } from "@/config/credentials";
+import { fetchApiFromServer } from "@/lib/fetchApi";
 import { Promo } from "@/types/promo.type";
 
 const HomePromoList = async () => {
-  const response = await fetch(BASE_URL + "/api/proxy/promos", {
+  const response = await fetchApiFromServer("/promos", {
     method: "GET",
     headers: { "Content-Type": "application/json" },
     next: {

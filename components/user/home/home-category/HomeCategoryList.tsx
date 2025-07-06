@@ -1,10 +1,10 @@
 import HomeCategoryListClient from "./HomeCategoryListClient";
 
-import { BASE_URL } from "@/config/credentials";
+import { fetchApiFromServer } from "@/lib/fetchApi";
 import { Category } from "@/types/category.type";
 
 const HomeCategoryList = async () => {
-  const response = await fetch(BASE_URL! + "/api/proxy/categories", {
+  const response = await fetchApiFromServer("/categories", {
     method: "GET",
     headers: {
       "Content-Type": "application/json",

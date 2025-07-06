@@ -32,6 +32,7 @@ const DestinationDetailPageClient = ({
           {/* Big left box */}
           <AppImage
             isBlurred
+            alt={`${destination.title}-1`}
             classNames={{
               wrapper:
                 "bg-no-repeat bg-cover bg-center col-span-4 lg:col-span-2 row-span-2 lg:row-span-2 !max-w-none",
@@ -46,6 +47,7 @@ const DestinationDetailPageClient = ({
 
           <AppImage
             isBlurred
+            alt={`${destination.title}-2`}
             classNames={{
               wrapper: "bg-no-repeat bg-cover bg-center   !max-w-none",
               img: "w-full h-full object-cover",
@@ -59,6 +61,7 @@ const DestinationDetailPageClient = ({
 
           <AppImage
             isBlurred
+            alt={`${destination.title}-3`}
             classNames={{
               wrapper: "bg-no-repeat bg-cover bg-center   !max-w-none",
               img: "w-full h-full object-cover",
@@ -72,6 +75,7 @@ const DestinationDetailPageClient = ({
 
           <AppImage
             isBlurred
+            alt={`${destination.title}-4`}
             classNames={{
               wrapper: "bg-no-repeat bg-cover bg-center   !max-w-none",
               img: "w-full h-full object-cover",
@@ -85,6 +89,7 @@ const DestinationDetailPageClient = ({
 
           <AppImage
             isBlurred
+            alt={`${destination.title}-5`}
             classNames={{
               wrapper: "bg-no-repeat bg-cover bg-center   !max-w-none",
               img: "w-full h-full object-cover",

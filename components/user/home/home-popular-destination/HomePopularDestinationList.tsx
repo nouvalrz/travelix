@@ -1,10 +1,10 @@
 import HomePopularDestinationListClient from "./HomePopularDestinationListClient";
 
-import { BASE_URL } from "@/config/credentials";
+import { fetchApiFromServer } from "@/lib/fetchApi";
 import { Destination } from "@/types/destination.type";
 
 const HomePopularDestinationList = async () => {
-  const response = await fetch(BASE_URL + "/api/proxy/activities", {
+  const response = await fetchApiFromServer("/activities", {
     method: "GET",
     headers: { "Content-Type": "application/json" },
     next: {
