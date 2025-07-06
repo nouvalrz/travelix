@@ -22,6 +22,7 @@ const DestinationFilterCategory = () => {
           <p className="font-medium">Filter by Category</p>
           <Button
             isIconOnly
+            aria-label="reset category to default"
             size="sm"
             variant="light"
             onPress={() => setCategorySelected("")}

@@ -30,13 +30,20 @@ const DestinationFilterPrice = () => {
       <CardBody>
         <div className="flex justify-between items-start">
           <p className="font-medium">Filter by Price Range</p>
-          <Button isIconOnly size="sm" variant="light" onPress={handleReset}>
+          <Button
+            isIconOnly
+            aria-label="reset price range to default"
+            size="sm"
+            variant="light"
+            onPress={handleReset}
+          >
             <RotateCcw className="text-gray-600 size-5" />
           </Button>
         </div>
         <Slider
           key={sliderKey}
           showTooltip
+          aria-label="price range slider"
           className="w-full mt-2"
           defaultValue={[
             useDestinationsStore.getState().minPriceSelected,

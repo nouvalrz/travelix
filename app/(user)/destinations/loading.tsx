@@ -6,7 +6,7 @@ import DestinationCardPlaceholder from "@/components/user/destinations/Destinati
 
 const loading = () => {
   return (
-    <div className="px-4 py-12">
+    <div className="px-4 py-12 min-h-[1290px]">
       <div className="container mx-auto">
         <div className="flex lg:flex-row gap-8">
           <div className="w-full max-w-72 lg:block hidden">
